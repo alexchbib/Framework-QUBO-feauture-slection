@@ -1,0 +1,13 @@
+==== Benchmark 1: Predictive Performance ====
+Metric Details: Mean Squared Error (MSE), Mean Absolute Error (MAE), R-Squared (R2)
+
+--- Multi-Task Linear (L2,1 Lasso) ---
+Target: M24_ADAS13(Alzheimer's Disease Assessment Scale - Cognitive Subscale 13) | R2: -1.2355 | MAE: 14.9658 | MSE: 305.2498
+Target: M24_CDRSB(Clinical Dementia Rating) | R2: -0.1416 | MAE: 1.7464 | MSE: 5.9033
+Target: M24_MMSE(Mini-Mental State Examination) | R2: -59.6427 | MAE: 27.1280 | MSE: 743.7027
+
+--- Ridge Regression (on selected panel) ---
+Target: M24_ADAS13(Alzheimer's Disease Assessment Scale - Cognitive Subscale 13) | R2: -0.5262 | MAE: 13.7360 | MSE: 208.3919
+Target: M24_CDRSB(Clinical Dementia Rating) | R2: 0.3373 | MAE: 1.6084 | MSE: 3.4273
+Target: M24_MMSE(Mini-Mental State Examination) | R2: -63.2172 | MAE: 27.9234 | MSE: 787.5386
+
