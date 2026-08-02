@@ -1,0 +1,2132 @@
+Feature_Name,Panel_Name
+RID,Demographics & Medical History
+SITEID,Demographics & Medical History
+PTSOURCE,Demographics & Medical History
+PTGENDER,Demographics & Medical History
+PTDOB,Demographics & Medical History
+PTDOBYY,Demographics & Medical History
+PTHAND,Demographics & Medical History
+PTMARRY,Demographics & Medical History
+PTEDUCAT,Demographics & Medical History
+PTWORKHS,Demographics & Medical History
+PTNOTRT,Demographics & Medical History
+PTRTYR,Demographics & Medical History
+PTHOME,Demographics & Medical History
+PTTLANG,Demographics & Medical History
+PTPLANG,Demographics & Medical History
+PTCOGBEG,Demographics & Medical History
+PTADDX,Demographics & Medical History
+PTETHCAT,Demographics & Medical History
+PTRACCAT,Demographics & Medical History
+ID,Demographics & Medical History
+TOTSCORE,ADAS-Cog Assessment
+TOTAL13,ADAS-Cog Assessment
+SITEID.adas,ADAS-Cog Assessment
+MMDATE,MMSE Assessment
+MMYEAR,MMSE Assessment
+MMMONTH,MMSE Assessment
+MMDAY,MMSE Assessment
+MMSEASON,MMSE Assessment
+MMHOSPIT,MMSE Assessment
+MMFLOOR,MMSE Assessment
+MMCITY,MMSE Assessment
+MMAREA,MMSE Assessment
+MMSTATE,MMSE Assessment
+WORDLIST,ADAS-Cog Assessment
+WORD1,ADAS-Cog Assessment
+WORD2,ADAS-Cog Assessment
+WORD3,ADAS-Cog Assessment
+MMTRIALS,MMSE Assessment
+MMD,MMSE Assessment
+MML,MMSE Assessment
+MMR,MMSE Assessment
+MMO,MMSE Assessment
+MMW,MMSE Assessment
+WORD1DL,ADAS-Cog Assessment
+WORD2DL,ADAS-Cog Assessment
+WORD3DL,ADAS-Cog Assessment
+MMWATCH,MMSE Assessment
+MMPENCIL,MMSE Assessment
+MMREPEAT,MMSE Assessment
+MMHAND,MMSE Assessment
+MMFOLD,MMSE Assessment
+MMONFLR,MMSE Assessment
+MMREAD,MMSE Assessment
+MMWRITE,MMSE Assessment
+MMDRAW,MMSE Assessment
+MMSCORE,MMSE Assessment
+SITEID.mmse,MMSE Assessment
+CLOCKCIRC,Clock Drawing Test
+CLOCKSYM,Clock Drawing Test
+CLOCKNUM,Clock Drawing Test
+CLOCKHAND,Clock Drawing Test
+CLOCKTIME,Clock Drawing Test
+CLOCKSCOR,Clock Drawing Test
+COPYCIRC,Copy Drawing Test
+COPYSYM,Copy Drawing Test
+COPYNUM,Copy Drawing Test
+COPYHAND,Copy Drawing Test
+COPYTIME,Copy Drawing Test
+COPYSCOR,Copy Drawing Test
+LMSTORY,Logical Memory Test
+LIMMTOTAL,Logical Memory Test
+LIMMEND,Logical Memory Test
+AVTOT1,Rey Auditory Verbal Learning Test (RAVLT)
+AVERR1,Rey Auditory Verbal Learning Test (RAVLT)
+AVTOT2,Rey Auditory Verbal Learning Test (RAVLT)
+AVERR2,Rey Auditory Verbal Learning Test (RAVLT)
+AVTOT3,Rey Auditory Verbal Learning Test (RAVLT)
+AVERR3,Rey Auditory Verbal Learning Test (RAVLT)
+AVTOT4,Rey Auditory Verbal Learning Test (RAVLT)
+AVERR4,Rey Auditory Verbal Learning Test (RAVLT)
+AVTOT5,Rey Auditory Verbal Learning Test (RAVLT)
+AVERR5,Rey Auditory Verbal Learning Test (RAVLT)
+AVTOT6,Rey Auditory Verbal Learning Test (RAVLT)
+AVERR6,Rey Auditory Verbal Learning Test (RAVLT)
+AVTOTB,Rey Auditory Verbal Learning Test (RAVLT)
+AVERRB,Rey Auditory Verbal Learning Test (RAVLT)
+CATANIMSC,Category Fluency Test
+CATANPERS,Category Fluency Test
+CATANINTR,Category Fluency Test
+TRAASCOR,Trail Making Test (TMT)
+TRAAERRCOM,Trail Making Test (TMT)
+TRAAERROM,Trail Making Test (TMT)
+TRABSCOR,Trail Making Test (TMT)
+TRABERRCOM,Trail Making Test (TMT)
+TRABERROM,Trail Making Test (TMT)
+LDELBEGIN,Logical Memory Test
+LDELTOTAL,Logical Memory Test
+LDELCUE,Logical Memory Test
+BNTSPONT,Boston Naming Test
+BNTSTIM,Boston Naming Test
+BNTCSTIM,Boston Naming Test
+BNTPHON,Boston Naming Test
+BNTCPHON,Boston Naming Test
+BNTTOTAL,Boston Naming Test
+AVDELBEGAN,Rey Auditory Verbal Learning Test (RAVLT)
+AVDEL30MIN,Rey Auditory Verbal Learning Test (RAVLT)
+AVDELERR1,Rey Auditory Verbal Learning Test (RAVLT)
+AVDELTOT,Rey Auditory Verbal Learning Test (RAVLT)
+AVDELERR2,Rey Auditory Verbal Learning Test (RAVLT)
+ANARTERR,Rey Auditory Verbal Learning Test (RAVLT)
+SITEID.neuro,Clinical Dementia Rating (CDR)
+CDSOURCE,Clinical Dementia Rating (CDR)
+CDVERSION,Clinical Dementia Rating (CDR)
+CDMEMORY,Clinical Dementia Rating (CDR)
+CDORIENT,Clinical Dementia Rating (CDR)
+CDJUDGE,Clinical Dementia Rating (CDR)
+CDCOMMUN,Clinical Dementia Rating (CDR)
+CDHOME,Clinical Dementia Rating (CDR)
+CDCARE,Clinical Dementia Rating (CDR)
+CDGLOBAL,Clinical Dementia Rating (CDR)
+CDRSB,Clinical Dementia Rating (CDR)
+SITEID.cdr,Clinical Dementia Rating (CDR)
+SOURCE.faq,Functional Assessment Questionnaire (FAQ)
+FAQFINAN,Functional Assessment Questionnaire (FAQ)
+FAQFORM,Functional Assessment Questionnaire (FAQ)
+FAQSHOP,Functional Assessment Questionnaire (FAQ)
+FAQGAME,Functional Assessment Questionnaire (FAQ)
+FAQBEVG,Functional Assessment Questionnaire (FAQ)
+FAQMEAL,Functional Assessment Questionnaire (FAQ)
+FAQEVENT,Functional Assessment Questionnaire (FAQ)
+FAQTV,Functional Assessment Questionnaire (FAQ)
+FAQREM,Functional Assessment Questionnaire (FAQ)
+FAQTRAVL,Functional Assessment Questionnaire (FAQ)
+FAQTOTAL,Functional Assessment Questionnaire (FAQ)
+SITEID.faq,Functional Assessment Questionnaire (FAQ)
+IMAGEUID,Amyloid PET Imaging
+FIELD_STRENGTH,Structural MRI (FreeSurfer)
+STATUS,UNMAPPED
+FSVER,Structural MRI (FreeSurfer)
+ST101SV,Structural MRI (FreeSurfer)
+ST102CV,Structural MRI (FreeSurfer)
+ST102SA,Structural MRI (FreeSurfer)
+ST102TA,Structural MRI (FreeSurfer)
+ST102TS,Structural MRI (FreeSurfer)
+ST103CV,Structural MRI (FreeSurfer)
+ST103SA,Structural MRI (FreeSurfer)
+ST103TA,Structural MRI (FreeSurfer)
+ST103TS,Structural MRI (FreeSurfer)
+ST104CV,Structural MRI (FreeSurfer)
+ST104SA,Structural MRI (FreeSurfer)
+ST104TA,Structural MRI (FreeSurfer)
+ST104TS,Structural MRI (FreeSurfer)
+ST105CV,Structural MRI (FreeSurfer)
+ST105SA,Structural MRI (FreeSurfer)
+ST105TA,Structural MRI (FreeSurfer)
+ST105TS,Structural MRI (FreeSurfer)
+ST106CV,Structural MRI (FreeSurfer)
+ST106SA,Structural MRI (FreeSurfer)
+ST106TA,Structural MRI (FreeSurfer)
+ST106TS,Structural MRI (FreeSurfer)
+ST107CV,Structural MRI (FreeSurfer)
+ST107SA,Structural MRI (FreeSurfer)
+ST107TA,Structural MRI (FreeSurfer)
+ST107TS,Structural MRI (FreeSurfer)
+ST108CV,Structural MRI (FreeSurfer)
+ST108SA,Structural MRI (FreeSurfer)
+ST108TA,Structural MRI (FreeSurfer)
+ST108TS,Structural MRI (FreeSurfer)
+ST109CV,Structural MRI (FreeSurfer)
+ST109SA,Structural MRI (FreeSurfer)
+ST109TA,Structural MRI (FreeSurfer)
+ST109TS,Structural MRI (FreeSurfer)
+ST10CV,Structural MRI (FreeSurfer)
+ST110CV,Structural MRI (FreeSurfer)
+ST110SA,Structural MRI (FreeSurfer)
+ST110TA,Structural MRI (FreeSurfer)
+ST110TS,Structural MRI (FreeSurfer)
+ST111CV,Structural MRI (FreeSurfer)
+ST111SA,Structural MRI (FreeSurfer)
+ST111TA,Structural MRI (FreeSurfer)
+ST111TS,Structural MRI (FreeSurfer)
+ST112SV,Structural MRI (FreeSurfer)
+ST113CV,Structural MRI (FreeSurfer)
+ST113SA,Structural MRI (FreeSurfer)
+ST113TA,Structural MRI (FreeSurfer)
+ST113TS,Structural MRI (FreeSurfer)
+ST114CV,Structural MRI (FreeSurfer)
+ST114SA,Structural MRI (FreeSurfer)
+ST114TA,Structural MRI (FreeSurfer)
+ST114TS,Structural MRI (FreeSurfer)
+ST115CV,Structural MRI (FreeSurfer)
+ST115SA,Structural MRI (FreeSurfer)
+ST115TA,Structural MRI (FreeSurfer)
+ST115TS,Structural MRI (FreeSurfer)
+ST116CV,Structural MRI (FreeSurfer)
+ST116SA,Structural MRI (FreeSurfer)
+ST116TA,Structural MRI (FreeSurfer)
+ST116TS,Structural MRI (FreeSurfer)
+ST117CV,Structural MRI (FreeSurfer)
+ST117SA,Structural MRI (FreeSurfer)
+ST117TA,Structural MRI (FreeSurfer)
+ST117TS,Structural MRI (FreeSurfer)
+ST118CV,Structural MRI (FreeSurfer)
+ST118SA,Structural MRI (FreeSurfer)
+ST118TA,Structural MRI (FreeSurfer)
+ST118TS,Structural MRI (FreeSurfer)
+ST119CV,Structural MRI (FreeSurfer)
+ST119SA,Structural MRI (FreeSurfer)
+ST119TA,Structural MRI (FreeSurfer)
+ST119TS,Structural MRI (FreeSurfer)
+ST11SV,Structural MRI (FreeSurfer)
+ST120SV,Structural MRI (FreeSurfer)
+ST121CV,Structural MRI (FreeSurfer)
+ST121SA,Structural MRI (FreeSurfer)
+ST121TA,Structural MRI (FreeSurfer)
+ST121TS,Structural MRI (FreeSurfer)
+ST124SV,Structural MRI (FreeSurfer)
+ST125SV,Structural MRI (FreeSurfer)
+ST127SV,Structural MRI (FreeSurfer)
+ST128SV,Structural MRI (FreeSurfer)
+ST129CV,Structural MRI (FreeSurfer)
+ST129SA,Structural MRI (FreeSurfer)
+ST129TA,Structural MRI (FreeSurfer)
+ST129TS,Structural MRI (FreeSurfer)
+ST12SV,Structural MRI (FreeSurfer)
+ST130CV,Structural MRI (FreeSurfer)
+ST130SA,Structural MRI (FreeSurfer)
+ST130TA,Structural MRI (FreeSurfer)
+ST130TS,Structural MRI (FreeSurfer)
+ST13CV,Structural MRI (FreeSurfer)
+ST13SA,Structural MRI (FreeSurfer)
+ST13TA,Structural MRI (FreeSurfer)
+ST13TS,Structural MRI (FreeSurfer)
+ST14CV,Structural MRI (FreeSurfer)
+ST14SA,Structural MRI (FreeSurfer)
+ST14TA,Structural MRI (FreeSurfer)
+ST14TS,Structural MRI (FreeSurfer)
+ST15CV,Structural MRI (FreeSurfer)
+ST15SA,Structural MRI (FreeSurfer)
+ST15TA,Structural MRI (FreeSurfer)
+ST15TS,Structural MRI (FreeSurfer)
+ST16SV,Structural MRI (FreeSurfer)
+ST17SV,Structural MRI (FreeSurfer)
+ST18SV,Structural MRI (FreeSurfer)
+ST1SV,Structural MRI (FreeSurfer)
+ST21SV,Structural MRI (FreeSurfer)
+ST23CV,Structural MRI (FreeSurfer)
+ST23SA,Structural MRI (FreeSurfer)
+ST23TA,Structural MRI (FreeSurfer)
+ST23TS,Structural MRI (FreeSurfer)
+ST24CV,Structural MRI (FreeSurfer)
+ST24SA,Structural MRI (FreeSurfer)
+ST24TA,Structural MRI (FreeSurfer)
+ST24TS,Structural MRI (FreeSurfer)
+ST25CV,Structural MRI (FreeSurfer)
+ST25SA,Structural MRI (FreeSurfer)
+ST25TA,Structural MRI (FreeSurfer)
+ST25TS,Structural MRI (FreeSurfer)
+ST26CV,Structural MRI (FreeSurfer)
+ST26SA,Structural MRI (FreeSurfer)
+ST26TA,Structural MRI (FreeSurfer)
+ST26TS,Structural MRI (FreeSurfer)
+ST28SA,Structural MRI (FreeSurfer)
+ST29SV,Structural MRI (FreeSurfer)
+ST2SV,Structural MRI (FreeSurfer)
+ST30SV,Structural MRI (FreeSurfer)
+ST31CV,Structural MRI (FreeSurfer)
+ST31SA,Structural MRI (FreeSurfer)
+ST31TA,Structural MRI (FreeSurfer)
+ST31TS,Structural MRI (FreeSurfer)
+ST32CV,Structural MRI (FreeSurfer)
+ST32SA,Structural MRI (FreeSurfer)
+ST32TA,Structural MRI (FreeSurfer)
+ST32TS,Structural MRI (FreeSurfer)
+ST34CV,Structural MRI (FreeSurfer)
+ST34SA,Structural MRI (FreeSurfer)
+ST34TA,Structural MRI (FreeSurfer)
+ST34TS,Structural MRI (FreeSurfer)
+ST35CV,Structural MRI (FreeSurfer)
+ST35SA,Structural MRI (FreeSurfer)
+ST35TA,Structural MRI (FreeSurfer)
+ST35TS,Structural MRI (FreeSurfer)
+ST36CV,Structural MRI (FreeSurfer)
+ST36SA,Structural MRI (FreeSurfer)
+ST36TA,Structural MRI (FreeSurfer)
+ST36TS,Structural MRI (FreeSurfer)
+ST37SV,Structural MRI (FreeSurfer)
+ST38CV,Structural MRI (FreeSurfer)
+ST38SA,Structural MRI (FreeSurfer)
+ST38TA,Structural MRI (FreeSurfer)
+ST38TS,Structural MRI (FreeSurfer)
+ST39CV,Structural MRI (FreeSurfer)
+ST39SA,Structural MRI (FreeSurfer)
+ST39TA,Structural MRI (FreeSurfer)
+ST39TS,Structural MRI (FreeSurfer)
+ST3SV,Structural MRI (FreeSurfer)
+ST40CV,Structural MRI (FreeSurfer)
+ST40SA,Structural MRI (FreeSurfer)
+ST40TA,Structural MRI (FreeSurfer)
+ST40TS,Structural MRI (FreeSurfer)
+ST42SV,Structural MRI (FreeSurfer)
+ST43CV,Structural MRI (FreeSurfer)
+ST43SA,Structural MRI (FreeSurfer)
+ST43TA,Structural MRI (FreeSurfer)
+ST43TS,Structural MRI (FreeSurfer)
+ST44CV,Structural MRI (FreeSurfer)
+ST44SA,Structural MRI (FreeSurfer)
+ST44TA,Structural MRI (FreeSurfer)
+ST44TS,Structural MRI (FreeSurfer)
+ST45CV,Structural MRI (FreeSurfer)
+ST45SA,Structural MRI (FreeSurfer)
+ST45TA,Structural MRI (FreeSurfer)
+ST45TS,Structural MRI (FreeSurfer)
+ST46CV,Structural MRI (FreeSurfer)
+ST46SA,Structural MRI (FreeSurfer)
+ST46TA,Structural MRI (FreeSurfer)
+ST46TS,Structural MRI (FreeSurfer)
+ST47CV,Structural MRI (FreeSurfer)
+ST47SA,Structural MRI (FreeSurfer)
+ST47TA,Structural MRI (FreeSurfer)
+ST47TS,Structural MRI (FreeSurfer)
+ST48CV,Structural MRI (FreeSurfer)
+ST48SA,Structural MRI (FreeSurfer)
+ST48TA,Structural MRI (FreeSurfer)
+ST48TS,Structural MRI (FreeSurfer)
+ST49CV,Structural MRI (FreeSurfer)
+ST49SA,Structural MRI (FreeSurfer)
+ST49TA,Structural MRI (FreeSurfer)
+ST49TS,Structural MRI (FreeSurfer)
+ST4SV,Structural MRI (FreeSurfer)
+ST50CV,Structural MRI (FreeSurfer)
+ST50SA,Structural MRI (FreeSurfer)
+ST50TA,Structural MRI (FreeSurfer)
+ST50TS,Structural MRI (FreeSurfer)
+ST51CV,Structural MRI (FreeSurfer)
+ST51SA,Structural MRI (FreeSurfer)
+ST51TA,Structural MRI (FreeSurfer)
+ST51TS,Structural MRI (FreeSurfer)
+ST52CV,Structural MRI (FreeSurfer)
+ST52SA,Structural MRI (FreeSurfer)
+ST52TA,Structural MRI (FreeSurfer)
+ST52TS,Structural MRI (FreeSurfer)
+ST53SV,Structural MRI (FreeSurfer)
+ST54CV,Structural MRI (FreeSurfer)
+ST54SA,Structural MRI (FreeSurfer)
+ST54TA,Structural MRI (FreeSurfer)
+ST54TS,Structural MRI (FreeSurfer)
+ST55CV,Structural MRI (FreeSurfer)
+ST55SA,Structural MRI (FreeSurfer)
+ST55TA,Structural MRI (FreeSurfer)
+ST55TS,Structural MRI (FreeSurfer)
+ST56CV,Structural MRI (FreeSurfer)
+ST56SA,Structural MRI (FreeSurfer)
+ST56TA,Structural MRI (FreeSurfer)
+ST56TS,Structural MRI (FreeSurfer)
+ST57CV,Structural MRI (FreeSurfer)
+ST57SA,Structural MRI (FreeSurfer)
+ST57TA,Structural MRI (FreeSurfer)
+ST57TS,Structural MRI (FreeSurfer)
+ST58CV,Structural MRI (FreeSurfer)
+ST58SA,Structural MRI (FreeSurfer)
+ST58TA,Structural MRI (FreeSurfer)
+ST58TS,Structural MRI (FreeSurfer)
+ST59CV,Structural MRI (FreeSurfer)
+ST59SA,Structural MRI (FreeSurfer)
+ST59TA,Structural MRI (FreeSurfer)
+ST59TS,Structural MRI (FreeSurfer)
+ST5SV,Structural MRI (FreeSurfer)
+ST60CV,Structural MRI (FreeSurfer)
+ST60SA,Structural MRI (FreeSurfer)
+ST60TA,Structural MRI (FreeSurfer)
+ST60TS,Structural MRI (FreeSurfer)
+ST61SV,Structural MRI (FreeSurfer)
+ST62CV,Structural MRI (FreeSurfer)
+ST62SA,Structural MRI (FreeSurfer)
+ST62TA,Structural MRI (FreeSurfer)
+ST62TS,Structural MRI (FreeSurfer)
+ST65SV,Structural MRI (FreeSurfer)
+ST66SV,Structural MRI (FreeSurfer)
+ST68SV,Structural MRI (FreeSurfer)
+ST69SV,Structural MRI (FreeSurfer)
+ST6SV,Structural MRI (FreeSurfer)
+ST70SV,Structural MRI (FreeSurfer)
+ST71SV,Structural MRI (FreeSurfer)
+ST72CV,Structural MRI (FreeSurfer)
+ST72SA,Structural MRI (FreeSurfer)
+ST72TA,Structural MRI (FreeSurfer)
+ST72TS,Structural MRI (FreeSurfer)
+ST73CV,Structural MRI (FreeSurfer)
+ST73SA,Structural MRI (FreeSurfer)
+ST73TA,Structural MRI (FreeSurfer)
+ST73TS,Structural MRI (FreeSurfer)
+ST74CV,Structural MRI (FreeSurfer)
+ST74SA,Structural MRI (FreeSurfer)
+ST74TA,Structural MRI (FreeSurfer)
+ST74TS,Structural MRI (FreeSurfer)
+ST75SV,Structural MRI (FreeSurfer)
+ST76SV,Structural MRI (FreeSurfer)
+ST77SV,Structural MRI (FreeSurfer)
+ST7SV,Structural MRI (FreeSurfer)
+ST80SV,Structural MRI (FreeSurfer)
+ST82CV,Structural MRI (FreeSurfer)
+ST82SA,Structural MRI (FreeSurfer)
+ST82TA,Structural MRI (FreeSurfer)
+ST82TS,Structural MRI (FreeSurfer)
+ST83CV,Structural MRI (FreeSurfer)
+ST83SA,Structural MRI (FreeSurfer)
+ST83TA,Structural MRI (FreeSurfer)
+ST83TS,Structural MRI (FreeSurfer)
+ST84CV,Structural MRI (FreeSurfer)
+ST84SA,Structural MRI (FreeSurfer)
+ST84TA,Structural MRI (FreeSurfer)
+ST84TS,Structural MRI (FreeSurfer)
+ST85CV,Structural MRI (FreeSurfer)
+ST85SA,Structural MRI (FreeSurfer)
+ST85TA,Structural MRI (FreeSurfer)
+ST85TS,Structural MRI (FreeSurfer)
+ST87sa,Structural MRI (FreeSurfer)
+ST88SV,Structural MRI (FreeSurfer)
+ST89SV,Structural MRI (FreeSurfer)
+ST8SV,Structural MRI (FreeSurfer)
+ST90CV,Structural MRI (FreeSurfer)
+ST90SA,Structural MRI (FreeSurfer)
+ST90TA,Structural MRI (FreeSurfer)
+ST90TS,Structural MRI (FreeSurfer)
+ST91CV,Structural MRI (FreeSurfer)
+ST91SA,Structural MRI (FreeSurfer)
+ST91TA,Structural MRI (FreeSurfer)
+ST91TS,Structural MRI (FreeSurfer)
+ST93CV,Structural MRI (FreeSurfer)
+ST93SA,Structural MRI (FreeSurfer)
+ST93TA,Structural MRI (FreeSurfer)
+ST93TS,Structural MRI (FreeSurfer)
+ST94CV,Structural MRI (FreeSurfer)
+ST94SA,Structural MRI (FreeSurfer)
+ST94TA,Structural MRI (FreeSurfer)
+ST94TS,Structural MRI (FreeSurfer)
+ST95CV,Structural MRI (FreeSurfer)
+ST95SA,Structural MRI (FreeSurfer)
+ST95TA,Structural MRI (FreeSurfer)
+ST95TS,Structural MRI (FreeSurfer)
+ST96SV,Structural MRI (FreeSurfer)
+ST97CV,Structural MRI (FreeSurfer)
+ST97SA,Structural MRI (FreeSurfer)
+ST97TA,Structural MRI (FreeSurfer)
+ST97TS,Structural MRI (FreeSurfer)
+ST98CV,Structural MRI (FreeSurfer)
+ST98SA,Structural MRI (FreeSurfer)
+ST98TA,Structural MRI (FreeSurfer)
+ST98TS,Structural MRI (FreeSurfer)
+ST99CV,Structural MRI (FreeSurfer)
+ST99SA,Structural MRI (FreeSurfer)
+ST99TA,Structural MRI (FreeSurfer)
+ST99TS,Structural MRI (FreeSurfer)
+ST9SV,Structural MRI (FreeSurfer)
+ST147SV,Structural MRI (FreeSurfer)
+ST148SV,Structural MRI (FreeSurfer)
+ST149SV,Structural MRI (FreeSurfer)
+ST150SV,Structural MRI (FreeSurfer)
+ST151SV,Structural MRI (FreeSurfer)
+ST152SV,Structural MRI (FreeSurfer)
+ST153SV,Structural MRI (FreeSurfer)
+ST154SV,Structural MRI (FreeSurfer)
+ST155SV,Structural MRI (FreeSurfer)
+BATCH,CSF Biomarkers (Lumbar Puncture)
+KIT,CSF Biomarkers (Lumbar Puncture)
+STDS,CSF Biomarkers (Lumbar Puncture)
+ABETA,CSF Biomarkers (Lumbar Puncture)
+TAU,CSF Biomarkers (Lumbar Puncture)
+PTAU,Demographics & Medical History
+ABETA_RAW,CSF Biomarkers (Lumbar Puncture)
+TAU_RAW,CSF Biomarkers (Lumbar Puncture)
+PTAU_RAW,Demographics & Medical History
+ROINAME,UNMAPPED
+MEAN,Amyloid PET Imaging
+MAX,Amyloid PET Imaging
+STDEV,Amyloid PET Imaging
+TOTVOX,Amyloid PET Imaging
+LONIUID,UNMAPPED
+SCANDATE,Amyloid PET Imaging
+SITEID.amy,Amyloid PET Imaging
+PROCESSDATE,Amyloid PET Imaging
+IMAGE_RESOLUTION,Amyloid PET Imaging
+qc_flag,Amyloid PET Imaging
+TRACER,Trail Making Test (TMT)
+TRACER_SUVR_WARNING,Trail Making Test (TMT)
+AMYLOID_STATUS,Amyloid PET Imaging
+AMYLOID_STATUS_COMPOSITE_REF,Amyloid PET Imaging
+CENTILOIDS,Amyloid PET Imaging
+SUMMARY_SUVR,Amyloid PET Imaging
+SUMMARY_VOLUME,Amyloid PET Imaging
+WHOLECEREBELLUM_SUVR,Amyloid PET Imaging
+WHOLECEREBELLUM_VOLUME,Amyloid PET Imaging
+COMPOSITE_REF_SUVR,Amyloid PET Imaging
+COMPOSITE_REF_VOLUME,Amyloid PET Imaging
+CEREBELLUM_CORTEX_SUVR,Amyloid PET Imaging
+CEREBELLUM_CORTEX_VOLUME,Amyloid PET Imaging
+ERODED_SUBCORTICALWM_SUVR,Amyloid PET Imaging
+ERODED_SUBCORTICALWM_VOLUME,Amyloid PET Imaging
+BRAINSTEM_SUVR,Amyloid PET Imaging
+BRAINSTEM_VOLUME,Amyloid PET Imaging
+CC_ANTERIOR_SUVR,Amyloid PET Imaging
+CC_ANTERIOR_VOLUME,Amyloid PET Imaging
+CC_CENTRAL_SUVR,Amyloid PET Imaging
+CC_CENTRAL_VOLUME,Amyloid PET Imaging
+CC_MID_ANTERIOR_SUVR,Amyloid PET Imaging
+CC_MID_ANTERIOR_VOLUME,Amyloid PET Imaging
+CC_MID_POSTERIOR_SUVR,Amyloid PET Imaging
+CC_MID_POSTERIOR_VOLUME,Amyloid PET Imaging
+CC_POSTERIOR_SUVR,Amyloid PET Imaging
+CC_POSTERIOR_VOLUME,Amyloid PET Imaging
+CSF_SUVR,Amyloid PET Imaging
+CSF_VOLUME,Amyloid PET Imaging
+VENTRICLE_3RD_SUVR,Amyloid PET Imaging
+VENTRICLE_3RD_VOLUME,Amyloid PET Imaging
+VENTRICLE_4TH_SUVR,Amyloid PET Imaging
+VENTRICLE_4TH_VOLUME,Amyloid PET Imaging
+VENTRICLE_5TH_SUVR,Amyloid PET Imaging
+VENTRICLE_5TH_VOLUME,Amyloid PET Imaging
+WM_HYPOINTENSITIES_SUVR,Amyloid PET Imaging
+WM_HYPOINTENSITIES_VOLUME,Amyloid PET Imaging
+NON_WM_HYPOINTENSITIES_SUVR,Amyloid PET Imaging
+NON_WM_HYPOINTENSITIES_VOLUME,Amyloid PET Imaging
+CTX_BANKSSTS_SUVR,Amyloid PET Imaging
+CTX_BANKSSTS_VOLUME,Amyloid PET Imaging
+CTX_CAUDALANTERIORCINGULATE_SUVR,Amyloid PET Imaging
+CTX_CAUDALANTERIORCINGULATE_VOLUME,Amyloid PET Imaging
+CTX_CAUDALMIDDLEFRONTAL_SUVR,Amyloid PET Imaging
+CTX_CAUDALMIDDLEFRONTAL_VOLUME,Amyloid PET Imaging
+CTX_CUNEUS_SUVR,Amyloid PET Imaging
+CTX_CUNEUS_VOLUME,Amyloid PET Imaging
+CTX_ENTORHINAL_SUVR,Amyloid PET Imaging
+CTX_ENTORHINAL_VOLUME,Amyloid PET Imaging
+CTX_FRONTALPOLE_SUVR,Amyloid PET Imaging
+CTX_FRONTALPOLE_VOLUME,Amyloid PET Imaging
+CTX_FUSIFORM_SUVR,Amyloid PET Imaging
+CTX_FUSIFORM_VOLUME,Amyloid PET Imaging
+CTX_INFERIORPARIETAL_SUVR,Amyloid PET Imaging
+CTX_INFERIORPARIETAL_VOLUME,Amyloid PET Imaging
+CTX_INFERIORTEMPORAL_SUVR,Amyloid PET Imaging
+CTX_INFERIORTEMPORAL_VOLUME,Amyloid PET Imaging
+CTX_INSULA_SUVR,Amyloid PET Imaging
+CTX_INSULA_VOLUME,Amyloid PET Imaging
+CTX_ISTHMUSCINGULATE_SUVR,Amyloid PET Imaging
+CTX_ISTHMUSCINGULATE_VOLUME,Amyloid PET Imaging
+CTX_LATERALOCCIPITAL_SUVR,Amyloid PET Imaging
+CTX_LATERALOCCIPITAL_VOLUME,Amyloid PET Imaging
+CTX_LATERALORBITOFRONTAL_SUVR,Amyloid PET Imaging
+CTX_LATERALORBITOFRONTAL_VOLUME,Amyloid PET Imaging
+CTX_LINGUAL_SUVR,Amyloid PET Imaging
+CTX_LINGUAL_VOLUME,Amyloid PET Imaging
+CTX_MEDIALORBITOFRONTAL_SUVR,Amyloid PET Imaging
+CTX_MEDIALORBITOFRONTAL_VOLUME,Amyloid PET Imaging
+CTX_MIDDLETEMPORAL_SUVR,Amyloid PET Imaging
+CTX_MIDDLETEMPORAL_VOLUME,Amyloid PET Imaging
+CTX_PARACENTRAL_SUVR,Amyloid PET Imaging
+CTX_PARACENTRAL_VOLUME,Amyloid PET Imaging
+CTX_PARAHIPPOCAMPAL_SUVR,Amyloid PET Imaging
+CTX_PARAHIPPOCAMPAL_VOLUME,Amyloid PET Imaging
+CTX_PARSOPERCULARIS_SUVR,Amyloid PET Imaging
+CTX_PARSOPERCULARIS_VOLUME,Amyloid PET Imaging
+CTX_PARSORBITALIS_SUVR,Amyloid PET Imaging
+CTX_PARSORBITALIS_VOLUME,Amyloid PET Imaging
+CTX_PARSTRIANGULARIS_SUVR,Amyloid PET Imaging
+CTX_PARSTRIANGULARIS_VOLUME,Amyloid PET Imaging
+CTX_PERICALCARINE_SUVR,Amyloid PET Imaging
+CTX_PERICALCARINE_VOLUME,Amyloid PET Imaging
+CTX_POSTCENTRAL_SUVR,Amyloid PET Imaging
+CTX_POSTCENTRAL_VOLUME,Amyloid PET Imaging
+CTX_POSTERIORCINGULATE_SUVR,Amyloid PET Imaging
+CTX_POSTERIORCINGULATE_VOLUME,Amyloid PET Imaging
+CTX_PRECENTRAL_SUVR,Amyloid PET Imaging
+CTX_PRECENTRAL_VOLUME,Amyloid PET Imaging
+CTX_PRECUNEUS_SUVR,Amyloid PET Imaging
+CTX_PRECUNEUS_VOLUME,Amyloid PET Imaging
+CTX_ROSTRALANTERIORCINGULATE_SUVR,Amyloid PET Imaging
+CTX_ROSTRALANTERIORCINGULATE_VOLUME,Amyloid PET Imaging
+CTX_ROSTRALMIDDLEFRONTAL_SUVR,Amyloid PET Imaging
+CTX_ROSTRALMIDDLEFRONTAL_VOLUME,Amyloid PET Imaging
+CTX_SUPERIORFRONTAL_SUVR,Amyloid PET Imaging
+CTX_SUPERIORFRONTAL_VOLUME,Amyloid PET Imaging
+CTX_SUPERIORPARIETAL_SUVR,Amyloid PET Imaging
+CTX_SUPERIORPARIETAL_VOLUME,Amyloid PET Imaging
+CTX_SUPERIORTEMPORAL_SUVR,Amyloid PET Imaging
+CTX_SUPERIORTEMPORAL_VOLUME,Amyloid PET Imaging
+CTX_SUPRAMARGINAL_SUVR,Amyloid PET Imaging
+CTX_SUPRAMARGINAL_VOLUME,Amyloid PET Imaging
+CTX_TEMPORALPOLE_SUVR,Amyloid PET Imaging
+CTX_TEMPORALPOLE_VOLUME,Amyloid PET Imaging
+CTX_TRANSVERSETEMPORAL_SUVR,Amyloid PET Imaging
+CTX_TRANSVERSETEMPORAL_VOLUME,Amyloid PET Imaging
+ACCUMBENS_AREA_SUVR,Amyloid PET Imaging
+ACCUMBENS_AREA_VOLUME,Amyloid PET Imaging
+AMYGDALA_SUVR,Amyloid PET Imaging
+AMYGDALA_VOLUME,Amyloid PET Imaging
+CAUDATE_SUVR,Amyloid PET Imaging
+CAUDATE_VOLUME,Amyloid PET Imaging
+CEREBELLUM_WHITE_MATTER_SUVR,Amyloid PET Imaging
+CEREBELLUM_WHITE_MATTER_VOLUME,Amyloid PET Imaging
+CEREBRAL_WHITE_MATTER_SUVR,Amyloid PET Imaging
+CEREBRAL_WHITE_MATTER_VOLUME,Amyloid PET Imaging
+CHOROID_PLEXUS_SUVR,Amyloid PET Imaging
+CHOROID_PLEXUS_VOLUME,Amyloid PET Imaging
+HIPPOCAMPUS_SUVR,Amyloid PET Imaging
+HIPPOCAMPUS_VOLUME,Amyloid PET Imaging
+OPTIC_CHIASM_SUVR,Amyloid PET Imaging
+OPTIC_CHIASM_VOLUME,Amyloid PET Imaging
+INF_LAT_VENT_SUVR,Amyloid PET Imaging
+INF_LAT_VENT_VOLUME,Amyloid PET Imaging
+LATERAL_VENTRICLE_SUVR,Amyloid PET Imaging
+LATERAL_VENTRICLE_VOLUME,Amyloid PET Imaging
+PALLIDUM_SUVR,Amyloid PET Imaging
+PALLIDUM_VOLUME,Amyloid PET Imaging
+PUTAMEN_SUVR,Amyloid PET Imaging
+PUTAMEN_VOLUME,Amyloid PET Imaging
+THALAMUS_PROPER_SUVR,Amyloid PET Imaging
+THALAMUS_PROPER_VOLUME,Amyloid PET Imaging
+VENTRALDC_SUVR,Amyloid PET Imaging
+VENTRALDC_VOLUME,Amyloid PET Imaging
+VESSEL_SUVR,Amyloid PET Imaging
+VESSEL_VOLUME,Amyloid PET Imaging
+CTX_LH_BANKSSTS_SUVR,Amyloid PET Imaging
+CTX_LH_BANKSSTS_VOLUME,Amyloid PET Imaging
+CTX_LH_CAUDALANTERIORCINGULATE_SUVR,Amyloid PET Imaging
+CTX_LH_CAUDALANTERIORCINGULATE_VOLUME,Amyloid PET Imaging
+CTX_LH_CAUDALMIDDLEFRONTAL_SUVR,Amyloid PET Imaging
+CTX_LH_CAUDALMIDDLEFRONTAL_VOLUME,Amyloid PET Imaging
+CTX_LH_CUNEUS_SUVR,Amyloid PET Imaging
+CTX_LH_CUNEUS_VOLUME,Amyloid PET Imaging
+CTX_LH_ENTORHINAL_SUVR,Amyloid PET Imaging
+CTX_LH_ENTORHINAL_VOLUME,Amyloid PET Imaging
+CTX_LH_FRONTALPOLE_SUVR,Amyloid PET Imaging
+CTX_LH_FRONTALPOLE_VOLUME,Amyloid PET Imaging
+CTX_LH_FUSIFORM_SUVR,Amyloid PET Imaging
+CTX_LH_FUSIFORM_VOLUME,Amyloid PET Imaging
+CTX_LH_INFERIORPARIETAL_SUVR,Amyloid PET Imaging
+CTX_LH_INFERIORPARIETAL_VOLUME,Amyloid PET Imaging
+CTX_LH_INFERIORTEMPORAL_SUVR,Amyloid PET Imaging
+CTX_LH_INFERIORTEMPORAL_VOLUME,Amyloid PET Imaging
+CTX_LH_INSULA_SUVR,Amyloid PET Imaging
+CTX_LH_INSULA_VOLUME,Amyloid PET Imaging
+CTX_LH_ISTHMUSCINGULATE_SUVR,Amyloid PET Imaging
+CTX_LH_ISTHMUSCINGULATE_VOLUME,Amyloid PET Imaging
+CTX_LH_LATERALOCCIPITAL_SUVR,Amyloid PET Imaging
+CTX_LH_LATERALOCCIPITAL_VOLUME,Amyloid PET Imaging
+CTX_LH_LATERALORBITOFRONTAL_SUVR,Amyloid PET Imaging
+CTX_LH_LATERALORBITOFRONTAL_VOLUME,Amyloid PET Imaging
+CTX_LH_LINGUAL_SUVR,Amyloid PET Imaging
+CTX_LH_LINGUAL_VOLUME,Amyloid PET Imaging
+CTX_LH_MEDIALORBITOFRONTAL_SUVR,Amyloid PET Imaging
+CTX_LH_MEDIALORBITOFRONTAL_VOLUME,Amyloid PET Imaging
+CTX_LH_MIDDLETEMPORAL_SUVR,Amyloid PET Imaging
+CTX_LH_MIDDLETEMPORAL_VOLUME,Amyloid PET Imaging
+CTX_LH_PARACENTRAL_SUVR,Amyloid PET Imaging
+CTX_LH_PARACENTRAL_VOLUME,Amyloid PET Imaging
+CTX_LH_PARAHIPPOCAMPAL_SUVR,Amyloid PET Imaging
+CTX_LH_PARAHIPPOCAMPAL_VOLUME,Amyloid PET Imaging
+CTX_LH_PARSOPERCULARIS_SUVR,Amyloid PET Imaging
+CTX_LH_PARSOPERCULARIS_VOLUME,Amyloid PET Imaging
+CTX_LH_PARSORBITALIS_SUVR,Amyloid PET Imaging
+CTX_LH_PARSORBITALIS_VOLUME,Amyloid PET Imaging
+CTX_LH_PARSTRIANGULARIS_SUVR,Amyloid PET Imaging
+CTX_LH_PARSTRIANGULARIS_VOLUME,Amyloid PET Imaging
+CTX_LH_PERICALCARINE_SUVR,Amyloid PET Imaging
+CTX_LH_PERICALCARINE_VOLUME,Amyloid PET Imaging
+CTX_LH_POSTCENTRAL_SUVR,Amyloid PET Imaging
+CTX_LH_POSTCENTRAL_VOLUME,Amyloid PET Imaging
+CTX_LH_POSTERIORCINGULATE_SUVR,Amyloid PET Imaging
+CTX_LH_POSTERIORCINGULATE_VOLUME,Amyloid PET Imaging
+CTX_LH_PRECENTRAL_SUVR,Amyloid PET Imaging
+CTX_LH_PRECENTRAL_VOLUME,Amyloid PET Imaging
+CTX_LH_PRECUNEUS_SUVR,Amyloid PET Imaging
+CTX_LH_PRECUNEUS_VOLUME,Amyloid PET Imaging
+CTX_LH_ROSTRALANTERIORCINGULATE_SUVR,Amyloid PET Imaging
+CTX_LH_ROSTRALANTERIORCINGULATE_VOLUME,Amyloid PET Imaging
+CTX_LH_ROSTRALMIDDLEFRONTAL_SUVR,Amyloid PET Imaging
+CTX_LH_ROSTRALMIDDLEFRONTAL_VOLUME,Amyloid PET Imaging
+CTX_LH_SUPERIORFRONTAL_SUVR,Amyloid PET Imaging
+CTX_LH_SUPERIORFRONTAL_VOLUME,Amyloid PET Imaging
+CTX_LH_SUPERIORPARIETAL_SUVR,Amyloid PET Imaging
+CTX_LH_SUPERIORPARIETAL_VOLUME,Amyloid PET Imaging
+CTX_LH_SUPERIORTEMPORAL_SUVR,Amyloid PET Imaging
+CTX_LH_SUPERIORTEMPORAL_VOLUME,Amyloid PET Imaging
+CTX_LH_SUPRAMARGINAL_SUVR,Amyloid PET Imaging
+CTX_LH_SUPRAMARGINAL_VOLUME,Amyloid PET Imaging
+CTX_LH_TEMPORALPOLE_SUVR,Amyloid PET Imaging
+CTX_LH_TEMPORALPOLE_VOLUME,Amyloid PET Imaging
+CTX_LH_TRANSVERSETEMPORAL_SUVR,Amyloid PET Imaging
+CTX_LH_TRANSVERSETEMPORAL_VOLUME,Amyloid PET Imaging
+CTX_RH_BANKSSTS_SUVR,Amyloid PET Imaging
+CTX_RH_BANKSSTS_VOLUME,Amyloid PET Imaging
+CTX_RH_CAUDALANTERIORCINGULATE_SUVR,Amyloid PET Imaging
+CTX_RH_CAUDALANTERIORCINGULATE_VOLUME,Amyloid PET Imaging
+CTX_RH_CAUDALMIDDLEFRONTAL_SUVR,Amyloid PET Imaging
+CTX_RH_CAUDALMIDDLEFRONTAL_VOLUME,Amyloid PET Imaging
+CTX_RH_CUNEUS_SUVR,Amyloid PET Imaging
+CTX_RH_CUNEUS_VOLUME,Amyloid PET Imaging
+CTX_RH_ENTORHINAL_SUVR,Amyloid PET Imaging
+CTX_RH_ENTORHINAL_VOLUME,Amyloid PET Imaging
+CTX_RH_FRONTALPOLE_SUVR,Amyloid PET Imaging
+CTX_RH_FRONTALPOLE_VOLUME,Amyloid PET Imaging
+CTX_RH_FUSIFORM_SUVR,Amyloid PET Imaging
+CTX_RH_FUSIFORM_VOLUME,Amyloid PET Imaging
+CTX_RH_INFERIORPARIETAL_SUVR,Amyloid PET Imaging
+CTX_RH_INFERIORPARIETAL_VOLUME,Amyloid PET Imaging
+CTX_RH_INFERIORTEMPORAL_SUVR,Amyloid PET Imaging
+CTX_RH_INFERIORTEMPORAL_VOLUME,Amyloid PET Imaging
+CTX_RH_INSULA_SUVR,Amyloid PET Imaging
+CTX_RH_INSULA_VOLUME,Amyloid PET Imaging
+CTX_RH_ISTHMUSCINGULATE_SUVR,Amyloid PET Imaging
+CTX_RH_ISTHMUSCINGULATE_VOLUME,Amyloid PET Imaging
+CTX_RH_LATERALOCCIPITAL_SUVR,Amyloid PET Imaging
+CTX_RH_LATERALOCCIPITAL_VOLUME,Amyloid PET Imaging
+CTX_RH_LATERALORBITOFRONTAL_SUVR,Amyloid PET Imaging
+CTX_RH_LATERALORBITOFRONTAL_VOLUME,Amyloid PET Imaging
+CTX_RH_LINGUAL_SUVR,Amyloid PET Imaging
+CTX_RH_LINGUAL_VOLUME,Amyloid PET Imaging
+CTX_RH_MEDIALORBITOFRONTAL_SUVR,Amyloid PET Imaging
+CTX_RH_MEDIALORBITOFRONTAL_VOLUME,Amyloid PET Imaging
+CTX_RH_MIDDLETEMPORAL_SUVR,Amyloid PET Imaging
+CTX_RH_MIDDLETEMPORAL_VOLUME,Amyloid PET Imaging
+CTX_RH_PARACENTRAL_SUVR,Amyloid PET Imaging
+CTX_RH_PARACENTRAL_VOLUME,Amyloid PET Imaging
+CTX_RH_PARAHIPPOCAMPAL_SUVR,Amyloid PET Imaging
+CTX_RH_PARAHIPPOCAMPAL_VOLUME,Amyloid PET Imaging
+CTX_RH_PARSOPERCULARIS_SUVR,Amyloid PET Imaging
+CTX_RH_PARSOPERCULARIS_VOLUME,Amyloid PET Imaging
+CTX_RH_PARSORBITALIS_SUVR,Amyloid PET Imaging
+CTX_RH_PARSORBITALIS_VOLUME,Amyloid PET Imaging
+CTX_RH_PARSTRIANGULARIS_SUVR,Amyloid PET Imaging
+CTX_RH_PARSTRIANGULARIS_VOLUME,Amyloid PET Imaging
+CTX_RH_PERICALCARINE_SUVR,Amyloid PET Imaging
+CTX_RH_PERICALCARINE_VOLUME,Amyloid PET Imaging
+CTX_RH_POSTCENTRAL_SUVR,Amyloid PET Imaging
+CTX_RH_POSTCENTRAL_VOLUME,Amyloid PET Imaging
+CTX_RH_POSTERIORCINGULATE_SUVR,Amyloid PET Imaging
+CTX_RH_POSTERIORCINGULATE_VOLUME,Amyloid PET Imaging
+CTX_RH_PRECENTRAL_SUVR,Amyloid PET Imaging
+CTX_RH_PRECENTRAL_VOLUME,Amyloid PET Imaging
+CTX_RH_PRECUNEUS_SUVR,Amyloid PET Imaging
+CTX_RH_PRECUNEUS_VOLUME,Amyloid PET Imaging
+CTX_RH_ROSTRALANTERIORCINGULATE_SUVR,Amyloid PET Imaging
+CTX_RH_ROSTRALANTERIORCINGULATE_VOLUME,Amyloid PET Imaging
+CTX_RH_ROSTRALMIDDLEFRONTAL_SUVR,Amyloid PET Imaging
+CTX_RH_ROSTRALMIDDLEFRONTAL_VOLUME,Amyloid PET Imaging
+CTX_RH_SUPERIORFRONTAL_SUVR,Amyloid PET Imaging
+CTX_RH_SUPERIORFRONTAL_VOLUME,Amyloid PET Imaging
+CTX_RH_SUPERIORPARIETAL_SUVR,Amyloid PET Imaging
+CTX_RH_SUPERIORPARIETAL_VOLUME,Amyloid PET Imaging
+CTX_RH_SUPERIORTEMPORAL_SUVR,Amyloid PET Imaging
+CTX_RH_SUPERIORTEMPORAL_VOLUME,Amyloid PET Imaging
+CTX_RH_SUPRAMARGINAL_SUVR,Amyloid PET Imaging
+CTX_RH_SUPRAMARGINAL_VOLUME,Amyloid PET Imaging
+CTX_RH_TEMPORALPOLE_SUVR,Amyloid PET Imaging
+CTX_RH_TEMPORALPOLE_VOLUME,Amyloid PET Imaging
+CTX_RH_TRANSVERSETEMPORAL_SUVR,Amyloid PET Imaging
+CTX_RH_TRANSVERSETEMPORAL_VOLUME,Amyloid PET Imaging
+LEFT_ACCUMBENS_AREA_SUVR,Amyloid PET Imaging
+LEFT_ACCUMBENS_AREA_VOLUME,Amyloid PET Imaging
+LEFT_AMYGDALA_SUVR,Amyloid PET Imaging
+LEFT_AMYGDALA_VOLUME,Amyloid PET Imaging
+LEFT_CAUDATE_SUVR,Amyloid PET Imaging
+LEFT_CAUDATE_VOLUME,Amyloid PET Imaging
+LEFT_CEREBELLUM_CORTEX_SUVR,Amyloid PET Imaging
+LEFT_CEREBELLUM_CORTEX_VOLUME,Amyloid PET Imaging
+LEFT_CEREBELLUM_WHITE_MATTER_SUVR,Amyloid PET Imaging
+LEFT_CEREBELLUM_WHITE_MATTER_VOLUME,Amyloid PET Imaging
+LEFT_CEREBRAL_WHITE_MATTER_SUVR,Amyloid PET Imaging
+LEFT_CEREBRAL_WHITE_MATTER_VOLUME,Amyloid PET Imaging
+LEFT_CHOROID_PLEXUS_SUVR,Amyloid PET Imaging
+LEFT_CHOROID_PLEXUS_VOLUME,Amyloid PET Imaging
+LEFT_HIPPOCAMPUS_SUVR,Amyloid PET Imaging
+LEFT_HIPPOCAMPUS_VOLUME,Amyloid PET Imaging
+LEFT_INF_LAT_VENT_SUVR,Amyloid PET Imaging
+LEFT_INF_LAT_VENT_VOLUME,Amyloid PET Imaging
+LEFT_LATERAL_VENTRICLE_SUVR,Amyloid PET Imaging
+LEFT_LATERAL_VENTRICLE_VOLUME,Amyloid PET Imaging
+LEFT_PALLIDUM_SUVR,Amyloid PET Imaging
+LEFT_PALLIDUM_VOLUME,Amyloid PET Imaging
+LEFT_PUTAMEN_SUVR,Amyloid PET Imaging
+LEFT_PUTAMEN_VOLUME,Amyloid PET Imaging
+LEFT_THALAMUS_PROPER_SUVR,Amyloid PET Imaging
+LEFT_THALAMUS_PROPER_VOLUME,Amyloid PET Imaging
+LEFT_VENTRALDC_SUVR,Amyloid PET Imaging
+LEFT_VENTRALDC_VOLUME,Amyloid PET Imaging
+LEFT_VESSEL_SUVR,Amyloid PET Imaging
+LEFT_VESSEL_VOLUME,Amyloid PET Imaging
+RIGHT_ACCUMBENS_AREA_SUVR,Amyloid PET Imaging
+RIGHT_ACCUMBENS_AREA_VOLUME,Amyloid PET Imaging
+RIGHT_AMYGDALA_SUVR,Amyloid PET Imaging
+RIGHT_AMYGDALA_VOLUME,Amyloid PET Imaging
+RIGHT_CAUDATE_SUVR,Amyloid PET Imaging
+RIGHT_CAUDATE_VOLUME,Amyloid PET Imaging
+RIGHT_CEREBELLUM_CORTEX_SUVR,Amyloid PET Imaging
+RIGHT_CEREBELLUM_CORTEX_VOLUME,Amyloid PET Imaging
+RIGHT_CEREBELLUM_WHITE_MATTER_SUVR,Amyloid PET Imaging
+RIGHT_CEREBELLUM_WHITE_MATTER_VOLUME,Amyloid PET Imaging
+RIGHT_CEREBRAL_WHITE_MATTER_SUVR,Amyloid PET Imaging
+RIGHT_CEREBRAL_WHITE_MATTER_VOLUME,Amyloid PET Imaging
+RIGHT_CHOROID_PLEXUS_SUVR,Amyloid PET Imaging
+RIGHT_CHOROID_PLEXUS_VOLUME,Amyloid PET Imaging
+RIGHT_HIPPOCAMPUS_SUVR,Amyloid PET Imaging
+RIGHT_HIPPOCAMPUS_VOLUME,Amyloid PET Imaging
+RIGHT_INF_LAT_VENT_SUVR,Amyloid PET Imaging
+RIGHT_INF_LAT_VENT_VOLUME,Amyloid PET Imaging
+RIGHT_LATERAL_VENTRICLE_SUVR,Amyloid PET Imaging
+RIGHT_LATERAL_VENTRICLE_VOLUME,Amyloid PET Imaging
+RIGHT_PALLIDUM_SUVR,Amyloid PET Imaging
+RIGHT_PALLIDUM_VOLUME,Amyloid PET Imaging
+RIGHT_PUTAMEN_SUVR,Amyloid PET Imaging
+RIGHT_PUTAMEN_VOLUME,Amyloid PET Imaging
+RIGHT_THALAMUS_PROPER_SUVR,Amyloid PET Imaging
+RIGHT_THALAMUS_PROPER_VOLUME,Amyloid PET Imaging
+RIGHT_VENTRALDC_SUVR,Amyloid PET Imaging
+RIGHT_VENTRALDC_VOLUME,Amyloid PET Imaging
+RIGHT_VESSEL_SUVR,Amyloid PET Imaging
+RIGHT_VESSEL_VOLUME,Amyloid PET Imaging
+VERSION,Structural MRI (FreeSurfer)
+MANUFACTURER,Structural MRI (FreeSurfer)
+VOLUMES,Structural MRI (FreeSurfer)
+IMAGEUID.dti,DTI MRI (Diffusion Tensor)
+STATUS.dti,DTI MRI (Diffusion Tensor)
+QC,DTI MRI (Diffusion Tensor)
+AD_MCP,DTI MRI (Diffusion Tensor)
+AD_PCT,DTI MRI (Diffusion Tensor)
+AD_GCC,DTI MRI (Diffusion Tensor)
+AD_BCC,DTI MRI (Diffusion Tensor)
+AD_SCC,DTI MRI (Diffusion Tensor)
+AD_FX,DTI MRI (Diffusion Tensor)
+AD_CST_R,DTI MRI (Diffusion Tensor)
+AD_CST_L,DTI MRI (Diffusion Tensor)
+AD_ML_R,DTI MRI (Diffusion Tensor)
+AD_ML_L,DTI MRI (Diffusion Tensor)
+AD_ICP_R,DTI MRI (Diffusion Tensor)
+AD_ICP_L,DTI MRI (Diffusion Tensor)
+AD_SCP_R,DTI MRI (Diffusion Tensor)
+AD_SCP_L,DTI MRI (Diffusion Tensor)
+AD_CP_R,DTI MRI (Diffusion Tensor)
+AD_CP_L,DTI MRI (Diffusion Tensor)
+AD_ALIC_R,DTI MRI (Diffusion Tensor)
+AD_ALIC_L,DTI MRI (Diffusion Tensor)
+AD_PLIC_R,DTI MRI (Diffusion Tensor)
+AD_PLIC_L,DTI MRI (Diffusion Tensor)
+AD_RLIC_R,DTI MRI (Diffusion Tensor)
+AD_RLIC_L,DTI MRI (Diffusion Tensor)
+AD_ACR_R,DTI MRI (Diffusion Tensor)
+AD_ACR_L,DTI MRI (Diffusion Tensor)
+AD_SCR_R,DTI MRI (Diffusion Tensor)
+AD_SCR_L,DTI MRI (Diffusion Tensor)
+AD_PCR_R,DTI MRI (Diffusion Tensor)
+AD_PCR_L,DTI MRI (Diffusion Tensor)
+AD_PTR_R,DTI MRI (Diffusion Tensor)
+AD_PTR_L,DTI MRI (Diffusion Tensor)
+AD_SS_R,DTI MRI (Diffusion Tensor)
+AD_SS_L,DTI MRI (Diffusion Tensor)
+AD_EC_R,DTI MRI (Diffusion Tensor)
+AD_EC_L,DTI MRI (Diffusion Tensor)
+AD_CGC_R,DTI MRI (Diffusion Tensor)
+AD_CGC_L,DTI MRI (Diffusion Tensor)
+AD_CGH_R,DTI MRI (Diffusion Tensor)
+AD_CGH_L,DTI MRI (Diffusion Tensor)
+AD_FXST_R,DTI MRI (Diffusion Tensor)
+AD_FXST_L,DTI MRI (Diffusion Tensor)
+AD_SLF_R,DTI MRI (Diffusion Tensor)
+AD_SLF_L,DTI MRI (Diffusion Tensor)
+AD_SFO_R,DTI MRI (Diffusion Tensor)
+AD_SFO_L,DTI MRI (Diffusion Tensor)
+AD_UNC_R,DTI MRI (Diffusion Tensor)
+AD_UNC_L,DTI MRI (Diffusion Tensor)
+AD_TAP_R,DTI MRI (Diffusion Tensor)
+AD_TAP_L,DTI MRI (Diffusion Tensor)
+AD_CST,DTI MRI (Diffusion Tensor)
+AD_ML,DTI MRI (Diffusion Tensor)
+AD_ICP,DTI MRI (Diffusion Tensor)
+AD_SCP,DTI MRI (Diffusion Tensor)
+AD_CP,DTI MRI (Diffusion Tensor)
+AD_ALIC,DTI MRI (Diffusion Tensor)
+AD_PLIC,DTI MRI (Diffusion Tensor)
+AD_RLIC,DTI MRI (Diffusion Tensor)
+AD_ACR,DTI MRI (Diffusion Tensor)
+AD_SCR,DTI MRI (Diffusion Tensor)
+AD_PCR,DTI MRI (Diffusion Tensor)
+AD_PTR,DTI MRI (Diffusion Tensor)
+AD_SS,DTI MRI (Diffusion Tensor)
+AD_EC,DTI MRI (Diffusion Tensor)
+AD_CGC,DTI MRI (Diffusion Tensor)
+AD_CGH,DTI MRI (Diffusion Tensor)
+AD_FXST,DTI MRI (Diffusion Tensor)
+AD_SLF,DTI MRI (Diffusion Tensor)
+AD_SFO,DTI MRI (Diffusion Tensor)
+AD_UNC,DTI MRI (Diffusion Tensor)
+AD_TAP,DTI MRI (Diffusion Tensor)
+AD_IC,DTI MRI (Diffusion Tensor)
+AD_CC,DTI MRI (Diffusion Tensor)
+AD_CR,DTI MRI (Diffusion Tensor)
+AD_FULLWM,DTI MRI (Diffusion Tensor)
+FA_MCP,DTI MRI (Diffusion Tensor)
+FA_PCT,DTI MRI (Diffusion Tensor)
+FA_GCC,DTI MRI (Diffusion Tensor)
+FA_BCC,DTI MRI (Diffusion Tensor)
+FA_SCC,DTI MRI (Diffusion Tensor)
+FA_FX,DTI MRI (Diffusion Tensor)
+FA_CST_R,DTI MRI (Diffusion Tensor)
+FA_CST_L,DTI MRI (Diffusion Tensor)
+FA_ML_R,DTI MRI (Diffusion Tensor)
+FA_ML_L,DTI MRI (Diffusion Tensor)
+FA_ICP_R,DTI MRI (Diffusion Tensor)
+FA_ICP_L,DTI MRI (Diffusion Tensor)
+FA_SCP_R,DTI MRI (Diffusion Tensor)
+FA_SCP_L,DTI MRI (Diffusion Tensor)
+FA_CP_R,DTI MRI (Diffusion Tensor)
+FA_CP_L,DTI MRI (Diffusion Tensor)
+FA_ALIC_R,DTI MRI (Diffusion Tensor)
+FA_ALIC_L,DTI MRI (Diffusion Tensor)
+FA_PLIC_R,DTI MRI (Diffusion Tensor)
+FA_PLIC_L,DTI MRI (Diffusion Tensor)
+FA_RLIC_R,DTI MRI (Diffusion Tensor)
+FA_RLIC_L,DTI MRI (Diffusion Tensor)
+FA_ACR_R,DTI MRI (Diffusion Tensor)
+FA_ACR_L,DTI MRI (Diffusion Tensor)
+FA_SCR_R,DTI MRI (Diffusion Tensor)
+FA_SCR_L,DTI MRI (Diffusion Tensor)
+FA_PCR_R,DTI MRI (Diffusion Tensor)
+FA_PCR_L,DTI MRI (Diffusion Tensor)
+FA_PTR_R,DTI MRI (Diffusion Tensor)
+FA_PTR_L,DTI MRI (Diffusion Tensor)
+FA_SS_R,DTI MRI (Diffusion Tensor)
+FA_SS_L,DTI MRI (Diffusion Tensor)
+FA_EC_R,DTI MRI (Diffusion Tensor)
+FA_EC_L,DTI MRI (Diffusion Tensor)
+FA_CGC_R,DTI MRI (Diffusion Tensor)
+FA_CGC_L,DTI MRI (Diffusion Tensor)
+FA_CGH_R,DTI MRI (Diffusion Tensor)
+FA_CGH_L,DTI MRI (Diffusion Tensor)
+FA_FXST_R,DTI MRI (Diffusion Tensor)
+FA_FXST_L,DTI MRI (Diffusion Tensor)
+FA_SLF_R,DTI MRI (Diffusion Tensor)
+FA_SLF_L,DTI MRI (Diffusion Tensor)
+FA_SFO_R,DTI MRI (Diffusion Tensor)
+FA_SFO_L,DTI MRI (Diffusion Tensor)
+FA_UNC_R,DTI MRI (Diffusion Tensor)
+FA_UNC_L,DTI MRI (Diffusion Tensor)
+FA_TAP_R,DTI MRI (Diffusion Tensor)
+FA_TAP_L,DTI MRI (Diffusion Tensor)
+FA_CST,DTI MRI (Diffusion Tensor)
+FA_ML,DTI MRI (Diffusion Tensor)
+FA_ICP,DTI MRI (Diffusion Tensor)
+FA_SCP,DTI MRI (Diffusion Tensor)
+FA_CP,DTI MRI (Diffusion Tensor)
+FA_ALIC,DTI MRI (Diffusion Tensor)
+FA_PLIC,DTI MRI (Diffusion Tensor)
+FA_RLIC,DTI MRI (Diffusion Tensor)
+FA_ACR,DTI MRI (Diffusion Tensor)
+FA_SCR,DTI MRI (Diffusion Tensor)
+FA_PCR,DTI MRI (Diffusion Tensor)
+FA_PTR,DTI MRI (Diffusion Tensor)
+FA_SS,DTI MRI (Diffusion Tensor)
+FA_EC,DTI MRI (Diffusion Tensor)
+FA_CGC,DTI MRI (Diffusion Tensor)
+FA_CGH,DTI MRI (Diffusion Tensor)
+FA_FXST,DTI MRI (Diffusion Tensor)
+FA_SLF,DTI MRI (Diffusion Tensor)
+FA_SFO,DTI MRI (Diffusion Tensor)
+FA_UNC,DTI MRI (Diffusion Tensor)
+FA_TAP,DTI MRI (Diffusion Tensor)
+FA_IC,DTI MRI (Diffusion Tensor)
+FA_CC,DTI MRI (Diffusion Tensor)
+FA_CR,DTI MRI (Diffusion Tensor)
+FA_FULLWM,DTI MRI (Diffusion Tensor)
+MD_MCP,DTI MRI (Diffusion Tensor)
+MD_PCT,DTI MRI (Diffusion Tensor)
+MD_GCC,DTI MRI (Diffusion Tensor)
+MD_BCC,DTI MRI (Diffusion Tensor)
+MD_SCC,DTI MRI (Diffusion Tensor)
+MD_FX,DTI MRI (Diffusion Tensor)
+MD_CST_R,DTI MRI (Diffusion Tensor)
+MD_CST_L,DTI MRI (Diffusion Tensor)
+MD_ML_R,DTI MRI (Diffusion Tensor)
+MD_ML_L,DTI MRI (Diffusion Tensor)
+MD_ICP_R,DTI MRI (Diffusion Tensor)
+MD_ICP_L,DTI MRI (Diffusion Tensor)
+MD_SCP_R,DTI MRI (Diffusion Tensor)
+MD_SCP_L,DTI MRI (Diffusion Tensor)
+MD_CP_R,DTI MRI (Diffusion Tensor)
+MD_CP_L,DTI MRI (Diffusion Tensor)
+MD_ALIC_R,DTI MRI (Diffusion Tensor)
+MD_ALIC_L,DTI MRI (Diffusion Tensor)
+MD_PLIC_R,DTI MRI (Diffusion Tensor)
+MD_PLIC_L,DTI MRI (Diffusion Tensor)
+MD_RLIC_R,DTI MRI (Diffusion Tensor)
+MD_RLIC_L,DTI MRI (Diffusion Tensor)
+MD_ACR_R,DTI MRI (Diffusion Tensor)
+MD_ACR_L,DTI MRI (Diffusion Tensor)
+MD_SCR_R,DTI MRI (Diffusion Tensor)
+MD_SCR_L,DTI MRI (Diffusion Tensor)
+MD_PCR_R,DTI MRI (Diffusion Tensor)
+MD_PCR_L,DTI MRI (Diffusion Tensor)
+MD_PTR_R,DTI MRI (Diffusion Tensor)
+MD_PTR_L,DTI MRI (Diffusion Tensor)
+MD_SS_R,DTI MRI (Diffusion Tensor)
+MD_SS_L,DTI MRI (Diffusion Tensor)
+MD_EC_R,DTI MRI (Diffusion Tensor)
+MD_EC_L,DTI MRI (Diffusion Tensor)
+MD_CGC_R,DTI MRI (Diffusion Tensor)
+MD_CGC_L,DTI MRI (Diffusion Tensor)
+MD_CGH_R,DTI MRI (Diffusion Tensor)
+MD_CGH_L,DTI MRI (Diffusion Tensor)
+MD_FXST_R,DTI MRI (Diffusion Tensor)
+MD_FXST_L,DTI MRI (Diffusion Tensor)
+MD_SLF_R,DTI MRI (Diffusion Tensor)
+MD_SLF_L,DTI MRI (Diffusion Tensor)
+MD_SFO_R,DTI MRI (Diffusion Tensor)
+MD_SFO_L,DTI MRI (Diffusion Tensor)
+MD_UNC_R,DTI MRI (Diffusion Tensor)
+MD_UNC_L,DTI MRI (Diffusion Tensor)
+MD_TAP_R,DTI MRI (Diffusion Tensor)
+MD_TAP_L,DTI MRI (Diffusion Tensor)
+MD_CST,DTI MRI (Diffusion Tensor)
+MD_ML,DTI MRI (Diffusion Tensor)
+MD_ICP,DTI MRI (Diffusion Tensor)
+MD_SCP,DTI MRI (Diffusion Tensor)
+MD_CP,DTI MRI (Diffusion Tensor)
+MD_ALIC,DTI MRI (Diffusion Tensor)
+MD_PLIC,DTI MRI (Diffusion Tensor)
+MD_RLIC,DTI MRI (Diffusion Tensor)
+MD_ACR,DTI MRI (Diffusion Tensor)
+MD_SCR,DTI MRI (Diffusion Tensor)
+MD_PCR,DTI MRI (Diffusion Tensor)
+MD_PTR,DTI MRI (Diffusion Tensor)
+MD_SS,DTI MRI (Diffusion Tensor)
+MD_EC,DTI MRI (Diffusion Tensor)
+MD_CGC,DTI MRI (Diffusion Tensor)
+MD_CGH,DTI MRI (Diffusion Tensor)
+MD_FXST,DTI MRI (Diffusion Tensor)
+MD_SLF,DTI MRI (Diffusion Tensor)
+MD_SFO,DTI MRI (Diffusion Tensor)
+MD_UNC,DTI MRI (Diffusion Tensor)
+MD_TAP,DTI MRI (Diffusion Tensor)
+MD_IC,DTI MRI (Diffusion Tensor)
+MD_CC,DTI MRI (Diffusion Tensor)
+MD_CR,DTI MRI (Diffusion Tensor)
+MD_FULLWM,DTI MRI (Diffusion Tensor)
+RD_MCP,DTI MRI (Diffusion Tensor)
+RD_PCT,DTI MRI (Diffusion Tensor)
+RD_GCC,DTI MRI (Diffusion Tensor)
+RD_BCC,DTI MRI (Diffusion Tensor)
+RD_SCC,DTI MRI (Diffusion Tensor)
+RD_FX,DTI MRI (Diffusion Tensor)
+RD_CST_R,DTI MRI (Diffusion Tensor)
+RD_CST_L,DTI MRI (Diffusion Tensor)
+RD_ML_R,DTI MRI (Diffusion Tensor)
+RD_ML_L,DTI MRI (Diffusion Tensor)
+RD_ICP_R,DTI MRI (Diffusion Tensor)
+RD_ICP_L,DTI MRI (Diffusion Tensor)
+RD_SCP_R,DTI MRI (Diffusion Tensor)
+RD_SCP_L,DTI MRI (Diffusion Tensor)
+RD_CP_R,DTI MRI (Diffusion Tensor)
+RD_CP_L,DTI MRI (Diffusion Tensor)
+RD_ALIC_R,DTI MRI (Diffusion Tensor)
+RD_ALIC_L,DTI MRI (Diffusion Tensor)
+RD_PLIC_R,DTI MRI (Diffusion Tensor)
+RD_PLIC_L,DTI MRI (Diffusion Tensor)
+RD_RLIC_R,DTI MRI (Diffusion Tensor)
+RD_RLIC_L,DTI MRI (Diffusion Tensor)
+RD_ACR_R,DTI MRI (Diffusion Tensor)
+RD_ACR_L,DTI MRI (Diffusion Tensor)
+RD_SCR_R,DTI MRI (Diffusion Tensor)
+RD_SCR_L,DTI MRI (Diffusion Tensor)
+RD_PCR_R,DTI MRI (Diffusion Tensor)
+RD_PCR_L,DTI MRI (Diffusion Tensor)
+RD_PTR_R,DTI MRI (Diffusion Tensor)
+RD_PTR_L,DTI MRI (Diffusion Tensor)
+RD_SS_R,DTI MRI (Diffusion Tensor)
+RD_SS_L,DTI MRI (Diffusion Tensor)
+RD_EC_R,DTI MRI (Diffusion Tensor)
+RD_EC_L,DTI MRI (Diffusion Tensor)
+RD_CGC_R,DTI MRI (Diffusion Tensor)
+RD_CGC_L,DTI MRI (Diffusion Tensor)
+RD_CGH_R,DTI MRI (Diffusion Tensor)
+RD_CGH_L,DTI MRI (Diffusion Tensor)
+RD_FXST_R,DTI MRI (Diffusion Tensor)
+RD_FXST_L,DTI MRI (Diffusion Tensor)
+RD_SLF_R,DTI MRI (Diffusion Tensor)
+RD_SLF_L,DTI MRI (Diffusion Tensor)
+RD_SFO_R,DTI MRI (Diffusion Tensor)
+RD_SFO_L,DTI MRI (Diffusion Tensor)
+RD_UNC_R,DTI MRI (Diffusion Tensor)
+RD_UNC_L,DTI MRI (Diffusion Tensor)
+RD_TAP_R,DTI MRI (Diffusion Tensor)
+RD_TAP_L,DTI MRI (Diffusion Tensor)
+RD_CST,DTI MRI (Diffusion Tensor)
+RD_ML,DTI MRI (Diffusion Tensor)
+RD_ICP,DTI MRI (Diffusion Tensor)
+RD_SCP,DTI MRI (Diffusion Tensor)
+RD_CP,DTI MRI (Diffusion Tensor)
+RD_ALIC,DTI MRI (Diffusion Tensor)
+RD_PLIC,DTI MRI (Diffusion Tensor)
+RD_RLIC,DTI MRI (Diffusion Tensor)
+RD_ACR,DTI MRI (Diffusion Tensor)
+RD_SCR,DTI MRI (Diffusion Tensor)
+RD_PCR,DTI MRI (Diffusion Tensor)
+RD_PTR,DTI MRI (Diffusion Tensor)
+RD_SS,DTI MRI (Diffusion Tensor)
+RD_EC,DTI MRI (Diffusion Tensor)
+RD_CGC,DTI MRI (Diffusion Tensor)
+RD_CGH,DTI MRI (Diffusion Tensor)
+RD_FXST,DTI MRI (Diffusion Tensor)
+RD_SLF,DTI MRI (Diffusion Tensor)
+RD_SFO,DTI MRI (Diffusion Tensor)
+RD_UNC,DTI MRI (Diffusion Tensor)
+RD_TAP,DTI MRI (Diffusion Tensor)
+RD_IC,DTI MRI (Diffusion Tensor)
+RD_CC,DTI MRI (Diffusion Tensor)
+RD_CR,DTI MRI (Diffusion Tensor)
+RD_FULLWM,DTI MRI (Diffusion Tensor)
+VERSION.asl,ASL MRI (Arterial Spin Labeling)
+LONIUID.asl,ASL MRI (Arterial Spin Labeling)
+IMAGEUID.asl,ASL MRI (Arterial Spin Labeling)
+RAWQC,ASL MRI (Arterial Spin Labeling)
+ST1MIN,ASL MRI (Arterial Spin Labeling)
+ST1MAX,ASL MRI (Arterial Spin Labeling)
+ST1MD,ASL MRI (Arterial Spin Labeling)
+ST1AVG,ASL MRI (Arterial Spin Labeling)
+ST1SD,ASL MRI (Arterial Spin Labeling)
+ST1CT,ASL MRI (Arterial Spin Labeling)
+ST2MIN,ASL MRI (Arterial Spin Labeling)
+ST2MAX,ASL MRI (Arterial Spin Labeling)
+ST2MD,ASL MRI (Arterial Spin Labeling)
+ST2AVG,ASL MRI (Arterial Spin Labeling)
+ST2SD,ASL MRI (Arterial Spin Labeling)
+ST2CT,ASL MRI (Arterial Spin Labeling)
+ST3MIN,ASL MRI (Arterial Spin Labeling)
+ST3MAX,ASL MRI (Arterial Spin Labeling)
+ST3MD,ASL MRI (Arterial Spin Labeling)
+ST3AVG,ASL MRI (Arterial Spin Labeling)
+ST3SD,ASL MRI (Arterial Spin Labeling)
+ST3CT,ASL MRI (Arterial Spin Labeling)
+ST4MIN,ASL MRI (Arterial Spin Labeling)
+ST4MAX,ASL MRI (Arterial Spin Labeling)
+ST4MD,ASL MRI (Arterial Spin Labeling)
+ST4AVG,ASL MRI (Arterial Spin Labeling)
+ST4SD,ASL MRI (Arterial Spin Labeling)
+ST4CT,ASL MRI (Arterial Spin Labeling)
+ST5MIN,ASL MRI (Arterial Spin Labeling)
+ST5MAX,ASL MRI (Arterial Spin Labeling)
+ST5MD,ASL MRI (Arterial Spin Labeling)
+ST5AVG,ASL MRI (Arterial Spin Labeling)
+ST5SD,ASL MRI (Arterial Spin Labeling)
+ST5CT,ASL MRI (Arterial Spin Labeling)
+ST6MIN,ASL MRI (Arterial Spin Labeling)
+ST6MAX,ASL MRI (Arterial Spin Labeling)
+ST6MD,ASL MRI (Arterial Spin Labeling)
+ST6AVG,ASL MRI (Arterial Spin Labeling)
+ST6SD,ASL MRI (Arterial Spin Labeling)
+ST6CT,ASL MRI (Arterial Spin Labeling)
+ST7MIN,ASL MRI (Arterial Spin Labeling)
+ST7MAX,ASL MRI (Arterial Spin Labeling)
+ST7MD,ASL MRI (Arterial Spin Labeling)
+ST7AVG,ASL MRI (Arterial Spin Labeling)
+ST7SD,ASL MRI (Arterial Spin Labeling)
+ST7CT,ASL MRI (Arterial Spin Labeling)
+ST8MIN,ASL MRI (Arterial Spin Labeling)
+ST8MAX,ASL MRI (Arterial Spin Labeling)
+ST8MD,ASL MRI (Arterial Spin Labeling)
+ST8AVG,ASL MRI (Arterial Spin Labeling)
+ST8SD,ASL MRI (Arterial Spin Labeling)
+ST8CT,ASL MRI (Arterial Spin Labeling)
+ST9MIN,ASL MRI (Arterial Spin Labeling)
+ST9MAX,ASL MRI (Arterial Spin Labeling)
+ST9MD,ASL MRI (Arterial Spin Labeling)
+ST9AVG,ASL MRI (Arterial Spin Labeling)
+ST9SD,ASL MRI (Arterial Spin Labeling)
+ST9CT,ASL MRI (Arterial Spin Labeling)
+ST11MIN,ASL MRI (Arterial Spin Labeling)
+ST11MAX,ASL MRI (Arterial Spin Labeling)
+ST11MD,ASL MRI (Arterial Spin Labeling)
+ST11AVG,ASL MRI (Arterial Spin Labeling)
+ST11SD,ASL MRI (Arterial Spin Labeling)
+ST11CT,ASL MRI (Arterial Spin Labeling)
+ST12MIN,ASL MRI (Arterial Spin Labeling)
+ST12MAX,ASL MRI (Arterial Spin Labeling)
+ST12MD,ASL MRI (Arterial Spin Labeling)
+ST12AVG,ASL MRI (Arterial Spin Labeling)
+ST12SD,ASL MRI (Arterial Spin Labeling)
+ST12CT,ASL MRI (Arterial Spin Labeling)
+ST13MIN,ASL MRI (Arterial Spin Labeling)
+ST13MAX,ASL MRI (Arterial Spin Labeling)
+ST13MD,ASL MRI (Arterial Spin Labeling)
+ST13AVG,ASL MRI (Arterial Spin Labeling)
+ST13SD,ASL MRI (Arterial Spin Labeling)
+ST13CT,ASL MRI (Arterial Spin Labeling)
+ST14MIN,ASL MRI (Arterial Spin Labeling)
+ST14MAX,ASL MRI (Arterial Spin Labeling)
+ST14MD,ASL MRI (Arterial Spin Labeling)
+ST14AVG,ASL MRI (Arterial Spin Labeling)
+ST14SD,ASL MRI (Arterial Spin Labeling)
+ST14CT,ASL MRI (Arterial Spin Labeling)
+ST15MIN,ASL MRI (Arterial Spin Labeling)
+ST15MAX,ASL MRI (Arterial Spin Labeling)
+ST15MD,ASL MRI (Arterial Spin Labeling)
+ST15AVG,ASL MRI (Arterial Spin Labeling)
+ST15SD,ASL MRI (Arterial Spin Labeling)
+ST15CT,ASL MRI (Arterial Spin Labeling)
+ST16MIN,ASL MRI (Arterial Spin Labeling)
+ST16MAX,ASL MRI (Arterial Spin Labeling)
+ST16MD,ASL MRI (Arterial Spin Labeling)
+ST16AVG,ASL MRI (Arterial Spin Labeling)
+ST16SD,ASL MRI (Arterial Spin Labeling)
+ST16CT,ASL MRI (Arterial Spin Labeling)
+ST17MIN,ASL MRI (Arterial Spin Labeling)
+ST17MAX,ASL MRI (Arterial Spin Labeling)
+ST17MD,ASL MRI (Arterial Spin Labeling)
+ST17AVG,ASL MRI (Arterial Spin Labeling)
+ST17SD,ASL MRI (Arterial Spin Labeling)
+ST17CT,ASL MRI (Arterial Spin Labeling)
+ST18MIN,ASL MRI (Arterial Spin Labeling)
+ST18MAX,ASL MRI (Arterial Spin Labeling)
+ST18MD,ASL MRI (Arterial Spin Labeling)
+ST18AVG,ASL MRI (Arterial Spin Labeling)
+ST18SD,ASL MRI (Arterial Spin Labeling)
+ST18CT,ASL MRI (Arterial Spin Labeling)
+ST20MIN,ASL MRI (Arterial Spin Labeling)
+ST20MAX,ASL MRI (Arterial Spin Labeling)
+ST20MD,ASL MRI (Arterial Spin Labeling)
+ST20AVG,ASL MRI (Arterial Spin Labeling)
+ST20SD,ASL MRI (Arterial Spin Labeling)
+ST20CT,ASL MRI (Arterial Spin Labeling)
+ST21MIN,ASL MRI (Arterial Spin Labeling)
+ST21MAX,ASL MRI (Arterial Spin Labeling)
+ST21MD,ASL MRI (Arterial Spin Labeling)
+ST21AVG,ASL MRI (Arterial Spin Labeling)
+ST21SD,ASL MRI (Arterial Spin Labeling)
+ST21CT,ASL MRI (Arterial Spin Labeling)
+ST23MIN,ASL MRI (Arterial Spin Labeling)
+ST23MAX,ASL MRI (Arterial Spin Labeling)
+ST23MD,ASL MRI (Arterial Spin Labeling)
+ST23AVG,ASL MRI (Arterial Spin Labeling)
+ST23SD,ASL MRI (Arterial Spin Labeling)
+ST23CT,ASL MRI (Arterial Spin Labeling)
+ST24MIN,ASL MRI (Arterial Spin Labeling)
+ST24MAX,ASL MRI (Arterial Spin Labeling)
+ST24MD,ASL MRI (Arterial Spin Labeling)
+ST24AVG,ASL MRI (Arterial Spin Labeling)
+ST24SD,ASL MRI (Arterial Spin Labeling)
+ST24CT,ASL MRI (Arterial Spin Labeling)
+ST25MIN,ASL MRI (Arterial Spin Labeling)
+ST25MAX,ASL MRI (Arterial Spin Labeling)
+ST25MD,ASL MRI (Arterial Spin Labeling)
+ST25AVG,ASL MRI (Arterial Spin Labeling)
+ST25SD,ASL MRI (Arterial Spin Labeling)
+ST25CT,ASL MRI (Arterial Spin Labeling)
+ST26MIN,ASL MRI (Arterial Spin Labeling)
+ST26MAX,ASL MRI (Arterial Spin Labeling)
+ST26MD,ASL MRI (Arterial Spin Labeling)
+ST26AVG,ASL MRI (Arterial Spin Labeling)
+ST26SD,ASL MRI (Arterial Spin Labeling)
+ST26CT,ASL MRI (Arterial Spin Labeling)
+ST29MIN,ASL MRI (Arterial Spin Labeling)
+ST29MAX,ASL MRI (Arterial Spin Labeling)
+ST29MD,ASL MRI (Arterial Spin Labeling)
+ST29AVG,ASL MRI (Arterial Spin Labeling)
+ST29SD,ASL MRI (Arterial Spin Labeling)
+ST29CT,ASL MRI (Arterial Spin Labeling)
+ST30MIN,ASL MRI (Arterial Spin Labeling)
+ST30MAX,ASL MRI (Arterial Spin Labeling)
+ST30MD,ASL MRI (Arterial Spin Labeling)
+ST30AVG,ASL MRI (Arterial Spin Labeling)
+ST30SD,ASL MRI (Arterial Spin Labeling)
+ST30CT,ASL MRI (Arterial Spin Labeling)
+ST31MIN,ASL MRI (Arterial Spin Labeling)
+ST31MAX,ASL MRI (Arterial Spin Labeling)
+ST31MD,ASL MRI (Arterial Spin Labeling)
+ST31AVG,ASL MRI (Arterial Spin Labeling)
+ST31SD,ASL MRI (Arterial Spin Labeling)
+ST31CT,ASL MRI (Arterial Spin Labeling)
+ST32MIN,ASL MRI (Arterial Spin Labeling)
+ST32MAX,ASL MRI (Arterial Spin Labeling)
+ST32MD,ASL MRI (Arterial Spin Labeling)
+ST32AVG,ASL MRI (Arterial Spin Labeling)
+ST32SD,ASL MRI (Arterial Spin Labeling)
+ST32CT,ASL MRI (Arterial Spin Labeling)
+ST34MIN,ASL MRI (Arterial Spin Labeling)
+ST34MAX,ASL MRI (Arterial Spin Labeling)
+ST34MD,ASL MRI (Arterial Spin Labeling)
+ST34AVG,ASL MRI (Arterial Spin Labeling)
+ST34SD,ASL MRI (Arterial Spin Labeling)
+ST34CT,ASL MRI (Arterial Spin Labeling)
+ST35MIN,ASL MRI (Arterial Spin Labeling)
+ST35MAX,ASL MRI (Arterial Spin Labeling)
+ST35MD,ASL MRI (Arterial Spin Labeling)
+ST35AVG,ASL MRI (Arterial Spin Labeling)
+ST35SD,ASL MRI (Arterial Spin Labeling)
+ST35CT,ASL MRI (Arterial Spin Labeling)
+ST36MIN,ASL MRI (Arterial Spin Labeling)
+ST36MAX,ASL MRI (Arterial Spin Labeling)
+ST36MD,ASL MRI (Arterial Spin Labeling)
+ST36AVG,ASL MRI (Arterial Spin Labeling)
+ST36SD,ASL MRI (Arterial Spin Labeling)
+ST36CT,ASL MRI (Arterial Spin Labeling)
+ST37MIN,ASL MRI (Arterial Spin Labeling)
+ST37MAX,ASL MRI (Arterial Spin Labeling)
+ST37MD,ASL MRI (Arterial Spin Labeling)
+ST37AVG,ASL MRI (Arterial Spin Labeling)
+ST37SD,ASL MRI (Arterial Spin Labeling)
+ST37CT,ASL MRI (Arterial Spin Labeling)
+ST38MIN,ASL MRI (Arterial Spin Labeling)
+ST38MAX,ASL MRI (Arterial Spin Labeling)
+ST38MD,ASL MRI (Arterial Spin Labeling)
+ST38AVG,ASL MRI (Arterial Spin Labeling)
+ST38SD,ASL MRI (Arterial Spin Labeling)
+ST38CT,ASL MRI (Arterial Spin Labeling)
+ST39MIN,ASL MRI (Arterial Spin Labeling)
+ST39MAX,ASL MRI (Arterial Spin Labeling)
+ST39MD,ASL MRI (Arterial Spin Labeling)
+ST39AVG,ASL MRI (Arterial Spin Labeling)
+ST39SD,ASL MRI (Arterial Spin Labeling)
+ST39CT,ASL MRI (Arterial Spin Labeling)
+ST40MIN,ASL MRI (Arterial Spin Labeling)
+ST40MAX,ASL MRI (Arterial Spin Labeling)
+ST40MD,ASL MRI (Arterial Spin Labeling)
+ST40AVG,ASL MRI (Arterial Spin Labeling)
+ST40SD,ASL MRI (Arterial Spin Labeling)
+ST40CT,ASL MRI (Arterial Spin Labeling)
+ST42MIN,ASL MRI (Arterial Spin Labeling)
+ST42MAX,ASL MRI (Arterial Spin Labeling)
+ST42MD,ASL MRI (Arterial Spin Labeling)
+ST42AVG,ASL MRI (Arterial Spin Labeling)
+ST42SD,ASL MRI (Arterial Spin Labeling)
+ST42CT,ASL MRI (Arterial Spin Labeling)
+ST43MIN,ASL MRI (Arterial Spin Labeling)
+ST43MAX,ASL MRI (Arterial Spin Labeling)
+ST43MD,ASL MRI (Arterial Spin Labeling)
+ST43AVG,ASL MRI (Arterial Spin Labeling)
+ST43SD,ASL MRI (Arterial Spin Labeling)
+ST43CT,ASL MRI (Arterial Spin Labeling)
+ST44MIN,ASL MRI (Arterial Spin Labeling)
+ST44MAX,ASL MRI (Arterial Spin Labeling)
+ST44MD,ASL MRI (Arterial Spin Labeling)
+ST44AVG,ASL MRI (Arterial Spin Labeling)
+ST44SD,ASL MRI (Arterial Spin Labeling)
+ST44CT,ASL MRI (Arterial Spin Labeling)
+ST45MIN,ASL MRI (Arterial Spin Labeling)
+ST45MAX,ASL MRI (Arterial Spin Labeling)
+ST45MD,ASL MRI (Arterial Spin Labeling)
+ST45AVG,ASL MRI (Arterial Spin Labeling)
+ST45SD,ASL MRI (Arterial Spin Labeling)
+ST45CT,ASL MRI (Arterial Spin Labeling)
+ST46MIN,ASL MRI (Arterial Spin Labeling)
+ST46MAX,ASL MRI (Arterial Spin Labeling)
+ST46MD,ASL MRI (Arterial Spin Labeling)
+ST46AVG,ASL MRI (Arterial Spin Labeling)
+ST46SD,ASL MRI (Arterial Spin Labeling)
+ST46CT,ASL MRI (Arterial Spin Labeling)
+ST47MIN,ASL MRI (Arterial Spin Labeling)
+ST47MAX,ASL MRI (Arterial Spin Labeling)
+ST47MD,ASL MRI (Arterial Spin Labeling)
+ST47AVG,ASL MRI (Arterial Spin Labeling)
+ST47SD,ASL MRI (Arterial Spin Labeling)
+ST47CT,ASL MRI (Arterial Spin Labeling)
+ST48MIN,ASL MRI (Arterial Spin Labeling)
+ST48MAX,ASL MRI (Arterial Spin Labeling)
+ST48MD,ASL MRI (Arterial Spin Labeling)
+ST48AVG,ASL MRI (Arterial Spin Labeling)
+ST48SD,ASL MRI (Arterial Spin Labeling)
+ST48CT,ASL MRI (Arterial Spin Labeling)
+ST49MIN,ASL MRI (Arterial Spin Labeling)
+ST49MAX,ASL MRI (Arterial Spin Labeling)
+ST49MD,ASL MRI (Arterial Spin Labeling)
+ST49AVG,ASL MRI (Arterial Spin Labeling)
+ST49SD,ASL MRI (Arterial Spin Labeling)
+ST49CT,ASL MRI (Arterial Spin Labeling)
+ST50MIN,ASL MRI (Arterial Spin Labeling)
+ST50MAX,ASL MRI (Arterial Spin Labeling)
+ST50MD,ASL MRI (Arterial Spin Labeling)
+ST50AVG,ASL MRI (Arterial Spin Labeling)
+ST50SD,ASL MRI (Arterial Spin Labeling)
+ST50CT,ASL MRI (Arterial Spin Labeling)
+ST51MIN,ASL MRI (Arterial Spin Labeling)
+ST51MAX,ASL MRI (Arterial Spin Labeling)
+ST51MD,ASL MRI (Arterial Spin Labeling)
+ST51AVG,ASL MRI (Arterial Spin Labeling)
+ST51SD,ASL MRI (Arterial Spin Labeling)
+ST51CT,ASL MRI (Arterial Spin Labeling)
+ST52MIN,ASL MRI (Arterial Spin Labeling)
+ST52MAX,ASL MRI (Arterial Spin Labeling)
+ST52MD,ASL MRI (Arterial Spin Labeling)
+ST52AVG,ASL MRI (Arterial Spin Labeling)
+ST52SD,ASL MRI (Arterial Spin Labeling)
+ST52CT,ASL MRI (Arterial Spin Labeling)
+ST53MIN,ASL MRI (Arterial Spin Labeling)
+ST53MAX,ASL MRI (Arterial Spin Labeling)
+ST53MD,ASL MRI (Arterial Spin Labeling)
+ST53AVG,ASL MRI (Arterial Spin Labeling)
+ST53SD,ASL MRI (Arterial Spin Labeling)
+ST53CT,ASL MRI (Arterial Spin Labeling)
+ST54MIN,ASL MRI (Arterial Spin Labeling)
+ST54MAX,ASL MRI (Arterial Spin Labeling)
+ST54MD,ASL MRI (Arterial Spin Labeling)
+ST54AVG,ASL MRI (Arterial Spin Labeling)
+ST54SD,ASL MRI (Arterial Spin Labeling)
+ST54CT,ASL MRI (Arterial Spin Labeling)
+ST55MIN,ASL MRI (Arterial Spin Labeling)
+ST55MAX,ASL MRI (Arterial Spin Labeling)
+ST55MD,ASL MRI (Arterial Spin Labeling)
+ST55AVG,ASL MRI (Arterial Spin Labeling)
+ST55SD,ASL MRI (Arterial Spin Labeling)
+ST55CT,ASL MRI (Arterial Spin Labeling)
+ST56MIN,ASL MRI (Arterial Spin Labeling)
+ST56MAX,ASL MRI (Arterial Spin Labeling)
+ST56MD,ASL MRI (Arterial Spin Labeling)
+ST56AVG,ASL MRI (Arterial Spin Labeling)
+ST56SD,ASL MRI (Arterial Spin Labeling)
+ST56CT,ASL MRI (Arterial Spin Labeling)
+ST57MIN,ASL MRI (Arterial Spin Labeling)
+ST57MAX,ASL MRI (Arterial Spin Labeling)
+ST57MD,ASL MRI (Arterial Spin Labeling)
+ST57AVG,ASL MRI (Arterial Spin Labeling)
+ST57SD,ASL MRI (Arterial Spin Labeling)
+ST57CT,ASL MRI (Arterial Spin Labeling)
+ST58MIN,ASL MRI (Arterial Spin Labeling)
+ST58MAX,ASL MRI (Arterial Spin Labeling)
+ST58MD,ASL MRI (Arterial Spin Labeling)
+ST58AVG,ASL MRI (Arterial Spin Labeling)
+ST58SD,ASL MRI (Arterial Spin Labeling)
+ST58CT,ASL MRI (Arterial Spin Labeling)
+ST59MIN,ASL MRI (Arterial Spin Labeling)
+ST59MAX,ASL MRI (Arterial Spin Labeling)
+ST59MD,ASL MRI (Arterial Spin Labeling)
+ST59AVG,ASL MRI (Arterial Spin Labeling)
+ST59SD,ASL MRI (Arterial Spin Labeling)
+ST59CT,ASL MRI (Arterial Spin Labeling)
+ST60MIN,ASL MRI (Arterial Spin Labeling)
+ST60MAX,ASL MRI (Arterial Spin Labeling)
+ST60MD,ASL MRI (Arterial Spin Labeling)
+ST60AVG,ASL MRI (Arterial Spin Labeling)
+ST60SD,ASL MRI (Arterial Spin Labeling)
+ST60CT,ASL MRI (Arterial Spin Labeling)
+ST61MIN,ASL MRI (Arterial Spin Labeling)
+ST61MAX,ASL MRI (Arterial Spin Labeling)
+ST61MD,ASL MRI (Arterial Spin Labeling)
+ST61AVG,ASL MRI (Arterial Spin Labeling)
+ST61SD,ASL MRI (Arterial Spin Labeling)
+ST61CT,ASL MRI (Arterial Spin Labeling)
+ST62MIN,ASL MRI (Arterial Spin Labeling)
+ST62MAX,ASL MRI (Arterial Spin Labeling)
+ST62MD,ASL MRI (Arterial Spin Labeling)
+ST62AVG,ASL MRI (Arterial Spin Labeling)
+ST62SD,ASL MRI (Arterial Spin Labeling)
+ST62CT,ASL MRI (Arterial Spin Labeling)
+ST64MIN,ASL MRI (Arterial Spin Labeling)
+ST64MAX,ASL MRI (Arterial Spin Labeling)
+ST64MD,ASL MRI (Arterial Spin Labeling)
+ST64AVG,ASL MRI (Arterial Spin Labeling)
+ST64SD,ASL MRI (Arterial Spin Labeling)
+ST64CT,ASL MRI (Arterial Spin Labeling)
+ST65MIN,ASL MRI (Arterial Spin Labeling)
+ST65MAX,ASL MRI (Arterial Spin Labeling)
+ST65MD,ASL MRI (Arterial Spin Labeling)
+ST65AVG,ASL MRI (Arterial Spin Labeling)
+ST65SD,ASL MRI (Arterial Spin Labeling)
+ST65CT,ASL MRI (Arterial Spin Labeling)
+ST66MIN,ASL MRI (Arterial Spin Labeling)
+ST66MAX,ASL MRI (Arterial Spin Labeling)
+ST66MD,ASL MRI (Arterial Spin Labeling)
+ST66AVG,ASL MRI (Arterial Spin Labeling)
+ST66SD,ASL MRI (Arterial Spin Labeling)
+ST66CT,ASL MRI (Arterial Spin Labeling)
+ST68MIN,ASL MRI (Arterial Spin Labeling)
+ST68MAX,ASL MRI (Arterial Spin Labeling)
+ST68MD,ASL MRI (Arterial Spin Labeling)
+ST68AVG,ASL MRI (Arterial Spin Labeling)
+ST68SD,ASL MRI (Arterial Spin Labeling)
+ST68CT,ASL MRI (Arterial Spin Labeling)
+ST69MIN,ASL MRI (Arterial Spin Labeling)
+ST69MAX,ASL MRI (Arterial Spin Labeling)
+ST69MD,ASL MRI (Arterial Spin Labeling)
+ST69AVG,ASL MRI (Arterial Spin Labeling)
+ST69SD,ASL MRI (Arterial Spin Labeling)
+ST69CT,ASL MRI (Arterial Spin Labeling)
+ST70MIN,ASL MRI (Arterial Spin Labeling)
+ST70MAX,ASL MRI (Arterial Spin Labeling)
+ST70MD,ASL MRI (Arterial Spin Labeling)
+ST70AVG,ASL MRI (Arterial Spin Labeling)
+ST70SD,ASL MRI (Arterial Spin Labeling)
+ST70CT,ASL MRI (Arterial Spin Labeling)
+ST71MIN,ASL MRI (Arterial Spin Labeling)
+ST71MAX,ASL MRI (Arterial Spin Labeling)
+ST71MD,ASL MRI (Arterial Spin Labeling)
+ST71AVG,ASL MRI (Arterial Spin Labeling)
+ST71SD,ASL MRI (Arterial Spin Labeling)
+ST71CT,ASL MRI (Arterial Spin Labeling)
+ST72MIN,ASL MRI (Arterial Spin Labeling)
+ST72MAX,ASL MRI (Arterial Spin Labeling)
+ST72MD,ASL MRI (Arterial Spin Labeling)
+ST72AVG,ASL MRI (Arterial Spin Labeling)
+ST72SD,ASL MRI (Arterial Spin Labeling)
+ST72CT,ASL MRI (Arterial Spin Labeling)
+ST73MIN,ASL MRI (Arterial Spin Labeling)
+ST73MAX,ASL MRI (Arterial Spin Labeling)
+ST73MD,ASL MRI (Arterial Spin Labeling)
+ST73AVG,ASL MRI (Arterial Spin Labeling)
+ST73SD,ASL MRI (Arterial Spin Labeling)
+ST73CT,ASL MRI (Arterial Spin Labeling)
+ST74MIN,ASL MRI (Arterial Spin Labeling)
+ST74MAX,ASL MRI (Arterial Spin Labeling)
+ST74MD,ASL MRI (Arterial Spin Labeling)
+ST74AVG,ASL MRI (Arterial Spin Labeling)
+ST74SD,ASL MRI (Arterial Spin Labeling)
+ST74CT,ASL MRI (Arterial Spin Labeling)
+ST75MIN,ASL MRI (Arterial Spin Labeling)
+ST75MAX,ASL MRI (Arterial Spin Labeling)
+ST75MD,ASL MRI (Arterial Spin Labeling)
+ST75AVG,ASL MRI (Arterial Spin Labeling)
+ST75SD,ASL MRI (Arterial Spin Labeling)
+ST75CT,ASL MRI (Arterial Spin Labeling)
+ST76MIN,ASL MRI (Arterial Spin Labeling)
+ST76MAX,ASL MRI (Arterial Spin Labeling)
+ST76MD,ASL MRI (Arterial Spin Labeling)
+ST76AVG,ASL MRI (Arterial Spin Labeling)
+ST76SD,ASL MRI (Arterial Spin Labeling)
+ST76CT,ASL MRI (Arterial Spin Labeling)
+ST77MIN,ASL MRI (Arterial Spin Labeling)
+ST77MAX,ASL MRI (Arterial Spin Labeling)
+ST77MD,ASL MRI (Arterial Spin Labeling)
+ST77AVG,ASL MRI (Arterial Spin Labeling)
+ST77SD,ASL MRI (Arterial Spin Labeling)
+ST77CT,ASL MRI (Arterial Spin Labeling)
+ST79MIN,ASL MRI (Arterial Spin Labeling)
+ST79MAX,ASL MRI (Arterial Spin Labeling)
+ST79MD,ASL MRI (Arterial Spin Labeling)
+ST79AVG,ASL MRI (Arterial Spin Labeling)
+ST79SD,ASL MRI (Arterial Spin Labeling)
+ST79CT,ASL MRI (Arterial Spin Labeling)
+ST80MIN,ASL MRI (Arterial Spin Labeling)
+ST80MAX,ASL MRI (Arterial Spin Labeling)
+ST80MD,ASL MRI (Arterial Spin Labeling)
+ST80AVG,ASL MRI (Arterial Spin Labeling)
+ST80SD,ASL MRI (Arterial Spin Labeling)
+ST80CT,ASL MRI (Arterial Spin Labeling)
+ST82MIN,ASL MRI (Arterial Spin Labeling)
+ST82MAX,ASL MRI (Arterial Spin Labeling)
+ST82MD,ASL MRI (Arterial Spin Labeling)
+ST82AVG,ASL MRI (Arterial Spin Labeling)
+ST82SD,ASL MRI (Arterial Spin Labeling)
+ST82CT,ASL MRI (Arterial Spin Labeling)
+ST83MIN,ASL MRI (Arterial Spin Labeling)
+ST83MAX,ASL MRI (Arterial Spin Labeling)
+ST83MD,ASL MRI (Arterial Spin Labeling)
+ST83AVG,ASL MRI (Arterial Spin Labeling)
+ST83SD,ASL MRI (Arterial Spin Labeling)
+ST83CT,ASL MRI (Arterial Spin Labeling)
+ST84MIN,ASL MRI (Arterial Spin Labeling)
+ST84MAX,ASL MRI (Arterial Spin Labeling)
+ST84MD,ASL MRI (Arterial Spin Labeling)
+ST84AVG,ASL MRI (Arterial Spin Labeling)
+ST84SD,ASL MRI (Arterial Spin Labeling)
+ST84CT,ASL MRI (Arterial Spin Labeling)
+ST85MIN,ASL MRI (Arterial Spin Labeling)
+ST85MAX,ASL MRI (Arterial Spin Labeling)
+ST85MD,ASL MRI (Arterial Spin Labeling)
+ST85AVG,ASL MRI (Arterial Spin Labeling)
+ST85SD,ASL MRI (Arterial Spin Labeling)
+ST85CT,ASL MRI (Arterial Spin Labeling)
+ST88MIN,ASL MRI (Arterial Spin Labeling)
+ST88MAX,ASL MRI (Arterial Spin Labeling)
+ST88MD,ASL MRI (Arterial Spin Labeling)
+ST88AVG,ASL MRI (Arterial Spin Labeling)
+ST88SD,ASL MRI (Arterial Spin Labeling)
+ST88CT,ASL MRI (Arterial Spin Labeling)
+ST89MIN,ASL MRI (Arterial Spin Labeling)
+ST89MAX,ASL MRI (Arterial Spin Labeling)
+ST89MD,ASL MRI (Arterial Spin Labeling)
+ST89AVG,ASL MRI (Arterial Spin Labeling)
+ST89SD,ASL MRI (Arterial Spin Labeling)
+ST89CT,ASL MRI (Arterial Spin Labeling)
+ST90MIN,ASL MRI (Arterial Spin Labeling)
+ST90MAX,ASL MRI (Arterial Spin Labeling)
+ST90MD,ASL MRI (Arterial Spin Labeling)
+ST90AVG,ASL MRI (Arterial Spin Labeling)
+ST90SD,ASL MRI (Arterial Spin Labeling)
+ST90CT,ASL MRI (Arterial Spin Labeling)
+ST91MIN,ASL MRI (Arterial Spin Labeling)
+ST91MAX,ASL MRI (Arterial Spin Labeling)
+ST91MD,ASL MRI (Arterial Spin Labeling)
+ST91AVG,ASL MRI (Arterial Spin Labeling)
+ST91SD,ASL MRI (Arterial Spin Labeling)
+ST91CT,ASL MRI (Arterial Spin Labeling)
+ST93MIN,ASL MRI (Arterial Spin Labeling)
+ST93MAX,ASL MRI (Arterial Spin Labeling)
+ST93MD,ASL MRI (Arterial Spin Labeling)
+ST93AVG,ASL MRI (Arterial Spin Labeling)
+ST93SD,ASL MRI (Arterial Spin Labeling)
+ST93CT,ASL MRI (Arterial Spin Labeling)
+ST94MIN,ASL MRI (Arterial Spin Labeling)
+ST94MAX,ASL MRI (Arterial Spin Labeling)
+ST94MD,ASL MRI (Arterial Spin Labeling)
+ST94AVG,ASL MRI (Arterial Spin Labeling)
+ST94SD,ASL MRI (Arterial Spin Labeling)
+ST94CT,ASL MRI (Arterial Spin Labeling)
+ST95MIN,ASL MRI (Arterial Spin Labeling)
+ST95MAX,ASL MRI (Arterial Spin Labeling)
+ST95MD,ASL MRI (Arterial Spin Labeling)
+ST95AVG,ASL MRI (Arterial Spin Labeling)
+ST95SD,ASL MRI (Arterial Spin Labeling)
+ST95CT,ASL MRI (Arterial Spin Labeling)
+ST96MIN,ASL MRI (Arterial Spin Labeling)
+ST96MAX,ASL MRI (Arterial Spin Labeling)
+ST96MD,ASL MRI (Arterial Spin Labeling)
+ST96AVG,ASL MRI (Arterial Spin Labeling)
+ST96SD,ASL MRI (Arterial Spin Labeling)
+ST96CT,ASL MRI (Arterial Spin Labeling)
+ST97MIN,ASL MRI (Arterial Spin Labeling)
+ST97MAX,ASL MRI (Arterial Spin Labeling)
+ST97MD,ASL MRI (Arterial Spin Labeling)
+ST97AVG,ASL MRI (Arterial Spin Labeling)
+ST97SD,ASL MRI (Arterial Spin Labeling)
+ST97CT,ASL MRI (Arterial Spin Labeling)
+ST98MIN,ASL MRI (Arterial Spin Labeling)
+ST98MAX,ASL MRI (Arterial Spin Labeling)
+ST98MD,ASL MRI (Arterial Spin Labeling)
+ST98AVG,ASL MRI (Arterial Spin Labeling)
+ST98SD,ASL MRI (Arterial Spin Labeling)
+ST98CT,ASL MRI (Arterial Spin Labeling)
+ST99MIN,ASL MRI (Arterial Spin Labeling)
+ST99MAX,ASL MRI (Arterial Spin Labeling)
+ST99MD,ASL MRI (Arterial Spin Labeling)
+ST99AVG,ASL MRI (Arterial Spin Labeling)
+ST99SD,ASL MRI (Arterial Spin Labeling)
+ST99CT,ASL MRI (Arterial Spin Labeling)
+ST101MIN,ASL MRI (Arterial Spin Labeling)
+ST101MAX,ASL MRI (Arterial Spin Labeling)
+ST101MD,ASL MRI (Arterial Spin Labeling)
+ST101AVG,ASL MRI (Arterial Spin Labeling)
+ST101SD,ASL MRI (Arterial Spin Labeling)
+ST101CT,ASL MRI (Arterial Spin Labeling)
+ST102MIN,ASL MRI (Arterial Spin Labeling)
+ST102MAX,ASL MRI (Arterial Spin Labeling)
+ST102MD,ASL MRI (Arterial Spin Labeling)
+ST102AVG,ASL MRI (Arterial Spin Labeling)
+ST102SD,ASL MRI (Arterial Spin Labeling)
+ST102CT,ASL MRI (Arterial Spin Labeling)
+ST103MIN,ASL MRI (Arterial Spin Labeling)
+ST103MAX,ASL MRI (Arterial Spin Labeling)
+ST103MD,ASL MRI (Arterial Spin Labeling)
+ST103AVG,ASL MRI (Arterial Spin Labeling)
+ST103SD,ASL MRI (Arterial Spin Labeling)
+ST103CT,ASL MRI (Arterial Spin Labeling)
+ST104MIN,ASL MRI (Arterial Spin Labeling)
+ST104MAX,ASL MRI (Arterial Spin Labeling)
+ST104MD,ASL MRI (Arterial Spin Labeling)
+ST104AVG,ASL MRI (Arterial Spin Labeling)
+ST104SD,ASL MRI (Arterial Spin Labeling)
+ST104CT,ASL MRI (Arterial Spin Labeling)
+ST105MIN,ASL MRI (Arterial Spin Labeling)
+ST105MAX,ASL MRI (Arterial Spin Labeling)
+ST105MD,ASL MRI (Arterial Spin Labeling)
+ST105AVG,ASL MRI (Arterial Spin Labeling)
+ST105SD,ASL MRI (Arterial Spin Labeling)
+ST105CT,ASL MRI (Arterial Spin Labeling)
+ST106MIN,ASL MRI (Arterial Spin Labeling)
+ST106MAX,ASL MRI (Arterial Spin Labeling)
+ST106MD,ASL MRI (Arterial Spin Labeling)
+ST106AVG,ASL MRI (Arterial Spin Labeling)
+ST106SD,ASL MRI (Arterial Spin Labeling)
+ST106CT,ASL MRI (Arterial Spin Labeling)
+ST107MIN,ASL MRI (Arterial Spin Labeling)
+ST107MAX,ASL MRI (Arterial Spin Labeling)
+ST107MD,ASL MRI (Arterial Spin Labeling)
+ST107AVG,ASL MRI (Arterial Spin Labeling)
+ST107SD,ASL MRI (Arterial Spin Labeling)
+ST107CT,ASL MRI (Arterial Spin Labeling)
+ST108MIN,ASL MRI (Arterial Spin Labeling)
+ST108MAX,ASL MRI (Arterial Spin Labeling)
+ST108MD,ASL MRI (Arterial Spin Labeling)
+ST108AVG,ASL MRI (Arterial Spin Labeling)
+ST108SD,ASL MRI (Arterial Spin Labeling)
+ST108CT,ASL MRI (Arterial Spin Labeling)
+ST109MIN,ASL MRI (Arterial Spin Labeling)
+ST109MAX,ASL MRI (Arterial Spin Labeling)
+ST109MD,ASL MRI (Arterial Spin Labeling)
+ST109AVG,ASL MRI (Arterial Spin Labeling)
+ST109SD,ASL MRI (Arterial Spin Labeling)
+ST109CT,ASL MRI (Arterial Spin Labeling)
+ST110MIN,ASL MRI (Arterial Spin Labeling)
+ST110MAX,ASL MRI (Arterial Spin Labeling)
+ST110MD,ASL MRI (Arterial Spin Labeling)
+ST110AVG,ASL MRI (Arterial Spin Labeling)
+ST110SD,ASL MRI (Arterial Spin Labeling)
+ST110CT,ASL MRI (Arterial Spin Labeling)
+ST111MIN,ASL MRI (Arterial Spin Labeling)
+ST111MAX,ASL MRI (Arterial Spin Labeling)
+ST111MD,ASL MRI (Arterial Spin Labeling)
+ST111AVG,ASL MRI (Arterial Spin Labeling)
+ST111SD,ASL MRI (Arterial Spin Labeling)
+ST111CT,ASL MRI (Arterial Spin Labeling)
+ST112MIN,ASL MRI (Arterial Spin Labeling)
+ST112MAX,ASL MRI (Arterial Spin Labeling)
+ST112MD,ASL MRI (Arterial Spin Labeling)
+ST112AVG,ASL MRI (Arterial Spin Labeling)
+ST112SD,ASL MRI (Arterial Spin Labeling)
+ST112CT,ASL MRI (Arterial Spin Labeling)
+ST113MIN,ASL MRI (Arterial Spin Labeling)
+ST113MAX,ASL MRI (Arterial Spin Labeling)
+ST113MD,ASL MRI (Arterial Spin Labeling)
+ST113AVG,ASL MRI (Arterial Spin Labeling)
+ST113SD,ASL MRI (Arterial Spin Labeling)
+ST113CT,ASL MRI (Arterial Spin Labeling)
+ST114MIN,ASL MRI (Arterial Spin Labeling)
+ST114MAX,ASL MRI (Arterial Spin Labeling)
+ST114MD,ASL MRI (Arterial Spin Labeling)
+ST114AVG,ASL MRI (Arterial Spin Labeling)
+ST114SD,ASL MRI (Arterial Spin Labeling)
+ST114CT,ASL MRI (Arterial Spin Labeling)
+ST115MIN,ASL MRI (Arterial Spin Labeling)
+ST115MAX,ASL MRI (Arterial Spin Labeling)
+ST115MD,ASL MRI (Arterial Spin Labeling)
+ST115AVG,ASL MRI (Arterial Spin Labeling)
+ST115SD,ASL MRI (Arterial Spin Labeling)
+ST115CT,ASL MRI (Arterial Spin Labeling)
+ST116MIN,ASL MRI (Arterial Spin Labeling)
+ST116MAX,ASL MRI (Arterial Spin Labeling)
+ST116MD,ASL MRI (Arterial Spin Labeling)
+ST116AVG,ASL MRI (Arterial Spin Labeling)
+ST116SD,ASL MRI (Arterial Spin Labeling)
+ST116CT,ASL MRI (Arterial Spin Labeling)
+ST117MIN,ASL MRI (Arterial Spin Labeling)
+ST117MAX,ASL MRI (Arterial Spin Labeling)
+ST117MD,ASL MRI (Arterial Spin Labeling)
+ST117AVG,ASL MRI (Arterial Spin Labeling)
+ST117SD,ASL MRI (Arterial Spin Labeling)
+ST117CT,ASL MRI (Arterial Spin Labeling)
+ST118MIN,ASL MRI (Arterial Spin Labeling)
+ST118MAX,ASL MRI (Arterial Spin Labeling)
+ST118MD,ASL MRI (Arterial Spin Labeling)
+ST118AVG,ASL MRI (Arterial Spin Labeling)
+ST118SD,ASL MRI (Arterial Spin Labeling)
+ST118CT,ASL MRI (Arterial Spin Labeling)
+ST119MIN,ASL MRI (Arterial Spin Labeling)
+ST119MAX,ASL MRI (Arterial Spin Labeling)
+ST119MD,ASL MRI (Arterial Spin Labeling)
+ST119AVG,ASL MRI (Arterial Spin Labeling)
+ST119SD,ASL MRI (Arterial Spin Labeling)
+ST119CT,ASL MRI (Arterial Spin Labeling)
+ST120MIN,ASL MRI (Arterial Spin Labeling)
+ST120MAX,ASL MRI (Arterial Spin Labeling)
+ST120MD,ASL MRI (Arterial Spin Labeling)
+ST120AVG,ASL MRI (Arterial Spin Labeling)
+ST120SD,ASL MRI (Arterial Spin Labeling)
+ST120CT,ASL MRI (Arterial Spin Labeling)
+ST121MIN,ASL MRI (Arterial Spin Labeling)
+ST121MAX,ASL MRI (Arterial Spin Labeling)
+ST121MD,ASL MRI (Arterial Spin Labeling)
+ST121AVG,ASL MRI (Arterial Spin Labeling)
+ST121SD,ASL MRI (Arterial Spin Labeling)
+ST121CT,ASL MRI (Arterial Spin Labeling)
+ST123MIN,ASL MRI (Arterial Spin Labeling)
+ST123MAX,ASL MRI (Arterial Spin Labeling)
+ST123MD,ASL MRI (Arterial Spin Labeling)
+ST123AVG,ASL MRI (Arterial Spin Labeling)
+ST123SD,ASL MRI (Arterial Spin Labeling)
+ST123CT,ASL MRI (Arterial Spin Labeling)
+ST124MIN,ASL MRI (Arterial Spin Labeling)
+ST124MAX,ASL MRI (Arterial Spin Labeling)
+ST124MD,ASL MRI (Arterial Spin Labeling)
+ST124AVG,ASL MRI (Arterial Spin Labeling)
+ST124SD,ASL MRI (Arterial Spin Labeling)
+ST124CT,ASL MRI (Arterial Spin Labeling)
+ST125MIN,ASL MRI (Arterial Spin Labeling)
+ST125MAX,ASL MRI (Arterial Spin Labeling)
+ST125MD,ASL MRI (Arterial Spin Labeling)
+ST125AVG,ASL MRI (Arterial Spin Labeling)
+ST125SD,ASL MRI (Arterial Spin Labeling)
+ST125CT,ASL MRI (Arterial Spin Labeling)
+ST127MIN,ASL MRI (Arterial Spin Labeling)
+ST127MAX,ASL MRI (Arterial Spin Labeling)
+ST127MD,ASL MRI (Arterial Spin Labeling)
+ST127AVG,ASL MRI (Arterial Spin Labeling)
+ST127SD,ASL MRI (Arterial Spin Labeling)
+ST127CT,ASL MRI (Arterial Spin Labeling)
+ST128MIN,ASL MRI (Arterial Spin Labeling)
+ST128MAX,ASL MRI (Arterial Spin Labeling)
+ST128MD,ASL MRI (Arterial Spin Labeling)
+ST128AVG,ASL MRI (Arterial Spin Labeling)
+ST128SD,ASL MRI (Arterial Spin Labeling)
+ST128CT,ASL MRI (Arterial Spin Labeling)
+ST129MIN,ASL MRI (Arterial Spin Labeling)
+ST129MAX,ASL MRI (Arterial Spin Labeling)
+ST129MD,ASL MRI (Arterial Spin Labeling)
+ST129AVG,ASL MRI (Arterial Spin Labeling)
+ST129SD,ASL MRI (Arterial Spin Labeling)
+ST129CT,ASL MRI (Arterial Spin Labeling)
+ST130MIN,ASL MRI (Arterial Spin Labeling)
+ST130MAX,ASL MRI (Arterial Spin Labeling)
+ST130MD,ASL MRI (Arterial Spin Labeling)
+ST130AVG,ASL MRI (Arterial Spin Labeling)
+ST130SD,ASL MRI (Arterial Spin Labeling)
+ST130CT,ASL MRI (Arterial Spin Labeling)
+LONIUID.tau,Tau PET Imaging
+SCANDATE.tau,Tau PET Imaging
+SITEID.tau,Tau PET Imaging
+PROCESSDATE.tau,Tau PET Imaging
+IMAGE_RESOLUTION.tau,Tau PET Imaging
+qc_flag.tau,Tau PET Imaging
+TRACER.tau,Trail Making Test (TMT)
+TRACER_SUVR_WARNING.tau,Trail Making Test (TMT)
+META_TEMPORAL_SUVR,Amyloid PET Imaging
+META_TEMPORAL_VOLUME,Amyloid PET Imaging
+CTX_ENTORHINAL_SUVR.tau,Tau PET Imaging
+CTX_ENTORHINAL_VOLUME.tau,Tau PET Imaging
+INFERIORCEREBELLUM_SUVR,Amyloid PET Imaging
+INFERIORCEREBELLUM_VOLUME,Amyloid PET Imaging
+ERODED_SUBCORTICALWM_SUVR.tau,Tau PET Imaging
+ERODED_SUBCORTICALWM_VOLUME.tau,Tau PET Imaging
+BRAINSTEM_SUVR.tau,Tau PET Imaging
+BRAINSTEM_VOLUME.tau,Tau PET Imaging
+CC_ANTERIOR_SUVR.tau,Tau PET Imaging
+CC_ANTERIOR_VOLUME.tau,Tau PET Imaging
+CC_CENTRAL_SUVR.tau,Tau PET Imaging
+CC_CENTRAL_VOLUME.tau,Tau PET Imaging
+CC_MID_ANTERIOR_SUVR.tau,Tau PET Imaging
+CC_MID_ANTERIOR_VOLUME.tau,Tau PET Imaging
+CC_MID_POSTERIOR_SUVR.tau,Tau PET Imaging
+CC_MID_POSTERIOR_VOLUME.tau,Tau PET Imaging
+CC_POSTERIOR_SUVR.tau,Tau PET Imaging
+CC_POSTERIOR_VOLUME.tau,Tau PET Imaging
+CSF_SUVR.tau,Tau PET Imaging
+CSF_VOLUME.tau,Tau PET Imaging
+VENTRICLE_3RD_SUVR.tau,Tau PET Imaging
+VENTRICLE_3RD_VOLUME.tau,Tau PET Imaging
+VENTRICLE_4TH_SUVR.tau,Tau PET Imaging
+VENTRICLE_4TH_VOLUME.tau,Tau PET Imaging
+VENTRICLE_5TH_SUVR.tau,Tau PET Imaging
+VENTRICLE_5TH_VOLUME.tau,Tau PET Imaging
+WM_HYPOINTENSITIES_SUVR.tau,Tau PET Imaging
+WM_HYPOINTENSITIES_VOLUME.tau,Tau PET Imaging
+NON_WM_HYPOINTENSITIES_SUVR.tau,Tau PET Imaging
+NON_WM_HYPOINTENSITIES_VOLUME.tau,Tau PET Imaging
+CTX_BANKSSTS_SUVR.tau,Tau PET Imaging
+CTX_BANKSSTS_VOLUME.tau,Tau PET Imaging
+CTX_CAUDALANTERIORCINGULATE_SUVR.tau,Tau PET Imaging
+CTX_CAUDALANTERIORCINGULATE_VOLUME.tau,Tau PET Imaging
+CTX_CAUDALMIDDLEFRONTAL_SUVR.tau,Tau PET Imaging
+CTX_CAUDALMIDDLEFRONTAL_VOLUME.tau,Tau PET Imaging
+CTX_CUNEUS_SUVR.tau,Tau PET Imaging
+CTX_CUNEUS_VOLUME.tau,Tau PET Imaging
+CTX_FRONTALPOLE_SUVR.tau,Tau PET Imaging
+CTX_FRONTALPOLE_VOLUME.tau,Tau PET Imaging
+CTX_FUSIFORM_SUVR.tau,Tau PET Imaging
+CTX_FUSIFORM_VOLUME.tau,Tau PET Imaging
+CTX_INFERIORPARIETAL_SUVR.tau,Tau PET Imaging
+CTX_INFERIORPARIETAL_VOLUME.tau,Tau PET Imaging
+CTX_INFERIORTEMPORAL_SUVR.tau,Tau PET Imaging
+CTX_INFERIORTEMPORAL_VOLUME.tau,Tau PET Imaging
+CTX_INSULA_SUVR.tau,Tau PET Imaging
+CTX_INSULA_VOLUME.tau,Tau PET Imaging
+CTX_ISTHMUSCINGULATE_SUVR.tau,Tau PET Imaging
+CTX_ISTHMUSCINGULATE_VOLUME.tau,Tau PET Imaging
+CTX_LATERALOCCIPITAL_SUVR.tau,Tau PET Imaging
+CTX_LATERALOCCIPITAL_VOLUME.tau,Tau PET Imaging
+CTX_LATERALORBITOFRONTAL_SUVR.tau,Tau PET Imaging
+CTX_LATERALORBITOFRONTAL_VOLUME.tau,Tau PET Imaging
+CTX_LINGUAL_SUVR.tau,Tau PET Imaging
+CTX_LINGUAL_VOLUME.tau,Tau PET Imaging
+CTX_MEDIALORBITOFRONTAL_SUVR.tau,Tau PET Imaging
+CTX_MEDIALORBITOFRONTAL_VOLUME.tau,Tau PET Imaging
+CTX_MIDDLETEMPORAL_SUVR.tau,Tau PET Imaging
+CTX_MIDDLETEMPORAL_VOLUME.tau,Tau PET Imaging
+CTX_PARACENTRAL_SUVR.tau,Tau PET Imaging
+CTX_PARACENTRAL_VOLUME.tau,Tau PET Imaging
+CTX_PARAHIPPOCAMPAL_SUVR.tau,Tau PET Imaging
+CTX_PARAHIPPOCAMPAL_VOLUME.tau,Tau PET Imaging
+CTX_PARSOPERCULARIS_SUVR.tau,Tau PET Imaging
+CTX_PARSOPERCULARIS_VOLUME.tau,Tau PET Imaging
+CTX_PARSORBITALIS_SUVR.tau,Tau PET Imaging
+CTX_PARSORBITALIS_VOLUME.tau,Tau PET Imaging
+CTX_PARSTRIANGULARIS_SUVR.tau,Tau PET Imaging
+CTX_PARSTRIANGULARIS_VOLUME.tau,Tau PET Imaging
+CTX_PERICALCARINE_SUVR.tau,Tau PET Imaging
+CTX_PERICALCARINE_VOLUME.tau,Tau PET Imaging
+CTX_POSTCENTRAL_SUVR.tau,Tau PET Imaging
+CTX_POSTCENTRAL_VOLUME.tau,Tau PET Imaging
+CTX_POSTERIORCINGULATE_SUVR.tau,Tau PET Imaging
+CTX_POSTERIORCINGULATE_VOLUME.tau,Tau PET Imaging
+CTX_PRECENTRAL_SUVR.tau,Tau PET Imaging
+CTX_PRECENTRAL_VOLUME.tau,Tau PET Imaging
+CTX_PRECUNEUS_SUVR.tau,Tau PET Imaging
+CTX_PRECUNEUS_VOLUME.tau,Tau PET Imaging
+CTX_ROSTRALANTERIORCINGULATE_SUVR.tau,Tau PET Imaging
+CTX_ROSTRALANTERIORCINGULATE_VOLUME.tau,Tau PET Imaging
+CTX_ROSTRALMIDDLEFRONTAL_SUVR.tau,Tau PET Imaging
+CTX_ROSTRALMIDDLEFRONTAL_VOLUME.tau,Tau PET Imaging
+CTX_SUPERIORFRONTAL_SUVR.tau,Tau PET Imaging
+CTX_SUPERIORFRONTAL_VOLUME.tau,Tau PET Imaging
+CTX_SUPERIORPARIETAL_SUVR.tau,Tau PET Imaging
+CTX_SUPERIORPARIETAL_VOLUME.tau,Tau PET Imaging
+CTX_SUPERIORTEMPORAL_SUVR.tau,Tau PET Imaging
+CTX_SUPERIORTEMPORAL_VOLUME.tau,Tau PET Imaging
+CTX_SUPRAMARGINAL_SUVR.tau,Tau PET Imaging
+CTX_SUPRAMARGINAL_VOLUME.tau,Tau PET Imaging
+CTX_TEMPORALPOLE_SUVR.tau,Tau PET Imaging
+CTX_TEMPORALPOLE_VOLUME.tau,Tau PET Imaging
+CTX_TRANSVERSETEMPORAL_SUVR.tau,Tau PET Imaging
+CTX_TRANSVERSETEMPORAL_VOLUME.tau,Tau PET Imaging
+ACCUMBENS_AREA_SUVR.tau,Tau PET Imaging
+ACCUMBENS_AREA_VOLUME.tau,Tau PET Imaging
+AMYGDALA_SUVR.tau,Tau PET Imaging
+AMYGDALA_VOLUME.tau,Tau PET Imaging
+CAUDATE_SUVR.tau,Tau PET Imaging
+CAUDATE_VOLUME.tau,Tau PET Imaging
+CEREBELLUM_CORTEX_SUVR.tau,Tau PET Imaging
+CEREBELLUM_CORTEX_VOLUME.tau,Tau PET Imaging
+CEREBELLUM_WHITE_MATTER_SUVR.tau,Tau PET Imaging
+CEREBELLUM_WHITE_MATTER_VOLUME.tau,Tau PET Imaging
+CEREBRAL_WHITE_MATTER_SUVR.tau,Tau PET Imaging
+CEREBRAL_WHITE_MATTER_VOLUME.tau,Tau PET Imaging
+CHOROID_PLEXUS_SUVR.tau,Tau PET Imaging
+CHOROID_PLEXUS_VOLUME.tau,Tau PET Imaging
+HIPPOCAMPUS_SUVR.tau,Tau PET Imaging
+HIPPOCAMPUS_VOLUME.tau,Tau PET Imaging
+OPTIC_CHIASM_SUVR.tau,Tau PET Imaging
+OPTIC_CHIASM_VOLUME.tau,Tau PET Imaging
+INF_LAT_VENT_SUVR.tau,Tau PET Imaging
+INF_LAT_VENT_VOLUME.tau,Tau PET Imaging
+LATERAL_VENTRICLE_SUVR.tau,Tau PET Imaging
+LATERAL_VENTRICLE_VOLUME.tau,Tau PET Imaging
+PALLIDUM_SUVR.tau,Tau PET Imaging
+PALLIDUM_VOLUME.tau,Tau PET Imaging
+PUTAMEN_SUVR.tau,Tau PET Imaging
+PUTAMEN_VOLUME.tau,Tau PET Imaging
+THALAMUS_PROPER_SUVR.tau,Tau PET Imaging
+THALAMUS_PROPER_VOLUME.tau,Tau PET Imaging
+VENTRALDC_SUVR.tau,Tau PET Imaging
+VENTRALDC_VOLUME.tau,Tau PET Imaging
+VESSEL_SUVR.tau,Tau PET Imaging
+VESSEL_VOLUME.tau,Tau PET Imaging
+CTX_LH_BANKSSTS_SUVR.tau,Tau PET Imaging
+CTX_LH_BANKSSTS_VOLUME.tau,Tau PET Imaging
+CTX_LH_CAUDALANTERIORCINGULATE_SUVR.tau,Tau PET Imaging
+CTX_LH_CAUDALANTERIORCINGULATE_VOLUME.tau,Tau PET Imaging
+CTX_LH_CAUDALMIDDLEFRONTAL_SUVR.tau,Tau PET Imaging
+CTX_LH_CAUDALMIDDLEFRONTAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_CUNEUS_SUVR.tau,Tau PET Imaging
+CTX_LH_CUNEUS_VOLUME.tau,Tau PET Imaging
+CTX_LH_ENTORHINAL_SUVR.tau,Tau PET Imaging
+CTX_LH_ENTORHINAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_FRONTALPOLE_SUVR.tau,Tau PET Imaging
+CTX_LH_FRONTALPOLE_VOLUME.tau,Tau PET Imaging
+CTX_LH_FUSIFORM_SUVR.tau,Tau PET Imaging
+CTX_LH_FUSIFORM_VOLUME.tau,Tau PET Imaging
+CTX_LH_INFERIORPARIETAL_SUVR.tau,Tau PET Imaging
+CTX_LH_INFERIORPARIETAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_INFERIORTEMPORAL_SUVR.tau,Tau PET Imaging
+CTX_LH_INFERIORTEMPORAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_INSULA_SUVR.tau,Tau PET Imaging
+CTX_LH_INSULA_VOLUME.tau,Tau PET Imaging
+CTX_LH_ISTHMUSCINGULATE_SUVR.tau,Tau PET Imaging
+CTX_LH_ISTHMUSCINGULATE_VOLUME.tau,Tau PET Imaging
+CTX_LH_LATERALOCCIPITAL_SUVR.tau,Tau PET Imaging
+CTX_LH_LATERALOCCIPITAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_LATERALORBITOFRONTAL_SUVR.tau,Tau PET Imaging
+CTX_LH_LATERALORBITOFRONTAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_LINGUAL_SUVR.tau,Tau PET Imaging
+CTX_LH_LINGUAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_MEDIALORBITOFRONTAL_SUVR.tau,Tau PET Imaging
+CTX_LH_MEDIALORBITOFRONTAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_MIDDLETEMPORAL_SUVR.tau,Tau PET Imaging
+CTX_LH_MIDDLETEMPORAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_PARACENTRAL_SUVR.tau,Tau PET Imaging
+CTX_LH_PARACENTRAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_PARAHIPPOCAMPAL_SUVR.tau,Tau PET Imaging
+CTX_LH_PARAHIPPOCAMPAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_PARSOPERCULARIS_SUVR.tau,Tau PET Imaging
+CTX_LH_PARSOPERCULARIS_VOLUME.tau,Tau PET Imaging
+CTX_LH_PARSORBITALIS_SUVR.tau,Tau PET Imaging
+CTX_LH_PARSORBITALIS_VOLUME.tau,Tau PET Imaging
+CTX_LH_PARSTRIANGULARIS_SUVR.tau,Tau PET Imaging
+CTX_LH_PARSTRIANGULARIS_VOLUME.tau,Tau PET Imaging
+CTX_LH_PERICALCARINE_SUVR.tau,Tau PET Imaging
+CTX_LH_PERICALCARINE_VOLUME.tau,Tau PET Imaging
+CTX_LH_POSTCENTRAL_SUVR.tau,Tau PET Imaging
+CTX_LH_POSTCENTRAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_POSTERIORCINGULATE_SUVR.tau,Tau PET Imaging
+CTX_LH_POSTERIORCINGULATE_VOLUME.tau,Tau PET Imaging
+CTX_LH_PRECENTRAL_SUVR.tau,Tau PET Imaging
+CTX_LH_PRECENTRAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_PRECUNEUS_SUVR.tau,Tau PET Imaging
+CTX_LH_PRECUNEUS_VOLUME.tau,Tau PET Imaging
+CTX_LH_ROSTRALANTERIORCINGULATE_SUVR.tau,Tau PET Imaging
+CTX_LH_ROSTRALANTERIORCINGULATE_VOLUME.tau,Tau PET Imaging
+CTX_LH_ROSTRALMIDDLEFRONTAL_SUVR.tau,Tau PET Imaging
+CTX_LH_ROSTRALMIDDLEFRONTAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_SUPERIORFRONTAL_SUVR.tau,Tau PET Imaging
+CTX_LH_SUPERIORFRONTAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_SUPERIORPARIETAL_SUVR.tau,Tau PET Imaging
+CTX_LH_SUPERIORPARIETAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_SUPERIORTEMPORAL_SUVR.tau,Tau PET Imaging
+CTX_LH_SUPERIORTEMPORAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_SUPRAMARGINAL_SUVR.tau,Tau PET Imaging
+CTX_LH_SUPRAMARGINAL_VOLUME.tau,Tau PET Imaging
+CTX_LH_TEMPORALPOLE_SUVR.tau,Tau PET Imaging
+CTX_LH_TEMPORALPOLE_VOLUME.tau,Tau PET Imaging
+CTX_LH_TRANSVERSETEMPORAL_SUVR.tau,Tau PET Imaging
+CTX_LH_TRANSVERSETEMPORAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_BANKSSTS_SUVR.tau,Tau PET Imaging
+CTX_RH_BANKSSTS_VOLUME.tau,Tau PET Imaging
+CTX_RH_CAUDALANTERIORCINGULATE_SUVR.tau,Tau PET Imaging
+CTX_RH_CAUDALANTERIORCINGULATE_VOLUME.tau,Tau PET Imaging
+CTX_RH_CAUDALMIDDLEFRONTAL_SUVR.tau,Tau PET Imaging
+CTX_RH_CAUDALMIDDLEFRONTAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_CUNEUS_SUVR.tau,Tau PET Imaging
+CTX_RH_CUNEUS_VOLUME.tau,Tau PET Imaging
+CTX_RH_ENTORHINAL_SUVR.tau,Tau PET Imaging
+CTX_RH_ENTORHINAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_FRONTALPOLE_SUVR.tau,Tau PET Imaging
+CTX_RH_FRONTALPOLE_VOLUME.tau,Tau PET Imaging
+CTX_RH_FUSIFORM_SUVR.tau,Tau PET Imaging
+CTX_RH_FUSIFORM_VOLUME.tau,Tau PET Imaging
+CTX_RH_INFERIORPARIETAL_SUVR.tau,Tau PET Imaging
+CTX_RH_INFERIORPARIETAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_INFERIORTEMPORAL_SUVR.tau,Tau PET Imaging
+CTX_RH_INFERIORTEMPORAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_INSULA_SUVR.tau,Tau PET Imaging
+CTX_RH_INSULA_VOLUME.tau,Tau PET Imaging
+CTX_RH_ISTHMUSCINGULATE_SUVR.tau,Tau PET Imaging
+CTX_RH_ISTHMUSCINGULATE_VOLUME.tau,Tau PET Imaging
+CTX_RH_LATERALOCCIPITAL_SUVR.tau,Tau PET Imaging
+CTX_RH_LATERALOCCIPITAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_LATERALORBITOFRONTAL_SUVR.tau,Tau PET Imaging
+CTX_RH_LATERALORBITOFRONTAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_LINGUAL_SUVR.tau,Tau PET Imaging
+CTX_RH_LINGUAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_MEDIALORBITOFRONTAL_SUVR.tau,Tau PET Imaging
+CTX_RH_MEDIALORBITOFRONTAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_MIDDLETEMPORAL_SUVR.tau,Tau PET Imaging
+CTX_RH_MIDDLETEMPORAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_PARACENTRAL_SUVR.tau,Tau PET Imaging
+CTX_RH_PARACENTRAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_PARAHIPPOCAMPAL_SUVR.tau,Tau PET Imaging
+CTX_RH_PARAHIPPOCAMPAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_PARSOPERCULARIS_SUVR.tau,Tau PET Imaging
+CTX_RH_PARSOPERCULARIS_VOLUME.tau,Tau PET Imaging
+CTX_RH_PARSORBITALIS_SUVR.tau,Tau PET Imaging
+CTX_RH_PARSORBITALIS_VOLUME.tau,Tau PET Imaging
+CTX_RH_PARSTRIANGULARIS_SUVR.tau,Tau PET Imaging
+CTX_RH_PARSTRIANGULARIS_VOLUME.tau,Tau PET Imaging
+CTX_RH_PERICALCARINE_SUVR.tau,Tau PET Imaging
+CTX_RH_PERICALCARINE_VOLUME.tau,Tau PET Imaging
+CTX_RH_POSTCENTRAL_SUVR.tau,Tau PET Imaging
+CTX_RH_POSTCENTRAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_POSTERIORCINGULATE_SUVR.tau,Tau PET Imaging
+CTX_RH_POSTERIORCINGULATE_VOLUME.tau,Tau PET Imaging
+CTX_RH_PRECENTRAL_SUVR.tau,Tau PET Imaging
+CTX_RH_PRECENTRAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_PRECUNEUS_SUVR.tau,Tau PET Imaging
+CTX_RH_PRECUNEUS_VOLUME.tau,Tau PET Imaging
+CTX_RH_ROSTRALANTERIORCINGULATE_SUVR.tau,Tau PET Imaging
+CTX_RH_ROSTRALANTERIORCINGULATE_VOLUME.tau,Tau PET Imaging
+CTX_RH_ROSTRALMIDDLEFRONTAL_SUVR.tau,Tau PET Imaging
+CTX_RH_ROSTRALMIDDLEFRONTAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_SUPERIORFRONTAL_SUVR.tau,Tau PET Imaging
+CTX_RH_SUPERIORFRONTAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_SUPERIORPARIETAL_SUVR.tau,Tau PET Imaging
+CTX_RH_SUPERIORPARIETAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_SUPERIORTEMPORAL_SUVR.tau,Tau PET Imaging
+CTX_RH_SUPERIORTEMPORAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_SUPRAMARGINAL_SUVR.tau,Tau PET Imaging
+CTX_RH_SUPRAMARGINAL_VOLUME.tau,Tau PET Imaging
+CTX_RH_TEMPORALPOLE_SUVR.tau,Tau PET Imaging
+CTX_RH_TEMPORALPOLE_VOLUME.tau,Tau PET Imaging
+CTX_RH_TRANSVERSETEMPORAL_SUVR.tau,Tau PET Imaging
+CTX_RH_TRANSVERSETEMPORAL_VOLUME.tau,Tau PET Imaging
+LEFT_ACCUMBENS_AREA_SUVR.tau,Tau PET Imaging
+LEFT_ACCUMBENS_AREA_VOLUME.tau,Tau PET Imaging
+LEFT_AMYGDALA_SUVR.tau,Tau PET Imaging
+LEFT_AMYGDALA_VOLUME.tau,Tau PET Imaging
+LEFT_CAUDATE_SUVR.tau,Tau PET Imaging
+LEFT_CAUDATE_VOLUME.tau,Tau PET Imaging
+LEFT_CEREBELLUM_CORTEX_SUVR.tau,Tau PET Imaging
+LEFT_CEREBELLUM_CORTEX_VOLUME.tau,Tau PET Imaging
+LEFT_CEREBELLUM_WHITE_MATTER_SUVR.tau,Tau PET Imaging
+LEFT_CEREBELLUM_WHITE_MATTER_VOLUME.tau,Tau PET Imaging
+LEFT_CEREBRAL_WHITE_MATTER_SUVR.tau,Tau PET Imaging
+LEFT_CEREBRAL_WHITE_MATTER_VOLUME.tau,Tau PET Imaging
+LEFT_CHOROID_PLEXUS_SUVR.tau,Tau PET Imaging
+LEFT_CHOROID_PLEXUS_VOLUME.tau,Tau PET Imaging
+LEFT_HIPPOCAMPUS_SUVR.tau,Tau PET Imaging
+LEFT_HIPPOCAMPUS_VOLUME.tau,Tau PET Imaging
+LEFT_INF_LAT_VENT_SUVR.tau,Tau PET Imaging
+LEFT_INF_LAT_VENT_VOLUME.tau,Tau PET Imaging
+LEFT_LATERAL_VENTRICLE_SUVR.tau,Tau PET Imaging
+LEFT_LATERAL_VENTRICLE_VOLUME.tau,Tau PET Imaging
+LEFT_PALLIDUM_SUVR.tau,Tau PET Imaging
+LEFT_PALLIDUM_VOLUME.tau,Tau PET Imaging
+LEFT_PUTAMEN_SUVR.tau,Tau PET Imaging
+LEFT_PUTAMEN_VOLUME.tau,Tau PET Imaging
+LEFT_THALAMUS_PROPER_SUVR.tau,Tau PET Imaging
+LEFT_THALAMUS_PROPER_VOLUME.tau,Tau PET Imaging
+LEFT_VENTRALDC_SUVR.tau,Tau PET Imaging
+LEFT_VENTRALDC_VOLUME.tau,Tau PET Imaging
+LEFT_VESSEL_SUVR.tau,Tau PET Imaging
+LEFT_VESSEL_VOLUME.tau,Tau PET Imaging
+RIGHT_ACCUMBENS_AREA_SUVR.tau,Tau PET Imaging
+RIGHT_ACCUMBENS_AREA_VOLUME.tau,Tau PET Imaging
+RIGHT_AMYGDALA_SUVR.tau,Tau PET Imaging
+RIGHT_AMYGDALA_VOLUME.tau,Tau PET Imaging
+RIGHT_CAUDATE_SUVR.tau,Tau PET Imaging
+RIGHT_CAUDATE_VOLUME.tau,Tau PET Imaging
+RIGHT_CEREBELLUM_CORTEX_SUVR.tau,Tau PET Imaging
+RIGHT_CEREBELLUM_CORTEX_VOLUME.tau,Tau PET Imaging
+RIGHT_CEREBELLUM_WHITE_MATTER_SUVR.tau,Tau PET Imaging
+RIGHT_CEREBELLUM_WHITE_MATTER_VOLUME.tau,Tau PET Imaging
+RIGHT_CEREBRAL_WHITE_MATTER_SUVR.tau,Tau PET Imaging
+RIGHT_CEREBRAL_WHITE_MATTER_VOLUME.tau,Tau PET Imaging
+RIGHT_CHOROID_PLEXUS_SUVR.tau,Tau PET Imaging
+RIGHT_CHOROID_PLEXUS_VOLUME.tau,Tau PET Imaging
+RIGHT_HIPPOCAMPUS_SUVR.tau,Tau PET Imaging
+RIGHT_HIPPOCAMPUS_VOLUME.tau,Tau PET Imaging
+RIGHT_INF_LAT_VENT_SUVR.tau,Tau PET Imaging
+RIGHT_INF_LAT_VENT_VOLUME.tau,Tau PET Imaging
+RIGHT_LATERAL_VENTRICLE_SUVR.tau,Tau PET Imaging
+RIGHT_LATERAL_VENTRICLE_VOLUME.tau,Tau PET Imaging
+RIGHT_PALLIDUM_SUVR.tau,Tau PET Imaging
+RIGHT_PALLIDUM_VOLUME.tau,Tau PET Imaging
+RIGHT_PUTAMEN_SUVR.tau,Tau PET Imaging
+RIGHT_PUTAMEN_VOLUME.tau,Tau PET Imaging
+RIGHT_THALAMUS_PROPER_SUVR.tau,Tau PET Imaging
+RIGHT_THALAMUS_PROPER_VOLUME.tau,Tau PET Imaging
+RIGHT_VENTRALDC_SUVR.tau,Tau PET Imaging
+RIGHT_VENTRALDC_VOLUME.tau,Tau PET Imaging
+RIGHT_VESSEL_SUVR.tau,Tau PET Imaging
+RIGHT_VESSEL_VOLUME.tau,Tau PET Imaging

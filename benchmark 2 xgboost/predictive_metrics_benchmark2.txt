@@ -1,0 +1,9 @@
+==== Benchmark 2: Predictive Performance (XGBoost) ====
+Metric Details: Mean Squared Error (MSE), Mean Absolute Error (MAE), R-Squared (R2)
+Note: Evaluated strictly on observed non-missing test target outcomes.
+
+--- XGBoost Regression (on top 447 selected features) ---
+Target: M24_ADAS13(Alzheimer's Disease Assessment Scale - Cognitive Subscale 13) | R2: 0.7067 | MAE: 4.1898 | MSE: 35.5639
+Target: M24_CDRSB(Clinical Dementia Rating) | R2: 0.7015 | MAE: 0.7298 | MSE: 1.4342
+Target: M24_MMSE(Mini-Mental State Examination) | R2: 0.5827 | MAE: 1.6019 | MSE: 5.1031
+

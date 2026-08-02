@@ -118,21 +118,14 @@ feature_cols <- setdiff(names(dataset), c("RID", "SITEID", "M24_ADAS13", "M24_CD
 row_missingness <- rowMeans(is.na(dataset[, feature_cols]))
 dataset <- dataset[row_missingness <= 0.90, ]
 
-# Calculate P and Sample
+# Keep pristine unique completer subjects (no oversampling with replacement to prevent data leakage)
+dataset <- dataset %>% distinct(RID, .keep_all = TRUE)
 P <- length(feature_cols) - 2 # Exclude RID and SITEID
-target_n <- round(0.40 * P)
 
 cat("==== Longitudinal Sampling Information ====\n")
 cat("Cleaned Baseline Features (P):", P, "\n")
-cat("Target Subjects (n = 40% of P):", target_n, "\n\n")
+cat("Unique Completer Subjects (n):", nrow(dataset), "\n\n")
 
-set.seed(42) # Reproducibility
-if(nrow(dataset) >= target_n) {
-  dataset <- dataset %>% sample_n(target_n)
-} else {
-  cat("Warning: Available Completer patients (", nrow(dataset), ") is less than target n. Sampling with replacement.\n")
-  dataset <- dataset %>% sample_n(target_n, replace = TRUE)
-}
 
 # Separate Features (X) and Targets (Y) into different matrices matching row-by-row
 final_features <- dataset %>% select(all_of(c("RID", "SITEID", feature_cols)))
