@@ -51,7 +51,7 @@ print(f"Loaded {len(panel_to_indices)} active clinical panels.")
 # Identify imaging & biomarker expensive panels to prune
 prunable_panels = [p for p in panel_to_indices.keys() if panel_costs.get(p, 0) >= 500]
 
-print("2. Executing Cost-Aware Greedy Panel Pruning Heuristic (FISTA-backed)...")
+print("2. Executing Greedy Panel Pruning with Cost Tie-Breaking (FISTA-backed)...")
 
 def fit_eval_panel_subset(panel_subset):
     indices = []
@@ -121,7 +121,10 @@ while len(current_panels) > 3:
     for p in candidates:
         test_subset = [x for x in current_panels if x != p]
         r2_sub, cost_sub = fit_eval_panel_subset(test_subset)
-        # Cost-aware efficiency metric: preserve accuracy while rewarding dollar savings (Fixes audit item 3)
+        # Cost tie-breaking heuristic: when two panels yield near-identical R², prefer removing
+        # the more expensive one. Max bonus is (3000/15000)*0.005 = 0.001, well within fold noise,
+        # so this only influences ordering in the flat R² plateau — it cannot trade meaningful
+        # accuracy for savings. For a true Pareto frontier, see the trace output.
         cost_saved = panel_costs.get(p, 0)
         score = r2_sub + (cost_saved / 15000.0) * 0.005
         if score > best_score:
@@ -137,8 +140,9 @@ while len(current_panels) > 3:
     trace.append((len(current_panels), cost_curr, r2_curr, f"Removed {best_p_to_remove}"))
 
 with open(OUTPUT_PATH, 'w', encoding='utf-8') as f:
-    f.write("==== Classical Greedy Panel Pruning Baseline ====\n")
-    f.write("Protocol: Iterative Cost-Aware Greedy Elimination (5-Fold CV)\n\n")
+    f.write("==== Greedy Panel Pruning with Cost Tie-Breaking ====\n")
+    f.write("Protocol: Backward Elimination with Cost Tie-Breaking Heuristic (5-Fold CV)\n")
+    f.write("Note: The cost bonus (max 0.001 R²) only breaks ties in the flat R² plateau.\n\n")
     f.write("Step | Active Panels | Billed Cost ($) | Mean R2 Score | Action\n")
     f.write("-" * 75 + "\n")
     for i, (n_p, cost, r2_val, action) in enumerate(trace):

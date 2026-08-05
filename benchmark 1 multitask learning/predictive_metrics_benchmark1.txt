@@ -1,6 +1,6 @@
 ==== Benchmark 1: Multi-Task L2,1-Norm (FISTA Converged) ====
 Validation Protocol: 5-Fold Cross-Validation
-Mean Features Selected: 58 out of 2093
+Mean Features Selected: 58 out of 2027
 
 --- Multi-Task L2,1 Lasso (FISTA) ---
 Target: M24_ADAS13

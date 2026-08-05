@@ -84,6 +84,25 @@ def load_and_preprocess_adni_data(features_path, targets_path, purge_admin=True,
     X = np.array([[safe_encode_val(row[i], x_header[i]) for i in keep_x_indices] for row in x_rows], dtype=np.float64)
     Y = np.array([[safe_encode_val(row[i], y_header[i]) for i in target_indices] for row in y_rows], dtype=np.float64)
     
+    # Safe global purge: remove columns that are universally dead across ALL subjects.
+    # A column that is all-NaN or has a single unique value in the full dataset is dead in
+    # every possible train fold, so purging globally is safe and leak-free.
+    if purge_zero_variance:
+        obs_counts = np.sum(~np.isnan(X), axis=0)
+        col_keep = np.ones(X.shape[1], dtype=bool)
+        for j in range(X.shape[1]):
+            if obs_counts[j] == 0:
+                col_keep[j] = False
+            else:
+                unique_vals = np.unique(X[~np.isnan(X[:, j]), j])
+                if len(unique_vals) <= 1:
+                    col_keep[j] = False
+        n_purged = int(np.sum(~col_keep))
+        if n_purged > 0:
+            X = X[:, col_keep]
+            feature_names = [feature_names[i] for i in range(len(feature_names)) if col_keep[i]]
+            print(f"Purged {n_purged} universally dead columns (all-NaN or constant). Remaining: {X.shape[1]} features.")
+    
     return X, Y, feature_names, target_names, np.array(rids_x)
 
 def compute_observed_scaling(X_train):
@@ -101,15 +120,26 @@ def compute_observed_scaling(X_train):
     
     return x_means, x_stds
 
-def apply_scaling_and_imputation(X_train, X_test, x_means, x_stds):
+def apply_scaling_and_imputation(X_train, X_test, x_means, x_stds, min_obs_frac=0.1):
     """
     Applies mean imputation using training means, followed by standardization using observed stds.
+    Zeroes out columns where fewer than min_obs_frac of training samples have observed values,
+    preventing extreme test z-scores from sparsely-observed features.
     """
+    # Compute per-feature observation rate BEFORE imputation
+    obs_rate = np.sum(~np.isnan(X_train), axis=0) / X_train.shape[0]
+    
     X_train_imp = np.where(np.isnan(X_train), x_means, X_train)
     X_test_imp = np.where(np.isnan(X_test), x_means, X_test)
     
     X_train_scaled = (X_train_imp - x_means) / x_stds
     X_test_scaled = (X_test_imp - x_means) / x_stds
+    
+    # Zero out underobserved columns to prevent extreme z-scores from sparse features
+    sparse_cols = obs_rate < min_obs_frac
+    if np.any(sparse_cols):
+        X_train_scaled[:, sparse_cols] = 0.0
+        X_test_scaled[:, sparse_cols] = 0.0
     
     return X_train_scaled, X_test_scaled, X_train_imp, X_test_imp
 

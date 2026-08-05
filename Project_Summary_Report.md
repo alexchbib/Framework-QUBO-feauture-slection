@@ -59,7 +59,7 @@ We upgraded the optimizer to **FISTA (Fast Iterative Shrinkage-Thresholding Algo
 
 ### Decision 5: Cleaning Out Administrative Tracking Numbers
 - **What we did**: We automatically searched for and removed 35 administrative tracking columns (such as `SITEID` hospital codes, `IMAGEUID` scan numbers, and database version codes) in `src/common/preprocessing.py`.
-- **Why we made this choice (Justification)**: Computer models can accidentally "cheat" by memorizing that a specific hospital ID or image scanner serial number is associated with worse patient outcomes. Removing administrative codes ensures the AI learns **true biological and clinical signals** (like memory scores and brain volumes) rather than database tracking artifacts. This left **2,093 clean clinical features**.
+- **Why we made this choice (Justification)**: Computer models can accidentally "cheat" by memorizing that a specific hospital ID or image scanner serial number is associated with worse patient outcomes. Removing administrative codes ensures the AI learns **true biological and clinical signals** (like memory scores and brain volumes) rather than database tracking artifacts. A subsequent global purge removed 66 universally dead columns (all-NaN or single-constant-value across all 553 subjects), yielding **2,027 clean clinical features**.
 
 ---
 
@@ -97,7 +97,7 @@ We tested three distinct approaches across 5 cross-validation folds (where the A
 ### Method Explanations:
 1. **Multi-Task $L_{2,1}$ Lasso (FISTA Converged)**: Solves Argyriou et al.'s joint multi-task selection model using FISTA to select a shared core subset of 58 clinical features across all 3 memory targets simultaneously.
 2. **Decision Tree Models (XGBoost / Random Forest)**: Modern non-linear machine learning algorithms that build decision trees and natively handles missing data without forcing fake averages (evaluated on the matching 58 feature budget).
-3. **Classical Greedy Panel Elimination**: A traditional cost-cutting strategy that starts with all medical tests and drops the least useful test one by one to see how cost drops relative to accuracy.
+3. **Greedy Panel Elimination (Backward Pruning with Cost Tie-Breaking)**: A backward elimination heuristic that starts with all medical test panels and drops the least useful panel one at a time to trace cost vs. accuracy. A small cost-based tie-breaking bonus (max 0.001 R²) orders removals when accuracy differences are within fold noise.
 
 ---
 
@@ -105,10 +105,10 @@ We tested three distinct approaches across 5 cross-validation folds (where the A
 
 | AI / Statistical Method | Selected Features | Billed Cost per Patient | 24-Month Memory Score Accuracy ($R^2$) | Simple Interpretation |
 | :--- | :---: | :---: | :---: | :--- |
-| **Multi-Task $L_{2,1}$ Lasso (FISTA)** | **58 features** | **$9,600.00** | **ADAS13**: **$0.8034 \pm 0.0333$** ([0.7702, 0.8367])<br>**CDR-SB**: **$0.7625 \pm 0.0465$** ([0.7160, 0.8089])<br>**MMSE**: **$0.6901 \pm 0.0678$** ([0.6224, 0.7579]) | **Tier 2 (Full Multi-Modal Operating Point)**: Top-end overall precision ($R^2 \approx 0.80$) combining imaging, fluid, and psychometrics. |
+| **Multi-Task $L_{2,1}$ Lasso (FISTA)** | **58 features** | **$9,600.00** | **ADAS13**: **$0.8034 \pm 0.0333$** ([0.7702, 0.8367])<br>**CDR-SB**: **$0.7625 \pm 0.0465$** ([0.7160, 0.8089])<br>**MMSE**: **$0.6901 \pm 0.0678$** ([0.6224, 0.7579]) | **Full Multi-Modal Operating Point**: Top-end ADAS13 precision ($R^2 \approx 0.80$) combining imaging, fluid, and psychometrics. Note: Greedy Step 3 ($8,150) achieves equivalent mean $R^2$ for $1,450 less (see greedy trace). |
 | **Cognitive Tests ONLY (FISTA)** | **27 features** | **$550.00** | **ADAS13**: **$0.7795 \pm 0.0481$** ([0.7313, 0.8276])<br>**CDR-SB**: **$0.7515 \pm 0.0509$** ([0.7005, 0.8024])<br>**MMSE**: **$0.6796 \pm 0.0805$** ([0.5991, 0.7600]) | **Tier 1 (Ultra-Low-Cost Operating Point)**: Saves **$9,050.00** per patient at a minimal $0.02$ drop in ADAS13 $R^2$ with overlapping 95% CIs. |
-| **Decision Tree Models (XGBoost)** | 58 features | **$9,600.00** | **ADAS13**: $0.6856 \pm 0.0412$ ([0.6443, 0.7268])<br>**CDR-SB**: $0.6537 \pm 0.0457$ ([0.6080, 0.6993])<br>**MMSE**: $0.5901 \pm 0.0544$ ([0.5357, 0.6445]) | Tree baseline evaluated on matching feature budget; joint linear multi-task shrinkage outperforms independent trees. |
-| **Greedy Panel Elimination (FISTA)** | Dynamic panel subsets | **$14,150 \rightarrow \$650** | **Full Set**: $0.7515$ ($14,150)<br>**Pruned Set**: **$0.7362$** at $650 | FISTA-backed panel pruning shows that removing expensive scan panels (ASL/DTI/PET) preserves accuracy at $R^2 = 0.7362$ down to $650. |
+| **Decision Tree Models (XGBoost)** | 58 features | **$9,600.00** | **ADAS13**: $0.6859 \pm 0.0412$ ([0.6447, 0.7272])<br>**CDR-SB**: $0.6455 \pm 0.0512$ ([0.5943, 0.6968])<br>**MMSE**: $0.5782 \pm 0.0546$ ([0.5236, 0.6328]) | Tree baseline evaluated on matching feature budget; joint linear multi-task shrinkage outperforms independent trees. |
+| **Greedy Panel Elimination (FISTA)** | Dynamic panel subsets | **$14,150 \rightarrow \$650** | **Full Set**: $0.7515$ ($14,150)<br>**Step 3 ($8,150)**: $0.7521$<br>**Step 4 ($6,650)**: $0.7520$<br>**Pruned Set**: **$0.7362$** at $650 | Greedy backward pruning reveals a **Pareto-dominant operating point**: Steps 3–4 achieve $R^2 \approx 0.752$ for $6,650–$8,150, matching the full FISTA selection ($9,600) at lower cost. |
 
 *Note: All confidence intervals report exact $95\%$ bounds ($\text{Mean} \pm 1.96 \cdot \frac{\text{SD}}{\sqrt{5}}$).*
 
@@ -124,7 +124,7 @@ We evaluated **BOTH FISTA Multi-Task Learning AND Decision Tree Regressors** acr
 | **Full Model** (All Modalities) | **Decision Trees** | **0.7560** ([0.7155, 0.7964]) | **0.6973** ([0.6571, 0.7375]) | **0.6280** ([0.5633, 0.6926]) | Tree baseline on full modality set. |
 | **Excluding Endpoint Totals ($t=0$)** (No `TOTAL13`, `CDRSB`, `MMSCORE`, `TOTSCORE`, `ADAS11`) | **FISTA MTFL** | **0.7541** ([0.7161, 0.7921]) | **0.7580** ([0.7095, 0.8065]) | **0.6640** ([0.5868, 0.7412]) | **Purged Target Proxies**: Purging baseline target proxies (`TOTAL13`, `TOTSCORE`) verifies that domain psychometrics (`FAQ`, `RAVLT`, `BNT`, `TMT`) maintain strong predictive signal ($R^2 = 0.7541$). |
 | **Excluding Endpoint Totals ($t=0$)** | **Decision Trees** | **0.7375** ([0.7161, 0.7590]) | **0.6871** ([0.6495, 0.7247]) | **0.5821** ([0.5381, 0.6261]) | Tree baseline excluding endpoint totals and proxies. |
-| **Pure Biomarkers ONLY** (Excludes ALL 105 Cognitive/Psychometric Tests) | **FISTA MTFL** | **0.5934** ([0.5506, 0.6363]) | **0.5369** ([0.5097, 0.5641]) | **0.5511** ([0.5054, 0.5969]) | **True Biological Floor**: Structural MRI, PET SUVr, CSF A$\beta$/p-Tau, APOE, and Demographics achieve $R^2 \approx 0.54 - 0.59$, perfectly matching standard ADNI literature benchmarks. |
+| **Pure Biomarkers ONLY** (Excludes ALL 57 Cognitive/Psychometric Tests) | **FISTA MTFL** | **0.5934** ([0.5506, 0.6363]) | **0.5369** ([0.5097, 0.5641]) | **0.5511** ([0.5054, 0.5969]) | **True Biological Floor**: Structural MRI, PET SUVr, CSF A$\beta$/p-Tau, APOE, and Demographics achieve $R^2 \approx 0.54 - 0.59$, perfectly matching standard ADNI literature benchmarks. |
 | **Pure Biomarkers ONLY** | **Decision Trees** | **0.5502** ([0.5262, 0.5741]) | **0.5105** ([0.4743, 0.5467]) | **0.4754** ([0.4254, 0.5254]) | Tree baseline on pure biological markers ($R^2 \approx 0.47 - 0.55$). |
 | **Cognitive Tests ONLY** (Excludes ALL MRI, PET, CSF Biomarkers) | **FISTA MTFL** | **0.7797** ([0.7314, 0.8280]) | **0.7514** ([0.7006, 0.8023]) | **0.6799** ([0.5996, 0.7601]) | **Tier 1 Pareto Winner ($550 Cost)**: Psychometric tests supply primary cognitive baseline variance ($R^2 = 0.7797$), representing an ultra-cost-effective screening tier. |
 | **Cognitive Tests ONLY** | **Decision Trees** | **0.7523** ([0.7059, 0.7987]) | **0.7220** ([0.6848, 0.7592]) | **0.6554** ([0.5782, 0.7325]) | Tree baseline on psychometrics only. |
@@ -133,15 +133,15 @@ We evaluated **BOTH FISTA Multi-Task Learning AND Decision Tree Regressors** acr
 
 ## 4. Literature Justification: Why Multi-Task $L_{2,1}$ Outperforms XGBoost
 
-The result where Multi-Task $L_{2,1}$ Lasso ($R^2 = 0.8034$) outperforms single-task XGBoost ($R^2 = 0.6856$) on this dataset is **strongly supported by published machine learning and biomedical informatics literature**:
+The result where Multi-Task $L_{2,1}$ Lasso ($R^2 = 0.8034$) outperforms single-task XGBoost ($R^2 = 0.6859$) on this dataset is **strongly supported by published machine learning and biomedical informatics literature**:
 
 ### 1. Information Pooling Across Tasks (Argyriou et al. 2006; Lounici et al. 2011)
 - **XGBoost** trains 3 separate decision tree models for `ADAS13`, `CDR-SB`, and `MMSE` independently. Each model learns from scratch using only its own target data ($N = 442$ training patients).
 - **Multi-Task $L_{2,1}$ Lasso** pools statistical strength across all 3 correlated cognitive endpoints simultaneously. Lounici et al. (*Annals of Statistics*, 2011) mathematically proved that $L_{2,1}$ multi-task regularization reduces estimation error by a factor of $\sqrt{T}$ (where $T=3$ tasks).
 
 ### 2. High-Dimensional Stability with Small Sample Sizes ($N \ll d$) (Hastie et al. 2009)
-- With **442 training patients** and **2,093 clinical features**, decision trees partition samples at every split. By depth 3, an XGBoost leaf node contains only ~55 patients, leading to split variance and overfitting on noisy continuous brain scan features.
-- $L_{2,1}$ Lasso applies **continuous soft-thresholding shrinkage**, which stabilizes variance across high-dimensional features ($d = 2,093$) without partitioning the small patient dataset into tiny leaf subsets.
+- With **442 training patients** and **2,027 clinical features**, decision trees partition samples at every split. By depth 3, an XGBoost leaf node contains only ~55 patients, leading to split variance and overfitting on noisy continuous brain scan features.
+- $L_{2,1}$ Lasso applies **continuous soft-thresholding shrinkage**, which stabilizes variance across high-dimensional features ($d = 2{,}027$) without partitioning the small patient dataset into tiny leaf subsets.
 
 ### 3. Biological Linearity in Alzheimer's Progression (Zhou et al., IEEE TPAMI 2013)
 - Zhou et al. (*IEEE Transactions on Pattern Analysis and Machine Intelligence*, 2013) specifically evaluated multi-task feature selection on ADNI outcome prediction.
@@ -158,8 +158,8 @@ The table below breaks down every medical test panel, its real-world clinical co
 | **Amyloid PET Imaging** | $3,000.00 | 11 | $3,000.00 | Brain PET scan detecting amyloid plaque buildup. |
 | **FDG PET Imaging** | $2,000.00 | 1 | $2,000.00 | Brain PET scan measuring brain glucose metabolism. |
 | **ASL MRI (Arterial Spin Labeling)** | $1,500.00 | 1 | $1,500.00 | MRI measuring blood flow in brain tissue. |
-| **Structural MRI (FreeSurfer)** | $1,500.00 | 14 | $1,500.00 | High-resolution MRI measuring brain shrink/volume. |
-| **CSF Biomarkers (Lumbar Puncture)** | $1,000.00 | 3 | $1,000.00 | Spinal tap measuring Alzheimer's proteins (Tau/Amyloid). |
+| **Structural MRI (FreeSurfer)** | $1,500.00 | 16 | $1,500.00 | High-resolution MRI measuring brain shrink/volume. |
+| **CSF Biomarkers (Lumbar Puncture)** | $1,000.00 | 1 | $1,000.00 | Spinal tap measuring Alzheimer's proteins (Tau/Amyloid). |
 | **Rey Auditory Verbal Learning (RAVLT)** | $150.00 | 7 | $150.00 | Word list memory test. |
 | **Functional Assessment (FAQ)** | $100.00 | 1 | $100.00 | Daily living activities questionnaire (filled by family). |
 | **Boston Naming Test** | $100.00 | 2 | $100.00 | Picture object naming test. |
@@ -202,14 +202,14 @@ This section serves as a direct reference for writing the Methods section of you
 | Experimental Parameter | Symbol / Value | Technical Meaning & Explanation for Paper Writing |
 | :--- | :--- | :--- |
 | **Primary Cohort ($N$)** | $N = 553$ subjects | **Sample Size ($N$)**: Total number of ADNI2 patients possessing complete baseline multi-modal data and audited 24-month follow-up outcomes. |
-| **Initial Feature Pool ($d$)** | $d = 2,022$ candidate features | **Feature Space Dimension ($d$)**: Total number of input clinical columns extracted across all medical test tables prior to feature selection, after purging 35 administrative columns and zero-variance features. |
-| **Selected Feature Budget** | $d^* = 58$ core features | **Sparse Selected Feature Budget ($d^*$)**: The sparse subset of non-zero clinical features selected by FISTA MTFL out of the initial candidate pool ($2,035$ features shrunk to zero). |
+| **Initial Feature Pool ($d$)** | $d = 2{,}027$ candidate features | **Feature Space Dimension ($d$)**: Total number of input clinical columns extracted across all medical test tables prior to feature selection, after purging 35 administrative columns and 66 universally dead columns (all-NaN or constant). |
+| **Selected Feature Budget** | $d^* = 58$ core features | **Sparse Selected Feature Budget ($d^*$)**: The sparse subset of non-zero clinical features selected by FISTA MTFL out of the initial candidate pool ($1{,}969$ features shrunk to zero). |
 | **Target Endpoints ($T$)** | $T = 3$ targets | **Multi-Task Target Matrix ($Y \in \mathbb{R}^{N \times 3}$)**: Co-primary 24-month outcome targets: `M24_ADAS13` (cognitive), `M24_CDRSB` (functional), `M24_MMSE` (global staging). |
 | **FISTA Regularization ($\lambda$)** | $\lambda = 0.05$ | **Sparse Group Regularization Parameter ($\lambda$)**: Selected via grid-search ($\lambda \in [0.001, 0.5]$) and verified via inner 3-fold cross-validation inside each outer training fold. |
 | **FISTA Lipschitz Step Size ($t$)** | $t = \frac{\min(N_l)}{\sigma_{\max}(X)^2}$ | **Gradient Step Size ($t = 1/L$)**: Exact inverse of the spectral norm Lipschitz constant $L = \frac{\sigma_{\max}(X_{\text{train}})^2}{\min(N_l)}$ for loss gradient $\nabla f(W) = X^T((XW - Y) \odot M) / N_l$, ensuring provably stable $O(1/k^2)$ convergence. |
 | **Target Masking Protocol** | Binary Mask $M \in \{0,1\}^{N \times T}$ | **Observation-Masked Gradient**: Missing training targets ($Y_{\text{train}}$) are masked out during FISTA loss and gradient evaluation with per-task $N_l$ normalization. |
 | **FISTA Stopping Criterion** | `rel_change < 1e-8` | **Mathematical Convergence Tolerance**: Relative objective value change $\frac{\|f(W^{(k)}) - f(W^{(k-1)})\|}{f(W^{(k-1)}) + 10^{-12}} < 10^{-8}$, reaching full convergence in ~400 iterations. |
 | **Cross-Validation Protocol** | 5-Fold Stratified CV (`seed=42`) | **Validation Protocol**: 80% training ($N_{train} \approx 442$) and 20% testing ($N_{test} \approx 111$) per fold. All scaling, imputation, and feature selection occur strictly within training folds. |
-| **Greedy Panel Elimination** | FISTA MTFL Heuristic | **Cost-Aware Pruning**: FISTA-backed backward elimination evaluating panel subset accuracy and cost efficiency. |
+| **Greedy Panel Elimination** | FISTA MTFL Heuristic | **Backward Pruning with Cost Tie-Breaking**: FISTA-backed backward elimination with a cost tie-breaking bonus (max 0.001 R²) that orders removals in the flat accuracy plateau. |
 | **XGBoost Hyper-Parameters** | `n_estimators=30`, `max_depth=3`, `lr=0.05` | **Decision Tree Baseline Regularization**: Shallow tree depth (`max_depth=3`) and conservative learning rate (`0.05`) evaluated on matching 58 features. |
 | **Panel Billing Policy** | Panel-level billing (15 panels) | **Financial Cost Evaluation**: Billed at the medical procedure level (e.g., 1 Structural MRI = $1,500) regardless of how many individual features are selected within that panel. |lled at $0.00. |

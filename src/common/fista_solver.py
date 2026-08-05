@@ -82,7 +82,7 @@ def select_lambda_inner_cv(X_tr_sc, Y_tr_sc, target_mask, lambda_candidates=[0.0
             mask_in_tr = target_mask[in_tr_idx]
             mask_in_val = target_mask[in_val_idx]
             
-            W_in = solve_fista_l21_mtfl(X_in_tr, Y_in_tr, target_mask=mask_in_tr.astype(float), lambda_val=l_cand, max_iters=2000, tol=1e-6)
+            W_in = solve_fista_l21_mtfl(X_in_tr, Y_in_tr, target_mask=mask_in_tr.astype(float), lambda_val=l_cand, max_iters=5000, tol=1e-8)
             preds_val = X_in_val.dot(W_in)
             
             val_r2s = []
