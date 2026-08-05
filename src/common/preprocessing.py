@@ -120,26 +120,17 @@ def compute_observed_scaling(X_train):
     
     return x_means, x_stds
 
-def apply_scaling_and_imputation(X_train, X_test, x_means, x_stds, min_obs_frac=0.1):
+def apply_scaling_and_imputation(X_train, X_test, x_means, x_stds, max_z=10.0):
     """
     Applies mean imputation using training means, followed by standardization using observed stds.
-    Zeroes out columns where fewer than min_obs_frac of training samples have observed values,
-    preventing extreme test z-scores from sparsely-observed features.
+    Clips standardized features to [-max_z, max_z] (default +-10.0) to structurally bound
+    extreme z-score outliers from small-sample std estimation.
     """
-    # Compute per-feature observation rate BEFORE imputation
-    obs_rate = np.sum(~np.isnan(X_train), axis=0) / X_train.shape[0]
-    
     X_train_imp = np.where(np.isnan(X_train), x_means, X_train)
     X_test_imp = np.where(np.isnan(X_test), x_means, X_test)
     
-    X_train_scaled = (X_train_imp - x_means) / x_stds
-    X_test_scaled = (X_test_imp - x_means) / x_stds
-    
-    # Zero out underobserved columns to prevent extreme z-scores from sparse features
-    sparse_cols = obs_rate < min_obs_frac
-    if np.any(sparse_cols):
-        X_train_scaled[:, sparse_cols] = 0.0
-        X_test_scaled[:, sparse_cols] = 0.0
+    X_train_scaled = np.clip((X_train_imp - x_means) / x_stds, -max_z, max_z)
+    X_test_scaled = np.clip((X_test_imp - x_means) / x_stds, -max_z, max_z)
     
     return X_train_scaled, X_test_scaled, X_train_imp, X_test_imp
 

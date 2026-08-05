@@ -5,10 +5,11 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from src.common.preprocessing import get_kfold_splits
 
-def solve_fista_l21_mtfl(X_sc, Y_sc, target_mask=None, lambda_val=0.05, max_iters=5000, tol=1e-8):
+def solve_fista_l21_mtfl(X_sc, Y_sc, target_mask=None, lambda_val=0.05, max_iters=5000, tol=1e-8, W_init=None):
     """
     Fast Iterative Shrinkage-Thresholding Algorithm (FISTA) for L2,1 Group Lasso.
     Features exact target observation masking and provably stable Lipschitz step size under N_l task counts.
+    Supports optional W_init for warm-starting across hyper-parameter sweeps.
     """
     N, d = X_sc.shape
     T = Y_sc.shape[1]
@@ -25,7 +26,10 @@ def solve_fista_l21_mtfl(X_sc, Y_sc, target_mask=None, lambda_val=0.05, max_iter
     L = (s_val[0]**2) / min_N_l
     step = 1.0 / L
     
-    W = np.zeros((d, T), dtype=np.float64)
+    if W_init is not None and W_init.shape == (d, T):
+        W = W_init.copy()
+    else:
+        W = np.zeros((d, T), dtype=np.float64)
     Z = W.copy()
     t_fista = 1.0
     
@@ -69,20 +73,33 @@ def solve_fista_l21_mtfl(X_sc, Y_sc, target_mask=None, lambda_val=0.05, max_iter
 def select_lambda_inner_cv(X_tr_sc, Y_tr_sc, target_mask, lambda_candidates=[0.001, 0.01, 0.05, 0.1, 0.5]):
     """
     Inner 3-fold cross-validation to select optimal lambda within each outer training fold.
+    Uses warm-starting across lambda candidates to accelerate convergence.
     """
     inner_splits = get_kfold_splits(X_tr_sc.shape[0], n_splits=3, seed=42)
     best_lambda = lambda_candidates[0]
     best_inner_r2 = -np.inf
     
+    # Store previous warm-start weights per fold split
+    warm_starts = {fold_idx: None for fold_idx in range(len(inner_splits))}
+    
     for l_cand in lambda_candidates:
         inner_r2s = []
-        for in_tr_idx, in_val_idx in inner_splits:
+        for fold_idx, (in_tr_idx, in_val_idx) in enumerate(inner_splits):
             X_in_tr, X_in_val = X_tr_sc[in_tr_idx], X_tr_sc[in_val_idx]
             Y_in_tr, Y_in_val = Y_tr_sc[in_tr_idx], Y_tr_sc[in_val_idx]
             mask_in_tr = target_mask[in_tr_idx]
             mask_in_val = target_mask[in_val_idx]
             
-            W_in = solve_fista_l21_mtfl(X_in_tr, Y_in_tr, target_mask=mask_in_tr.astype(float), lambda_val=l_cand, max_iters=5000, tol=1e-8)
+            W_in = solve_fista_l21_mtfl(
+                X_in_tr, Y_in_tr, 
+                target_mask=mask_in_tr.astype(float), 
+                lambda_val=l_cand, 
+                max_iters=5000, 
+                tol=1e-8,
+                W_init=warm_starts[fold_idx]
+            )
+            warm_starts[fold_idx] = W_in
+            
             preds_val = X_in_val.dot(W_in)
             
             val_r2s = []

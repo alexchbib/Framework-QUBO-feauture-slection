@@ -4,11 +4,11 @@ Note: The cost bonus (max 0.001 R²) only breaks ties in the flat R² plateau.
 
 Step | Active Panels | Billed Cost ($) | Mean R2 Score | Action
 ---------------------------------------------------------------------------
-   0 |            18 | $    14,150.00 |        0.7515 | Full Panel Set
-   1 |            17 | $    11,150.00 |        0.7520 | Removed Tau PET Imaging
-   2 |            16 | $     9,650.00 |        0.7518 | Removed DTI MRI (Diffusion Tensor)
-   3 |            15 | $     8,150.00 |        0.7521 | Removed Structural MRI (FreeSurfer)
-   4 |            14 | $     6,650.00 |        0.7520 | Removed ASL MRI (Arterial Spin Labeling)
-   5 |            13 | $     3,650.00 |        0.7511 | Removed Amyloid PET Imaging
-   6 |            12 | $     2,650.00 |        0.7477 | Removed CSF Biomarkers (Lumbar Puncture)
-   7 |            11 | $       650.00 |        0.7362 | Removed FDG PET Imaging
+   0 |            18 | $    14,150.00 |        0.7513 | Full Panel Set
+   1 |            17 | $    11,150.00 |        0.7513 | Removed Tau PET Imaging
+   2 |            16 | $     9,650.00 |        0.7516 | Removed ASL MRI (Arterial Spin Labeling)
+   3 |            15 | $     8,650.00 |        0.7512 | Removed CSF Biomarkers (Lumbar Puncture)
+   4 |            14 | $     7,150.00 |        0.7512 | Removed DTI MRI (Diffusion Tensor)
+   5 |            13 | $     5,650.00 |        0.7510 | Removed Structural MRI (FreeSurfer)
+   6 |            12 | $     2,650.00 |        0.7472 | Removed Amyloid PET Imaging
+   7 |            11 | $       650.00 |        0.7359 | Removed FDG PET Imaging

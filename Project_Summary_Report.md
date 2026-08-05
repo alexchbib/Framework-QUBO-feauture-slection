@@ -63,11 +63,12 @@ We upgraded the optimizer to **FISTA (Fast Iterative Shrinkage-Thresholding Algo
 
 ---
 
-### Decision 6: Preventing Data Leakage & Proper Feature Scaling
-- **What we did**: We calculated feature averages and standard deviations **strictly on observed (non-missing) entries within each training fold** before filling missing values with training averages.
+### Decision 6: Preventing Data Leakage, Proper Feature Scaling & Outlier Guarding
+- **What we did**: We calculated feature averages and standard deviations **strictly on observed (non-missing) entries within each training fold** before filling missing values with training averages. In addition, we applied a **z-score outlier clipping guard ($\pm 10.0$)** to standardized features.
 - **Why we made this choice (Justification)**: 
   1. **No Cheating (Fair Testing)**: If you calculate averages using the whole dataset before splitting into training and testing sets, information from future test patients "leaks" into the model's training phase. Doing it strictly per training fold ensures real-world testing accuracy.
   2. **No Scale Inflation**: Previous code filled missing values with zero before scaling, which artificially shrank the standard deviation and blew up missing scan values by 1.85x to 2.20x. Calculating scaling stats strictly on observed real data preserves true physical units.
+  3. **Structural Outlier Guard**: Clipping standardized feature matrices to $[-10.0, 10.0]$ prevents extreme test set z-scores stemming from small-sample standard deviation estimation on partially-observed features, protecting linear model predictions against unexpected numerical spikes.
 
 ---
 
@@ -105,8 +106,8 @@ We tested three distinct approaches across 5 cross-validation folds (where the A
 
 | AI / Statistical Method | Selected Features | Billed Cost per Patient | 24-Month Memory Score Accuracy ($R^2$) | Simple Interpretation |
 | :--- | :---: | :---: | :---: | :--- |
-| **Multi-Task $L_{2,1}$ Lasso (FISTA)** | **58 features** | **$9,600.00** | **ADAS13**: **$0.8034 \pm 0.0333$** ([0.7702, 0.8367])<br>**CDR-SB**: **$0.7625 \pm 0.0465$** ([0.7160, 0.8089])<br>**MMSE**: **$0.6901 \pm 0.0678$** ([0.6224, 0.7579]) | **Full Multi-Modal Operating Point**: Top-end ADAS13 precision ($R^2 \approx 0.80$) combining imaging, fluid, and psychometrics. Note: Greedy Step 3 ($8,150) achieves equivalent mean $R^2$ for $1,450 less (see greedy trace). |
-| **Cognitive Tests ONLY (FISTA)** | **27 features** | **$550.00** | **ADAS13**: **$0.7795 \pm 0.0481$** ([0.7313, 0.8276])<br>**CDR-SB**: **$0.7515 \pm 0.0509$** ([0.7005, 0.8024])<br>**MMSE**: **$0.6796 \pm 0.0805$** ([0.5991, 0.7600]) | **Tier 1 (Ultra-Low-Cost Operating Point)**: Saves **$9,050.00** per patient at a minimal $0.02$ drop in ADAS13 $R^2$ with overlapping 95% CIs. |
+| **Multi-Task $L_{2,1}$ Lasso (FISTA)** | **58 features** | **$9,600.00** | **ADAS13**: **$0.8026 \pm 0.0324$** ([0.7702, 0.8350])<br>**CDR-SB**: **$0.7627 \pm 0.0461$** ([0.7167, 0.8088])<br>**MMSE**: **$0.6899 \pm 0.0665$** ([0.6234, 0.7565]) | **Full Multi-Modal Operating Point**: Top-end ADAS13 precision ($R^2 \approx 0.80$) combining imaging, fluid, and psychometrics. Note: Greedy Step 3 ($8,150) achieves equivalent mean $R^2$ for $1,450 less (see greedy trace). |
+| **Cognitive Tests ONLY (FISTA)** | **27 features** | **$550.00** | **ADAS13**: **$0.7785 \pm 0.0467$** ([0.7318, 0.8252])<br>**CDR-SB**: **$0.7516 \pm 0.0505$** ([0.7011, 0.8021])<br>**MMSE**: **$0.6790 \pm 0.0785$** ([0.6006, 0.7575]) | **Tier 1 (Ultra-Low-Cost Operating Point)**: Saves **$9,050.00** per patient at a minimal $0.02$ drop in ADAS13 $R^2$ with overlapping 95% CIs. |
 | **Decision Tree Models (XGBoost)** | 58 features | **$9,600.00** | **ADAS13**: $0.6859 \pm 0.0412$ ([0.6447, 0.7272])<br>**CDR-SB**: $0.6455 \pm 0.0512$ ([0.5943, 0.6968])<br>**MMSE**: $0.5782 \pm 0.0546$ ([0.5236, 0.6328]) | Tree baseline evaluated on matching feature budget; joint linear multi-task shrinkage outperforms independent trees. |
 | **Greedy Panel Elimination (FISTA)** | Dynamic panel subsets | **$14,150 \rightarrow \$650** | **Full Set**: $0.7515$ ($14,150)<br>**Step 3 ($8,150)**: $0.7521$<br>**Step 4 ($6,650)**: $0.7520$<br>**Pruned Set**: **$0.7362$** at $650 | Greedy backward pruning reveals a **Pareto-dominant operating point**: Steps 3–4 achieve $R^2 \approx 0.752$ for $6,650–$8,150, matching the full FISTA selection ($9,600) at lower cost. |
 
@@ -119,21 +120,21 @@ We tested three distinct approaches across 5 cross-validation folds (where the A
 We evaluated **BOTH FISTA Multi-Task Learning AND Decision Tree Regressors** across all 4 feature modality subsets:
 
 | Feature Modality Subset | Model / Baseline | ADAS13 $R^2$ (95% CI) | CDR-SB $R^2$ (95% CI) | MMSE $R^2$ (95% CI) | Scientific Justification & Findings |
-| :--- | :--- | :---: | :---: | :---: | :--- |
-| **Full Model** (All Modalities) | **FISTA MTFL** | **0.8034** ([0.7702, 0.8367]) | **0.7625** ([0.7160, 0.8089]) | **0.6901** ([0.6224, 0.7579]) | Top-performing multi-modal clinical forecasting model combining cognitive anchors, imaging, and fluid biomarkers. |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Full Model** (All Modalities) | **FISTA MTFL** | **0.8026** ([0.7702, 0.8350]) | **0.7627** ([0.7167, 0.8088]) | **0.6899** ([0.6234, 0.7565]) | Top-performing multi-modal clinical forecasting model combining cognitive anchors, imaging, and fluid biomarkers. |
 | **Full Model** (All Modalities) | **Decision Trees** | **0.7560** ([0.7155, 0.7964]) | **0.6973** ([0.6571, 0.7375]) | **0.6280** ([0.5633, 0.6926]) | Tree baseline on full modality set. |
-| **Excluding Endpoint Totals ($t=0$)** (No `TOTAL13`, `CDRSB`, `MMSCORE`, `TOTSCORE`, `ADAS11`) | **FISTA MTFL** | **0.7541** ([0.7161, 0.7921]) | **0.7580** ([0.7095, 0.8065]) | **0.6640** ([0.5868, 0.7412]) | **Purged Target Proxies**: Purging baseline target proxies (`TOTAL13`, `TOTSCORE`) verifies that domain psychometrics (`FAQ`, `RAVLT`, `BNT`, `TMT`) maintain strong predictive signal ($R^2 = 0.7541$). |
+| **Excluding Endpoint Totals ($t=0$)** (No `TOTAL13`, `CDRSB`, `MMSCORE`, `TOTSCORE`, `ADAS11`) | **FISTA MTFL** | **0.7507** ([0.7139, 0.7874]) | **0.7577** ([0.7096, 0.8058]) | **0.6616** ([0.5857, 0.7375]) | **Purged Target Proxies**: Purging baseline target proxies (`TOTAL13`, `TOTSCORE`) verifies that domain psychometrics (`FAQ`, `RAVLT`, `BNT`, `TMT`) maintain strong predictive signal ($R^2 = 0.7507$). |
 | **Excluding Endpoint Totals ($t=0$)** | **Decision Trees** | **0.7375** ([0.7161, 0.7590]) | **0.6871** ([0.6495, 0.7247]) | **0.5821** ([0.5381, 0.6261]) | Tree baseline excluding endpoint totals and proxies. |
 | **Pure Biomarkers ONLY** (Excludes ALL 57 Cognitive/Psychometric Tests) | **FISTA MTFL** | **0.5934** ([0.5506, 0.6363]) | **0.5369** ([0.5097, 0.5641]) | **0.5511** ([0.5054, 0.5969]) | **True Biological Floor**: Structural MRI, PET SUVr, CSF A$\beta$/p-Tau, APOE, and Demographics achieve $R^2 \approx 0.54 - 0.59$, perfectly matching standard ADNI literature benchmarks. |
 | **Pure Biomarkers ONLY** | **Decision Trees** | **0.5502** ([0.5262, 0.5741]) | **0.5105** ([0.4743, 0.5467]) | **0.4754** ([0.4254, 0.5254]) | Tree baseline on pure biological markers ($R^2 \approx 0.47 - 0.55$). |
-| **Cognitive Tests ONLY** (Excludes ALL MRI, PET, CSF Biomarkers) | **FISTA MTFL** | **0.7797** ([0.7314, 0.8280]) | **0.7514** ([0.7006, 0.8023]) | **0.6799** ([0.5996, 0.7601]) | **Tier 1 Pareto Winner ($550 Cost)**: Psychometric tests supply primary cognitive baseline variance ($R^2 = 0.7797$), representing an ultra-cost-effective screening tier. |
+| **Cognitive Tests ONLY** (Excludes ALL MRI, PET, CSF Biomarkers) | **FISTA MTFL** | **0.7785** ([0.7318, 0.8252]) | **0.7516** ([0.7011, 0.8021]) | **0.6790** ([0.6006, 0.7575]) | **Tier 1 Pareto Winner ($550 Cost)**: Psychometric tests supply primary cognitive baseline variance ($R^2 = 0.7785$), representing an ultra-cost-effective screening tier. |
 | **Cognitive Tests ONLY** | **Decision Trees** | **0.7523** ([0.7059, 0.7987]) | **0.7220** ([0.6848, 0.7592]) | **0.6554** ([0.5782, 0.7325]) | Tree baseline on psychometrics only. |
 
 ---
 
 ## 4. Literature Justification: Why Multi-Task $L_{2,1}$ Outperforms XGBoost
 
-The result where Multi-Task $L_{2,1}$ Lasso ($R^2 = 0.8034$) outperforms single-task XGBoost ($R^2 = 0.6859$) on this dataset is **strongly supported by published machine learning and biomedical informatics literature**:
+The result where Multi-Task $L_{2,1}$ Lasso ($R^2 = 0.8026$) outperforms single-task XGBoost ($R^2 = 0.6859$) on this dataset is **strongly supported by published machine learning and biomedical informatics literature**:
 
 ### 1. Information Pooling Across Tasks (Argyriou et al. 2006; Lounici et al. 2011)
 - **XGBoost** trains 3 separate decision tree models for `ADAS13`, `CDR-SB`, and `MMSE` independently. Each model learns from scratch using only its own target data ($N = 442$ training patients).
@@ -146,6 +147,10 @@ The result where Multi-Task $L_{2,1}$ Lasso ($R^2 = 0.8034$) outperforms single-
 ### 3. Biological Linearity in Alzheimer's Progression (Zhou et al., IEEE TPAMI 2013)
 - Zhou et al. (*IEEE Transactions on Pattern Analysis and Machine Intelligence*, 2013) specifically evaluated multi-task feature selection on ADNI outcome prediction.
 - Their findings confirmed that 2-year Alzheimer's cognitive progression (`ADAS13`, `CDR-SB`, `MMSE`) follows an **additive biological degradation trajectory** (linear combinations of hippocampal brain shrinkage, word memory decline, and CSF tau elevation). Linear multi-task models fit this underlying biological process cleanly without the step-function split noise of decision trees.
+
+### 4. Model Preprocessing Protocol Parity Note
+- **XGBoost (GBDT)** receives unscaled features directly with native NaN values, leveraging XGBoost's default-direction split algorithm at each node (standard machine learning protocol for decision trees).
+- **FISTA (Regularized Linear Model)** uses training-fold observed mean imputation, standardization, and $\pm 10.0$ z-score clipping, as gradient-based linear solvers strictly require standardized, fully-dense numeric inputs.
 
 ---
 
