@@ -1,0 +1,13 @@
+==== Classical Greedy Panel Pruning Baseline ====
+Protocol: Iterative Cost-Aware Greedy Elimination (5-Fold CV)
+
+Step | Active Panels | Billed Cost ($) | Mean R2 Score | Action
+---------------------------------------------------------------------------
+   0 |            19 | $    14,150.00 |       -0.8815 | Full Panel Set
+   1 |            18 | $    12,650.00 |        0.7070 | Removed ASL MRI (Arterial Spin Labeling)
+   2 |            17 | $    11,150.00 |        0.7197 | Removed Structural MRI (FreeSurfer)
+   3 |            16 | $     8,150.00 |        0.7286 | Removed Amyloid PET Imaging
+   4 |            15 | $     6,650.00 |        0.7319 | Removed DTI MRI (Diffusion Tensor)
+   5 |            14 | $     3,650.00 |        0.7319 | Removed Tau PET Imaging
+   6 |            13 | $     1,650.00 |        0.7255 | Removed FDG PET Imaging
+   7 |            12 | $       650.00 |        0.7156 | Removed CSF Biomarkers (Lumbar Puncture)

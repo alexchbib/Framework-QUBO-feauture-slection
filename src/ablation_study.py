@@ -26,6 +26,10 @@ with open(MAPPING_PATH, 'r', encoding='utf-8') as f:
 
 X, Y, feature_cols, target_cols, rids = load_and_preprocess_adni_data(FEATURES_PATH, TARGETS_PATH, purge_admin=True)
 
+# Verify mapping completeness with strict fail-safe assertion
+for col in feature_cols:
+    assert col in feature_to_panel, f"Feature '{col}' is missing from feature_to_panel mapping table!"
+
 cognitive_panel_names = {
     "ADAS-Cog Assessment",
     "MMSE Assessment",
@@ -41,7 +45,7 @@ cognitive_panel_names = {
     "Psychometric Battery (Other)"
 }
 
-target_feature_names = {'TOTAL13', 'CDRSB', 'MMSCORE'}
+target_feature_names = {'TOTAL13', 'CDRSB', 'MMSCORE', 'TOTSCORE', 'ADAS11'}
 
 biomarker_mask = np.array([feature_to_panel.get(col, '') not in cognitive_panel_names for col in feature_cols])
 cognitive_mask = ~biomarker_mask
@@ -56,9 +60,12 @@ subsets = {
 
 splits = get_kfold_splits(X.shape[0], n_splits=5, seed=42)
 
-def solve_fista_l21_mtfl(X_sc, Y_sc, lambda_val=0.05, max_iters=5000, tol=1e-8):
+def solve_fista_l21_mtfl(X_sc, Y_sc, target_mask=None, lambda_val=0.05, max_iters=5000, tol=1e-8):
     N, d = X_sc.shape
     T = Y_sc.shape[1]
+    
+    if target_mask is None:
+        target_mask = np.ones_like(Y_sc)
     
     s_val = np.linalg.svd(X_sc, compute_uv=False)
     L = (s_val[0]**2) / N
@@ -69,14 +76,16 @@ def solve_fista_l21_mtfl(X_sc, Y_sc, lambda_val=0.05, max_iters=5000, tol=1e-8):
     t_fista = 1.0
     
     def compute_obj(W_curr):
-        loss = 0.5 * np.sum((X_sc.dot(W_curr) - Y_sc)**2) / N
+        diff = (X_sc.dot(W_curr) - Y_sc) * target_mask
+        loss = 0.5 * np.sum(diff**2) / N
         reg = lambda_val * np.sum(np.linalg.norm(W_curr, axis=1))
         return loss + reg
         
     obj_old = compute_obj(W)
     
     for it in range(max_iters):
-        grad = X_sc.T.dot(X_sc.dot(Z) - Y_sc) / N
+        diff_z = (X_sc.dot(Z) - Y_sc) * target_mask
+        grad = X_sc.T.dot(diff_z) / N
         W_temp = Z - step * grad
         
         norms = np.linalg.norm(W_temp, axis=1)
@@ -124,10 +133,12 @@ for name, mask in subsets.items():
         y_stds = np.nanstd(Y_train, axis=0)
         y_stds[np.isnan(y_stds) | (y_stds == 0)] = 1.0
         
-        Y_tr_imp = np.where(np.isnan(Y_train), y_means, Y_train)
+        target_mask = ~np.isnan(Y_train)
+        Y_tr_imp = np.where(np.isnan(Y_train), 0.0, Y_train)
         Y_tr_sc = (Y_tr_imp - y_means) / y_stds
+        Y_tr_sc[~target_mask] = 0.0
         
-        W_opt = solve_fista_l21_mtfl(X_tr_sc, Y_tr_sc, lambda_val=0.05, max_iters=5000, tol=1e-8)
+        W_opt = solve_fista_l21_mtfl(X_tr_sc, Y_tr_sc, target_mask=target_mask.astype(float), lambda_val=0.05, max_iters=5000, tol=1e-8)
         preds_sc = X_te_sc.dot(W_opt)
         preds = preds_sc * y_stds + y_means
         

@@ -29,20 +29,16 @@ print("1. Loading Data & Applying Preprocessing Pipeline...")
 X, Y, feature_cols, target_cols, rids = load_and_preprocess_adni_data(FEATURES_PATH, TARGETS_PATH, purge_admin=True)
 print(f"Loaded {X.shape[0]} unique subjects, {X.shape[1]} clean clinical features, and {Y.shape[1]} targets.")
 
-def solve_fista_l21_mtfl(X_sc, Y_sc, lambda_val, max_iters=5000, tol=1e-8):
+def solve_fista_l21_mtfl(X_sc, Y_sc, target_mask=None, lambda_val=0.05, max_iters=5000, tol=1e-8):
     """
-    Fast Iterative Shrinkage-Thresholding Algorithm (FISTA) for L2,1-norm MTFL.
-    Solves the exact multi-task feature selection objective (Argyriou et al., 2006):
-        min_W (1 / 2N) * ||X W - Y||_F^2 + lambda * ||W||_{2,1}
-        
-    Mathematical Fixes:
-    1. Exact Spectral Norm Lipschitz constant: L = (1 / N) * sigma_max(X)^2
-    2. Exact Step Size: t = 1 / L (no arbitrary over-estimation)
-    3. FISTA Nesterov Momentum Acceleration
-    4. Relative Objective Value Convergence Criterion: |obj_new - obj_old| / obj_old < tol
+    Fast Iterative Shrinkage-Thresholding Algorithm (FISTA) for L2,1 Group Lasso.
+    Features target observation masking to compute gradients strictly on observed targets.
     """
     N, d = X_sc.shape
     T = Y_sc.shape[1]
+    
+    if target_mask is None:
+        target_mask = np.ones_like(Y_sc)
     
     # Compute exact largest singular value / spectral norm
     s_val = np.linalg.svd(X_sc, compute_uv=False)
@@ -54,7 +50,8 @@ def solve_fista_l21_mtfl(X_sc, Y_sc, lambda_val, max_iters=5000, tol=1e-8):
     t_fista = 1.0
     
     def compute_obj(W_curr):
-        loss = 0.5 * np.sum((X_sc.dot(W_curr) - Y_sc)**2) / N
+        diff = (X_sc.dot(W_curr) - Y_sc) * target_mask
+        loss = 0.5 * np.sum(diff**2) / N
         reg = lambda_val * np.sum(np.linalg.norm(W_curr, axis=1))
         return loss + reg
         
@@ -62,7 +59,8 @@ def solve_fista_l21_mtfl(X_sc, Y_sc, lambda_val, max_iters=5000, tol=1e-8):
     
     for it in range(max_iters):
         # Gradient of smooth loss term w.r.t Z
-        grad = X_sc.T.dot(X_sc.dot(Z) - Y_sc) / N
+        diff_z = (X_sc.dot(Z) - Y_sc) * target_mask
+        grad = X_sc.T.dot(diff_z) / N
         W_temp = Z - step * grad
         
         # Block Soft-Thresholding for L2,1 group norm
@@ -114,10 +112,12 @@ for fold, (train_idx, test_idx) in enumerate(splits):
     y_stds = np.nanstd(Y_train, axis=0)
     y_stds[np.isnan(y_stds) | (y_stds == 0)] = 1.0
     
-    Y_tr_imp = np.where(np.isnan(Y_train), y_means, Y_train)
+    target_mask = ~np.isnan(Y_train)
+    Y_tr_imp = np.where(np.isnan(Y_train), 0.0, Y_train)
     Y_tr_sc = (Y_tr_imp - y_means) / y_stds
+    Y_tr_sc[~target_mask] = 0.0
     
-    W_opt = solve_fista_l21_mtfl(X_tr_sc, Y_tr_sc, lambda_val=LAMBDA_VAL, max_iters=MAX_ITERS, tol=TOLERANCE)
+    W_opt = solve_fista_l21_mtfl(X_tr_sc, Y_tr_sc, target_mask=target_mask.astype(float), lambda_val=LAMBDA_VAL, max_iters=MAX_ITERS, tol=TOLERANCE)
     
     feat_norms = np.linalg.norm(W_opt, axis=1)
     global_feature_importance += feat_norms

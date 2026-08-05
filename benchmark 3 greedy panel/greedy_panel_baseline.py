@@ -4,7 +4,7 @@ import csv
 import numpy as np
 
 # Add project root to python path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from src.common.preprocessing import (
     load_and_preprocess_adni_data,
     compute_observed_scaling,
@@ -12,8 +12,8 @@ from src.common.preprocessing import (
     get_kfold_splits
 )
 
-DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'data'))
-B1_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'benchmark 1 multitask learning'))
+DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
+B1_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'benchmark 1 multitask learning'))
 
 FEATURES_PATH = os.path.join(DATA_DIR, 'adni_longitudinal_features.csv')
 TARGETS_PATH = os.path.join(DATA_DIR, 'adni_longitudinal_targets.csv')
@@ -86,11 +86,10 @@ def fit_eval_panel_subset(panel_subset):
                 X_tr_t = X_tr_sub[valid_tr]
                 y_tr_t = (Y_train[valid_tr, t_i] - y_means[t_i]) / y_stds[t_i]
                 
-                ridge_alpha = 10.0
-                I = np.eye(X_tr_t.shape[1])
-                w_t = np.linalg.solve(X_tr_t.T.dot(X_tr_t) + ridge_alpha * I, X_tr_t.T.dot(y_tr_t))
-                
-                y_pred = (X_te_sub.dot(w_t)) * y_stds[t_i] + y_means[t_i]
+                from sklearn.linear_model import RidgeCV
+                model = RidgeCV(alphas=np.logspace(0, 5, 20)).fit(X_tr_t, y_tr_t)
+                y_pred_std = model.predict(X_te_sub)
+                y_pred = y_pred_std * y_stds[t_i] + y_means[t_i]
                 y_true = Y_test[valid_te, t_i]
                 
                 ss_res = np.sum((y_true - y_pred[valid_te])**2)

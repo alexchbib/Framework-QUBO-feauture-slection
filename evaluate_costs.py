@@ -40,15 +40,9 @@ def evaluate_panel_costs(panel_costs_path, feature_mapping_path, selected_featur
     unmapped_features = []
     
     for feature in selected_features:
-        panel_name = feature_to_panel.get(feature, 'UNMAPPED')
-        if panel_name == 'UNMAPPED':
-            unmapped_features.append(feature)
-        else:
-            triggered_panels.add(panel_name)
-            
-    if unmapped_features:
-        print(f"\nWARNING: {len(unmapped_features)} selected features are unmapped!")
-        print(f"Examples: {unmapped_features[:5]}")
+        assert feature in feature_to_panel, f"Feature '{feature}' is missing from feature_to_panel mapping table!"
+        panel_name = feature_to_panel[feature]
+        triggered_panels.add(panel_name)
     
     total_cost = 0.0
     panel_breakdown = []

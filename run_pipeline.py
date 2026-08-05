@@ -36,7 +36,7 @@ def main():
         run_script(os.path.join(root_dir, 'benchmark 2 xgboost', 'xgb_benchmark.py'))
 
     if args.all or args.baseline:
-        run_script(os.path.join(root_dir, 'src', 'baselines', 'greedy_panel_baseline.py'), cwd=root_dir)
+        run_script(os.path.join(root_dir, 'benchmark 3 greedy panel', 'greedy_panel_baseline.py'), cwd=root_dir)
 
     if args.all or args.costs:
         cmd = [
