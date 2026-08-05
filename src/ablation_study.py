@@ -3,6 +3,10 @@ import sys
 import csv
 import numpy as np
 
+sys.modules['bottleneck'] = None
+sys.modules['pyarrow'] = None
+import xgboost as xgb
+
 # Add project root to python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from src.common.preprocessing import (
@@ -70,11 +74,13 @@ results = []
 for name, mask in subsets.items():
     X_sub = X[:, mask]
     fista_r2 = {t: [] for t in target_cols}
+    xgb_r2 = {t: [] for t in target_cols}
     
     for fold, (train_idx, test_idx) in enumerate(splits):
         X_train, X_test = X_sub[train_idx], X_sub[test_idx]
         Y_train, Y_test = Y[train_idx], Y[test_idx]
         
+        # --- 1. FISTA MTFL ARM ---
         x_means, x_stds = compute_observed_scaling(X_train)
         X_tr_sc, X_te_sc, _, _ = apply_scaling_and_imputation(X_train, X_test, x_means, x_stds)
         
@@ -90,31 +96,67 @@ for name, mask in subsets.items():
         best_lambda = select_lambda_inner_cv(X_tr_sc, Y_tr_sc, target_mask)
         W_opt = solve_fista_l21_mtfl(X_tr_sc, Y_tr_sc, target_mask=target_mask.astype(float), lambda_val=best_lambda, max_iters=5000, tol=1e-8)
         preds_sc = X_te_sc.dot(W_opt)
-        preds = preds_sc * y_stds + y_means
+        preds_fista = preds_sc * y_stds + y_means
         
         for t_i, target_name in enumerate(target_cols):
             valid_test = ~np.isnan(Y_test[:, t_i])
             if np.sum(valid_test) > 0:
                 y_true = Y_test[valid_test, t_i]
-                y_pred = preds[valid_test, t_i]
+                y_pred = preds_fista[valid_test, t_i]
                 ss_res = np.sum((y_true - y_pred)**2)
                 ss_tot = np.sum((y_true - np.mean(y_true))**2)
                 r2 = 1.0 - (ss_res / ss_tot) if ss_tot > 0 else 0.0
                 fista_r2[target_name].append(r2)
                 
-    row = [name, f"{X_sub.shape[1]} features"]
+        # --- 2. XGBOOST DECISION TREE ARM ---
+        Y_tr_imp_raw = np.where(np.isnan(Y_train), y_means, Y_train)
+        preds_xgb = np.zeros((X_test.shape[0], len(target_cols)))
+        
+        for t_i, target_name in enumerate(target_cols):
+            model = xgb.XGBRegressor(
+                n_estimators=30,
+                max_depth=3,
+                learning_rate=0.05,
+                subsample=0.8,
+                colsample_bytree=0.8,
+                random_state=42 + fold,
+                n_jobs=4
+            )
+            model.fit(X_train, Y_tr_imp_raw[:, t_i])
+            preds_xgb[:, t_i] = model.predict(X_test)
+            
+            valid_test = ~np.isnan(Y_test[:, t_i])
+            if np.sum(valid_test) > 0:
+                y_true = Y_test[valid_test, t_i]
+                y_pred = preds_xgb[valid_test, t_i]
+                ss_res = np.sum((y_true - y_pred)**2)
+                ss_tot = np.sum((y_true - np.mean(y_true))**2)
+                r2 = 1.0 - (ss_res / ss_tot) if ss_tot > 0 else 0.0
+                xgb_r2[target_name].append(r2)
+                
+    # Format FISTA row
+    row_fista = [name, "FISTA MTFL", f"{X_sub.shape[1]} features"]
     for target_name in target_cols:
         r_list = fista_r2[target_name]
         r_m, r_sd = np.mean(r_list), np.std(r_list)
         ci = 1.96 * r_sd / np.sqrt(5)
-        row.append(f"{r_m:.4f} [{r_m-ci:.4f}, {r_m+ci:.4f}]")
-    results.append(row)
+        row_fista.append(f"{r_m:.4f} [{r_m-ci:.4f}, {r_m+ci:.4f}]")
+    results.append(row_fista)
+
+    # Format Decision Trees row
+    row_xgb = [name, "Decision Trees", f"{X_sub.shape[1]} features"]
+    for target_name in target_cols:
+        r_list = xgb_r2[target_name]
+        r_m, r_sd = np.mean(r_list), np.std(r_list)
+        ci = 1.96 * r_sd / np.sqrt(5)
+        row_xgb.append(f"{r_m:.4f} [{r_m-ci:.4f}, {r_m+ci:.4f}]")
+    results.append(row_xgb)
 
 print("=================================================================")
 print("OFFICIAL ABLATION STUDY RESULTS MATRIX")
 print("=================================================================")
-print(f"{'Feature Modality Subset':<35} | {'Features':<15} | {'ADAS13 R2 (95% CI)':<22} | {'CDRSB R2 (95% CI)':<22} | {'MMSE R2 (95% CI)':<22}")
+print(f"{'Feature Modality Subset':<35} | {'Model':<16} | {'ADAS13 R2 (95% CI)':<22} | {'CDRSB R2 (95% CI)':<22} | {'MMSE R2 (95% CI)':<22}")
 print("-" * 125)
 for row in results:
-    print(f"{row[0]:<35} | {row[1]:<15} | {row[2]:<22} | {row[3]:<22} | {row[4]:<22}")
+    print(f"{row[0]:<35} | {row[1]:<16} | {row[3]:<22} | {row[4]:<22} | {row[5]:<22}")
 print("=================================================================\n")

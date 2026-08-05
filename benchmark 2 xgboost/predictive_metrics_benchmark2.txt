@@ -1,4 +1,4 @@
-=== XGBoost Baseline Performance Metrics (5-Fold CV on Top 59 Features) ===
+=== XGBoost Baseline Performance Metrics (5-Fold CV on Top 58 Features) ===
 Target: M24_ADAS13
   R2:  0.6836 +/- 0.0394 (95% CI: [0.6442, 0.7231])
   MAE: 4.3806 +/- 0.3250

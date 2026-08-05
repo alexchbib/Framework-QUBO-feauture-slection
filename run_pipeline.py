@@ -54,6 +54,9 @@ def main():
     if args.all or args.ablation:
         run_script(os.path.join(root_dir, 'src', 'ablation_study.py'), cwd=root_dir)
 
+    if args.all:
+        run_script(os.path.join(root_dir, 'src', 'common', 'sync_report.py'), cwd=root_dir)
+
     print("\n=================================================================")
     print("PIPELINE EXECUTION COMPLETE! ALL RESULTS GENERATED AND SAVED.")
     print("=================================================================\n")

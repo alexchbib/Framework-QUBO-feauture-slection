@@ -104,7 +104,7 @@ top_feature_indices = np.argsort(avg_importance)[::-1][:TOP_N_FEATURES]
 
 metrics_summary_path = os.path.join(OUTPUT_DIR, 'predictive_metrics_benchmark2.txt')
 with open(metrics_summary_path, 'w') as f:
-    f.write("=== XGBoost Baseline Performance Metrics (5-Fold CV on Top 59 Features) ===\n")
+    f.write(f"=== XGBoost Baseline Performance Metrics (5-Fold CV on Top {TOP_N_FEATURES} Features) ===\n")
     for target_name in target_cols:
         r2_m, r2_std = np.mean(all_fold_metrics[target_name]['r2']), np.std(all_fold_metrics[target_name]['r2'])
         mae_m, mae_std = np.mean(all_fold_metrics[target_name]['mae']), np.std(all_fold_metrics[target_name]['mae'])

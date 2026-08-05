@@ -109,7 +109,7 @@ We tested three distinct approaches across 5 cross-validation folds (where the A
 | **Multi-Task $L_{2,1}$ Lasso (FISTA)** | **58 features** | **$9,600.00** | **ADAS13**: **$0.8026 \pm 0.0324$** ([0.7702, 0.8350])<br>**CDR-SB**: **$0.7627 \pm 0.0461$** ([0.7167, 0.8088])<br>**MMSE**: **$0.6899 \pm 0.0665$** ([0.6234, 0.7565]) | **Full Multi-Modal Operating Point**: Top-end ADAS13 precision ($R^2 \approx 0.80$) combining imaging, fluid, and psychometrics. Note: Greedy Step 5 ($5,650) achieves equivalent $R^2 = 0.7510$ for $3,950 less (see greedy trace). |
 | **Cognitive Tests ONLY (FISTA)** | **27 features** | **$550.00** | **ADAS13**: **$0.7785 \pm 0.0467$** ([0.7318, 0.8252])<br>**CDR-SB**: **$0.7516 \pm 0.0505$** ([0.7011, 0.8021])<br>**MMSE**: **$0.6790 \pm 0.0785$** ([0.6006, 0.7575]) | **Tier 1 (Ultra-Low-Cost Operating Point)**: Saves **$9,050.00** per patient at a minimal $0.02$ drop in ADAS13 $R^2$ with overlapping 95% CIs. |
 | **Decision Tree Models (XGBoost)** | 58 features | **$9,600.00** | **ADAS13**: $0.6859 \pm 0.0412$ ([0.6447, 0.7272])<br>**CDR-SB**: $0.6455 \pm 0.0512$ ([0.5943, 0.6968])<br>**MMSE**: $0.5782 \pm 0.0546$ ([0.5236, 0.6328]) | Tree baseline evaluated on matching feature budget; joint linear multi-task shrinkage outperforms independent trees. |
-| **Greedy Panel Elimination (FISTA)** | Dynamic panel subsets | **$14,150 \rightarrow \$650** | **Full Set**: $0.7513$ ($14,150)<br>**Step 2 ($9,650)**: $0.7516$<br>**Step 5 ($5,650)**: $0.7510$<br>**Pruned Set**: **$0.7359$** at $650 | Backward panel pruning reveals a **Pareto-dominant operating point**: Step 5 achieves $R^2 = 0.7510$ at $5,650$ (saving $3,950 per patient vs. full selection at $9,600 with only −0.0007 R² difference). |
+| **Greedy Panel Elimination (FISTA)** | Dynamic panel subsets | **$14,150 ightarrow \$650** | **Full Set**: 0.7513 ($    14,150.00)<br>**Step 2 ($     9,650.00)**: 0.7516<br>**Step 5 ($     5,650.00)**: 0.7510<br>**Pruned Set**: **0.7359** at $       650.00 | Backward panel pruning reveals a **Pareto-dominant operating point**: Step 5 achieves $R^2 = 0.7510$ at $     5,650.00 (saving $3,950 per patient vs. full selection at $9,600 with only −0.0007 R² difference). |
 
 *Note: All confidence intervals report exact $95\%$ bounds ($\text{Mean} \pm 1.96 \cdot \frac{\text{SD}}{\sqrt{5}}$).*
 
@@ -120,15 +120,15 @@ We tested three distinct approaches across 5 cross-validation folds (where the A
 We evaluated **BOTH FISTA Multi-Task Learning AND Decision Tree Regressors** across all 4 feature modality subsets:
 
 | Feature Modality Subset | Model / Baseline | ADAS13 $R^2$ (95% CI) | CDR-SB $R^2$ (95% CI) | MMSE $R^2$ (95% CI) | Scientific Justification & Findings |
-| :--- | :--- | :--- | :--- | :--- | :--- |
+| :--- | :--- | :---: | :---: | :---: | :--- |
 | **Full Model** (All Modalities) | **FISTA MTFL** | **0.8026** ([0.7702, 0.8350]) | **0.7627** ([0.7167, 0.8088]) | **0.6899** ([0.6234, 0.7565]) | Top-performing multi-modal clinical forecasting model combining cognitive anchors, imaging, and fluid biomarkers. |
-| **Full Model** (All Modalities) | **Decision Trees** | **0.7560** ([0.7155, 0.7964]) | **0.6973** ([0.6571, 0.7375]) | **0.6280** ([0.5633, 0.6926]) | Tree baseline on full modality set. |
+| **Full Model** (All Modalities) | **Decision Trees** | **0.6824** ([0.6317, 0.7332]) | **0.6381** ([0.5926, 0.6837]) | **0.5717** ([0.5123, 0.6311]) | Tree baseline on full modality set. |
 | **Excluding Endpoint Totals ($t=0$)** (No `TOTAL13`, `CDRSB`, `MMSCORE`, `TOTSCORE`, `ADAS11`) | **FISTA MTFL** | **0.7507** ([0.7139, 0.7874]) | **0.7577** ([0.7096, 0.8058]) | **0.6616** ([0.5857, 0.7375]) | **Purged Target Proxies**: Purging baseline target proxies (`TOTAL13`, `TOTSCORE`) verifies that domain psychometrics (`FAQ`, `RAVLT`, `BNT`, `TMT`) maintain strong predictive signal ($R^2 = 0.7507$). |
-| **Excluding Endpoint Totals ($t=0$)** | **Decision Trees** | **0.7375** ([0.7161, 0.7590]) | **0.6871** ([0.6495, 0.7247]) | **0.5821** ([0.5381, 0.6261]) | Tree baseline excluding endpoint totals and proxies. |
+| **Excluding Endpoint Totals ($t=0$)** | **Decision Trees** | **0.6119** ([0.5746, 0.6491]) | **0.6302** ([0.5740, 0.6863]) | **0.5145** ([0.4525, 0.5764]) | Tree baseline excluding endpoint totals and proxies. |
 | **Pure Biomarkers ONLY** (Excludes ALL 57 Cognitive/Psychometric Tests) | **FISTA MTFL** | **0.5934** ([0.5506, 0.6363]) | **0.5369** ([0.5097, 0.5641]) | **0.5511** ([0.5054, 0.5969]) | **True Biological Floor**: Structural MRI, PET SUVr, CSF A$\beta$/p-Tau, APOE, and Demographics achieve $R^2 \approx 0.54 - 0.59$, perfectly matching standard ADNI literature benchmarks. |
-| **Pure Biomarkers ONLY** | **Decision Trees** | **0.5502** ([0.5262, 0.5741]) | **0.5105** ([0.4743, 0.5467]) | **0.4754** ([0.4254, 0.5254]) | Tree baseline on pure biological markers ($R^2 \approx 0.47 - 0.55$). |
+| **Pure Biomarkers ONLY** | **Decision Trees** | **0.5088** ([0.4727, 0.5450]) | **0.4767** ([0.4310, 0.5223]) | **0.4457** ([0.4106, 0.4808]) | Tree baseline on pure biological markers ($R^2 \approx 0.45 - 0.51$). |
 | **Cognitive Tests ONLY** (Excludes ALL MRI, PET, CSF Biomarkers) | **FISTA MTFL** | **0.7785** ([0.7318, 0.8252]) | **0.7516** ([0.7011, 0.8021]) | **0.6790** ([0.6006, 0.7575]) | **Tier 1 Pareto Winner ($550 Cost)**: Psychometric tests supply primary cognitive baseline variance ($R^2 = 0.7785$), representing an ultra-cost-effective screening tier. |
-| **Cognitive Tests ONLY** | **Decision Trees** | **0.7523** ([0.7059, 0.7987]) | **0.7220** ([0.6848, 0.7592]) | **0.6554** ([0.5782, 0.7325]) | Tree baseline on psychometrics only. |
+| **Cognitive Tests ONLY** | **Decision Trees** | **0.6785** ([0.6346, 0.7225]) | **0.6532** ([0.6094, 0.6971]) | **0.5989** ([0.5413, 0.6566]) | Tree baseline on psychometrics only. |
 
 ---
 
