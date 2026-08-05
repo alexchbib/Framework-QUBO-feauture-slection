@@ -1,6 +1,7 @@
 import os
 import sys
 import csv
+import importlib.util
 import numpy as np
 
 # Add project root to python path
@@ -21,6 +22,13 @@ MAPPING_PATH = os.path.join(B1_DIR, 'feature_to_panel_mapping.csv')
 COSTS_PATH = os.path.join(B1_DIR, 'panel_costs.csv')
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), 'greedy_baseline_metrics.txt')
 
+# Import FISTA solver from benchmark 1
+b1_path = os.path.join(B1_DIR, 'mtfl_benchmark.py')
+spec = importlib.util.spec_from_file_location("mtfl_benchmark", b1_path)
+mtfl_module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(mtfl_module)
+solve_fista_l21_mtfl = mtfl_module.solve_fista_l21_mtfl
+
 print("1. Loading Data & Clinical Panel Provenance...")
 X, Y, feature_cols, target_cols, rids = load_and_preprocess_adni_data(FEATURES_PATH, TARGETS_PATH, purge_admin=True)
 
@@ -36,10 +44,11 @@ with open(COSTS_PATH, 'r', encoding='utf-8') as f:
     for row in reader:
         panel_costs[row['Panel_Name']] = float(row['Cost_USD'])
 
-# Group feature indices by panel
+# Group feature indices by panel with strict assertion (Fixes audit item 6)
 panel_to_indices = {}
 for i, feat in enumerate(feature_cols):
-    panel = feature_to_panel.get(feat, "Demographics & Medical History")
+    assert feat in feature_to_panel, f"Unmapped feature column encountered: {feat}"
+    panel = feature_to_panel[feat]
     if panel not in panel_to_indices:
         panel_to_indices[panel] = []
     panel_to_indices[panel].append(i)
@@ -49,7 +58,7 @@ print(f"Loaded {len(panel_to_indices)} active clinical panels.")
 # Identify imaging & biomarker expensive panels to prune
 prunable_panels = [p for p in panel_to_indices.keys() if panel_costs.get(p, 0) >= 500]
 
-print("2. Executing Greedy Panel Pruning Heuristic (Classical Benchmark)...")
+print("2. Executing Cost-Aware Greedy Panel Pruning Heuristic (FISTA-backed)...")
 
 def fit_eval_panel_subset(panel_subset):
     indices = []
@@ -77,25 +86,24 @@ def fit_eval_panel_subset(panel_subset):
         X_tr_sub = X_tr_sc[:, indices]
         X_te_sub = X_te_sc[:, indices]
         
+        target_mask = ~np.isnan(Y_train)
+        Y_tr_imp = np.where(np.isnan(Y_train), 0.0, Y_train)
+        Y_tr_sc = (Y_tr_imp - y_means) / y_stds
+        Y_tr_sc[~target_mask] = 0.0
+        
+        W_opt = solve_fista_l21_mtfl(X_tr_sub, Y_tr_sc, target_mask=target_mask.astype(float), lambda_val=0.05, max_iters=1500, tol=1e-6)
+        preds_sc = X_te_sub.dot(W_opt)
+        preds = preds_sc * y_stds + y_means
+        
         fold_r2s = []
         for t_i in range(Y.shape[1]):
-            valid_tr = ~np.isnan(Y_train[:, t_i])
             valid_te = ~np.isnan(Y_test[:, t_i])
-            
-            if np.sum(valid_tr) > 5 and np.sum(valid_te) > 0:
-                X_tr_t = X_tr_sub[valid_tr]
-                y_tr_t = (Y_train[valid_tr, t_i] - y_means[t_i]) / y_stds[t_i]
-                
-                from sklearn.linear_model import RidgeCV
-                model = RidgeCV(alphas=np.logspace(0, 5, 20)).fit(X_tr_t, y_tr_t)
-                y_pred_std = model.predict(X_te_sub)
-                y_pred = y_pred_std * y_stds[t_i] + y_means[t_i]
+            if np.sum(valid_te) > 0:
                 y_true = Y_test[valid_te, t_i]
-                
-                ss_res = np.sum((y_true - y_pred[valid_te])**2)
+                y_pred = preds[valid_te, t_i]
+                ss_res = np.sum((y_true - y_pred)**2)
                 ss_tot = np.sum((y_true - np.mean(y_true))**2)
-                r2 = 1.0 - (ss_res / ss_tot) if ss_tot > 0 else 0.0
-                fold_r2s.append(r2)
+                fold_r2s.append(1.0 - (ss_res / ss_tot) if ss_tot > 0 else 0.0)
                 
         r2_list.append(np.mean(fold_r2s))
         
@@ -120,8 +128,9 @@ while len(current_panels) > 3:
     for p in candidates:
         test_subset = [x for x in current_panels if x != p]
         r2_sub, cost_sub = fit_eval_panel_subset(test_subset)
-        # Efficiency metric: preserve max R2 per dollar saved
-        score = r2_sub
+        # Cost-aware efficiency metric: preserve accuracy while rewarding dollar savings (Fixes audit item 3)
+        cost_saved = panel_costs.get(p, 0)
+        score = r2_sub + (cost_saved / 15000.0) * 0.005
         if score > best_score:
             best_score = score
             best_p_to_remove = p

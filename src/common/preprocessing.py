@@ -42,10 +42,10 @@ def safe_encode_val(val, col_name=""):
             return 0.0
         return np.nan
 
-def load_and_preprocess_adni_data(features_path, targets_path, purge_admin=True):
+def load_and_preprocess_adni_data(features_path, targets_path, purge_admin=True, purge_zero_variance=True):
     """
     Loads raw CSV features & targets, applies categorical encoding, purges administrative flags,
-    and returns pristine X, Y matrices, feature names, target names, and patient RIDs.
+    filters out zero-variance/unobserved columns, and returns pristine X, Y matrices.
     """
     with open(features_path, 'r', encoding='utf-8') as f:
         reader = csv.reader(f)
@@ -83,6 +83,14 @@ def load_and_preprocess_adni_data(features_path, targets_path, purge_admin=True)
     
     X = np.array([[safe_encode_val(row[i], x_header[i]) for i in keep_x_indices] for row in x_rows], dtype=np.float64)
     Y = np.array([[safe_encode_val(row[i], y_header[i]) for i in target_indices] for row in y_rows], dtype=np.float64)
+    
+    if purge_zero_variance:
+        observed_counts = np.sum(~np.isnan(X), axis=0)
+        stds = np.nanstd(X, axis=0)
+        stds[np.isnan(stds)] = 0.0
+        valid_cols = (observed_counts > 5) & (stds > 1e-6)
+        X = X[:, valid_cols]
+        feature_names = [feature_names[i] for i in range(len(feature_names)) if valid_cols[i]]
     
     return X, Y, feature_names, target_names, np.array(rids_x)
 

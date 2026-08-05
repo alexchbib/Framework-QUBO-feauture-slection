@@ -95,8 +95,8 @@ We upgraded the optimizer to **FISTA (Fast Iterative Shrinkage-Thresholding Algo
 We tested three distinct approaches across 5 cross-validation folds (where the AI is trained on 80% of patients and tested on the remaining 20% across 5 rounds):
 
 ### Method Explanations:
-1. **Multi-Task $L_{2,1}$ Lasso (FISTA Converged)**: Solves Argyriou et al.'s joint multi-task selection model using FISTA to select a shared core subset of 59 clinical features across all 3 memory targets simultaneously.
-2. **Decision Tree Models (XGBoost / Random Forest)**: Modern non-linear machine learning algorithms that build decision trees and natively handles missing data without forcing fake averages (evaluated on the matching 59 feature budget).
+1. **Multi-Task $L_{2,1}$ Lasso (FISTA Converged)**: Solves Argyriou et al.'s joint multi-task selection model using FISTA to select a shared core subset of 56 clinical features across all 3 memory targets simultaneously.
+2. **Decision Tree Models (XGBoost / Random Forest)**: Modern non-linear machine learning algorithms that build decision trees and natively handles missing data without forcing fake averages (evaluated on the matching 56 feature budget).
 3. **Classical Greedy Panel Elimination**: A traditional cost-cutting strategy that starts with all medical tests and drops the least useful test one by one to see how cost drops relative to accuracy.
 
 ---
@@ -108,7 +108,7 @@ We tested three distinct approaches across 5 cross-validation folds (where the A
 | **Multi-Task $L_{2,1}$ Lasso (FISTA)** | **56 features** | **$9,600.00** | **ADAS13**: **$0.8033 \pm 0.0335$** ([0.7698, 0.8367])<br>**CDR-SB**: **$0.7629 \pm 0.0468$** ([0.7161, 0.8097])<br>**MMSE**: **$0.6899 \pm 0.0681$** ([0.6218, 0.7581]) | **Tier 2 (Full Multi-Modal Operating Point)**: Top-end overall precision ($R^2 \approx 0.80$) combining imaging, fluid, and psychometrics. |
 | **Cognitive Tests ONLY (FISTA)** | **27 features** | **$550.00** | **ADAS13**: **$0.7795 \pm 0.0481$** ([0.7313, 0.8276])<br>**CDR-SB**: **$0.7515 \pm 0.0509$** ([0.7005, 0.8024])<br>**MMSE**: **$0.6796 \pm 0.0805$** ([0.5991, 0.7600]) | **Tier 1 (Ultra-Low-Cost Operating Point)**: Saves **$9,050.00** per patient at a minimal $0.02$ drop in ADAS13 $R^2$ with overlapping 95% CIs. |
 | **Decision Tree Models (XGBoost)** | 56 features | **$9,600.00** | **ADAS13**: $0.7560 \pm 0.0404$ ([0.7155, 0.7964])<br>**CDR-SB**: $0.6973 \pm 0.0402$ ([0.6571, 0.7375])<br>**MMSE**: $0.6280 \pm 0.0646$ ([0.5633, 0.6926]) | Tree baseline evaluated on matching feature budget; joint linear multi-task shrinkage outperforms independent trees. |
-| **Greedy Panel Elimination (RidgeCV)** | Dynamic panel subsets | **$14,150 \rightarrow \$650** | **Full Set**: $-0.8815$ ($14,150)<br>**Pruned Set**: **$0.7319$** at $6,650 | RidgeCV panel pruning shows that removing expensive scan panels (ASL/DTI/PET) stabilizes accuracy at $R^2 = 0.7319$. |
+| **Greedy Panel Elimination (FISTA)** | Dynamic panel subsets | **$14,150 \rightarrow \$650** | **Full Set**: $0.7519$ ($14,150)<br>**Pruned Set**: **$0.7362$** at $650 | FISTA-backed panel pruning shows that removing expensive scan panels (ASL/DTI/PET) preserves accuracy at $R^2 = 0.7362$ down to $650. |
 
 *Note: All confidence intervals report exact $95\%$ bounds ($\text{Mean} \pm 1.96 \cdot \frac{\text{SD}}{\sqrt{5}}$).*
 
@@ -169,20 +169,25 @@ The table below breaks down every medical test panel, its real-world clinical co
 | **Clock Drawing Test** | $50.00 | 1 | $50.00 | Drawing clock face spatial memory test. |
 | **ADAS-Cog Assessment** | $0.00* | 1 | $0.00 | Primary trial endpoint (cognitive score). |
 | **Clinical Dementia Rating (CDR)** | $0.00* | 5 | $0.00 | Primary trial endpoint (dementia severity stage). |
-| **MMSE Assessment** | $0.00* | 5 | $0.00 | Primary trial endpoint (mental status score). |
-| **TOTAL BILLED COST PER PATIENT** | — | **59 Features** | **$9,600.00** | Total patient screening cost. |
+| **MMSE Assessment** | $0.00* | 5 | $0.00 | Primary trial endpoint (mental statu| **TOTAL BILLED COST PER PATIENT** | — | **56 Features** | **$9,600.00** | Total patient screening cost. |
 
-*\*Mandatory trial outcome measures billed at $0 per clinical trial trial budget policy.*
+*\*Mandatory trial outcome measures billed at $0 per clinical trial budget policy.*
 
 ---
 
-## 6. Key Practical Takeaways for Clinical Trials
+## 6. Key Practical Takeaways & The QUBO Motivation Thesis
 
-1. **True Convergence Unlocks High Accuracy**: By fixing the mathematical step size bug and using FISTA, the model converged to **59 core features** (down from 660 fake un-converged features), boosting prediction accuracy to **$R^2 = 0.7943$**!
-2. **ADNI2 Provides Optimal 24-Month Timeline Quality**: Selecting ADNI2 ($N=553$) over ADNI3 or ADNI1 provides the largest single complete 5-year cohort with 100% 24-month multi-modal imaging, fluid biomarker, and cognitive follow-up integrity.
-3. **FDA/EMA Regulatory Triad Mandates Endpoint Selection**: Selecting `ADAS13`, `CDR-SB`, and `MMSE` as the target matrix ($T=3$) directly mirrors regulatory registration requirements, combining cognitive performance (`ADAS13`), functional daily independence (`CDR-SB`), and global staging (`MMSE`).
-4. **Data Completeness Dictates $T=3$ Parsimony**: `ADAS13`, `CDR-SB`, and `MMSE` are the *only* primary clinical endpoints with 100% complete 24-month follow-up retention across all 553 completer patients. Adding secondary questionnaires would cause missing target entries, shrinking the sample size by over 50%.
-5. **Pure Biomarkers Cap Out at $R^2 \approx 0.52 - 0.58$**: Structural MRI, PET SUVr, CSF biomarkers, APOE, and Demographics predict 2-year cognitive endpoints with $R^2 \approx 0.52 - 0.58$ across both FISTA and Decision Tree benchmarks, perfectly matching standard ADNI literature benchmarks.
+1. **The QUBO Motivation Thesis (Why Standard $L_{2,1}$ Lasso Falls Short)**:
+   In our audited $9,600.00$ multi-modal selection:
+   - **ASL MRI**: **$1,500.00** for **1 single feature**
+   - **FDG PET**: **$2,000.00** for **1 single feature**
+   - **CSF Biomarkers**: **$1,000.00** for **1 single feature**
+   - **$4,500.00 (47% of the total budget)** is spent on just 3 isolated features! Standard $L_{2,1}$ group lasso evaluates feature weights individually without penalizing whole-panel entry costs — it doesn't know that the 2nd Amyloid feature is **$0 (FREE)** once $3,000 is paid, or that a single lone ASL feature costs **$1,500**. Quadratic Binary Optimization (QUBO) with explicit panel indicator variables is uniquely required to solve true cost-constrained feature selection.
+
+2. **True Convergence Unlocks High Accuracy**: By fixing the mathematical step size bug and using FISTA, the model converged to **56 core features** (down from 660 fake un-converged features), boosting prediction accuracy to **$R^2 = 0.8033$**!
+3. **ADNI2 Provides Optimal 24-Month Timeline Quality**: Selecting ADNI2 ($N=553$) over ADNI3 or ADNI1 provides the largest single complete 5-year cohort with 100% 24-month multi-modal imaging, fluid biomarker, and cognitive follow-up integrity.
+4. **FDA/EMA Regulatory Triad Mandates Endpoint Selection**: Selecting `ADAS13`, `CDR-SB`, and `MMSE` as the target matrix ($T=3$) directly mirrors regulatory registration requirements, combining cognitive performance (`ADAS13`), functional daily independence (`CDR-SB`), and global staging (`MMSE`).
+5. **Pure Biomarkers Cap Out at $R^2 \approx 0.52 - 0.59$**: Structural MRI, PET SUVr, CSF biomarkers, APOE, and Demographics predict 2-year cognitive endpoints with $R^2 \approx 0.52 - 0.59$ across both FISTA and Decision Tree benchmarks, perfectly matching standard ADNI literature benchmarks.
 6. **Multi-Task Pooling Beats Single-Task Trees**: On small-sample clinical cohorts ($N=442$), joint multi-task regularization pools strength across cognitive endpoints and consistently outperforms independent decision tree models across all feature subsets.
 7. **You Don't Need Every Brain Scan**: Eliminating redundant DTI MRI scans and streamlining PET inputs preserves high accuracy while saving thousands of dollars per patient.
 8. **Cognitive Tests Give Huge Bang-for-Buck**: Low-cost cognitive tests ($50–$150, like RAVLT memory lists and FAQ questionnaires) provide essential predictive signals at less than 1% of the cost of brain imaging.
@@ -196,13 +201,14 @@ This section serves as a direct reference for writing the Methods section of you
 | Experimental Parameter | Symbol / Value | Technical Meaning & Explanation for Paper Writing |
 | :--- | :--- | :--- |
 | **Primary Cohort ($N$)** | $N = 553$ subjects | **Sample Size ($N$)**: Total number of ADNI2 patients possessing complete baseline multi-modal data and audited 24-month follow-up outcomes. |
-| **Initial Feature Pool ($d$)** | $d = 2,093$ candidate features | **Feature Space Dimension ($d$)**: Total number of input clinical columns extracted across all medical test tables prior to feature selection, after purging 35 non-clinical administrative tracking columns (`SITEID`, `IMAGEUID`, scanner version IDs). |
-| **Selected Feature Budget** | $d^* = 59$ core features | **Sparse Selected Feature Budget ($d^*$)**: The sparse subset of non-zero clinical features selected by FISTA MTFL out of the initial $2,093$ candidate pool ($2,034$ features shrunk to zero). |
+| **Initial Feature Pool ($d$)** | $d = 2,022$ candidate features | **Feature Space Dimension ($d$)**: Total number of input clinical columns extracted across all medical test tables prior to feature selection, after purging 35 administrative columns and zero-variance features. |
+| **Selected Feature Budget** | $d^* = 56$ core features | **Sparse Selected Feature Budget ($d^*$)**: The sparse subset of non-zero clinical features selected by FISTA MTFL out of the initial candidate pool ($1,966$ features shrunk to zero). |
 | **Target Endpoints ($T$)** | $T = 3$ targets | **Multi-Task Target Matrix ($Y \in \mathbb{R}^{N \times 3}$)**: Co-primary 24-month outcome targets: `M24_ADAS13` (cognitive), `M24_CDRSB` (functional), `M24_MMSE` (global staging). |
-| **FISTA Regularization ($\lambda$)** | $\lambda = 0.05$ | **Sparse Group Regularization Parameter ($\lambda$)**: Selected via grid-search ($\lambda \in [0.001, 0.5]$) and verified via inner fold cross-validation to control row-sparsity, selecting $d^* \approx 56$ non-zero features while maximizing outer cross-validated $R^2$. |
-| **FISTA Lipschitz Step Size ($t$)** | $t = \frac{1}{\frac{1}{N}\sigma_{\max}(X)^2} \approx 0.00779$ | **Gradient Step Size ($t = 1/L$)**: Exact inverse of the spectral norm Lipschitz constant $L = \frac{1}{N}\sigma_{\max}(X_{\text{train}})^2 \approx 128.38$ for loss gradient $\nabla f(W) = \frac{1}{N}X^T((XW - Y) \odot M)$, guaranteeing stable $O(1/k^2)$ Nesterov momentum convergence. |
-| **Target Masking Protocol** | Binary Mask $M \in \{0,1\}^{N \times T}$ | **Observation-Masked Gradient**: Missing training targets ($Y_{\text{train}}$) are masked out during FISTA loss and gradient evaluation ($\nabla f(W) = \frac{1}{N}X^T((XW - Y) \odot M)$) rather than using target mean imputation. |
-| **FISTA Stopping Criterion** | `rel_change < 1e-8` | **Mathematical Convergence Tolerance**: Relative objective value change $\frac{\|f(W^{(k)}) - f(W^{(k-1)})\|}{f(W^{(k-1)}) + 1e-12} < 10^{-8}$, reaching full convergence in ~400 iterations (max iterations set to 5,000). |
-| **Cross-Validation Protocol** | 5-Fold Stratified CV (`seed=42`) | **Validation Protocol**: 80% training ($N_{train} \approx 442$) and 20% testing ($N_{test} \approx 111$) per fold. All scaling, imputation, and feature selection occur strictly within training folds to prevent data leakage. |
-| **XGBoost Hyper-Parameters** | `n_estimators=30`, `max_depth=3`, `lr=0.05` | **Decision Tree Baseline Regularization**: Shallow tree depth (`max_depth=3`) and conservative learning rate (`0.05`) with 80% subsampling to prevent tree variance overfitting on small $N_{train}=442$ training folds. |
-| **Panel Billing Policy** | Panel-level billing (15 panels) | **Financial Cost Evaluation**: Billed at the medical procedure level (e.g., 1 Structural MRI = $1,500) regardless of how many individual volumetric features are selected within that panel. Mandatory trial endpoints billed at $0.00. |
+| **FISTA Regularization ($\lambda$)** | $\lambda = 0.05$ | **Sparse Group Regularization Parameter ($\lambda$)**: Selected via grid-search ($\lambda \in [0.001, 0.5]$) and verified via inner 3-fold cross-validation inside each outer training fold. |
+| **FISTA Lipschitz Step Size ($t$)** | $t = \frac{1}{\frac{1}{N}\sigma_{\max}(X)^2} \approx 0.00779$ | **Gradient Step Size ($t = 1/L$)**: Exact inverse of the spectral norm Lipschitz constant $L = \frac{1}{N}\sigma_{\max}(X_{\text{train}})^2 \approx 128.38$ for loss gradient $\nabla f(W) = X^T((XW - Y) \odot M) / N_l$. |
+| **Target Masking Protocol** | Binary Mask $M \in \{0,1\}^{N \times T}$ | **Observation-Masked Gradient**: Missing training targets ($Y_{\text{train}}$) are masked out during FISTA loss and gradient evaluation with per-task $N_l$ normalization. |
+| **FISTA Stopping Criterion** | `rel_change < 1e-8` | **Mathematical Convergence Tolerance**: Relative objective value change $\frac{\|f(W^{(k)}) - f(W^{(k-1)})\|}{f(W^{(k-1)}) + 10^{-12}} < 10^{-8}$, reaching full convergence in ~400 iterations. |
+| **Cross-Validation Protocol** | 5-Fold Stratified CV (`seed=42`) | **Validation Protocol**: 80% training ($N_{train} \approx 442$) and 20% testing ($N_{test} \approx 111$) per fold. All scaling, imputation, and feature selection occur strictly within training folds. |
+| **Greedy Panel Elimination** | FISTA MTFL Heuristic | **Cost-Aware Pruning**: FISTA-backed backward elimination evaluating panel subset accuracy and cost efficiency. |
+| **XGBoost Hyper-Parameters** | `n_estimators=30`, `max_depth=3`, `lr=0.05` | **Decision Tree Baseline Regularization**: Shallow tree depth (`max_depth=3`) and conservative learning rate (`0.05`) evaluated on matching 56 features. |
+| **Panel Billing Policy** | Panel-level billing (15 panels) | **Financial Cost Evaluation**: Billed at the medical procedure level (e.g., 1 Structural MRI = $1,500) regardless of how many individual features are selected within that panel. |lled at $0.00. |
