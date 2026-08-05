@@ -1,0 +1,36 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments & Environments
+env/
+venv/
+.venv/
+ENV/
+benchmark 1 multitask learning/env/
+
+# R Environment & Temp files
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj.user
+
+# Large Raw Archives & Extracted Package Directories
+data/*.tar.gz
+ADNIMERGE2/
+
+# Archived Legacy Experiments
+archive/
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+ehthumbs.db
+Thumbs.db
+
+# IDE & Editor Settings
+.idea/
+.vscode/
+*.swp
+*.swo

@@ -1,5 +1,7 @@
 import os
 import sys
+sys.modules['bottleneck'] = None
+sys.modules['pyarrow'] = None
 import csv
 import numpy as np
 
@@ -98,34 +100,27 @@ for fold, (train_idx, test_idx) in enumerate(splits):
             all_fold_metrics[target_name]['mse'].append(mse)
 
 avg_importance = global_feature_importance / N_SPLITS
-top_indices = np.argsort(avg_importance)[::-1][:TOP_N_FEATURES]
+top_feature_indices = np.argsort(avg_importance)[::-1][:TOP_N_FEATURES]
 
-feature_output_path = os.path.join(OUTPUT_DIR, 'selected_features_benchmark2.csv')
-with open(feature_output_path, 'w', newline='', encoding='utf-8') as f:
-    writer = csv.writer(f)
-    writer.writerow(['Selected_Feature', 'ImportanceScore'])
-    for idx in top_indices:
-        writer.writerow([feature_cols[idx], avg_importance[idx]])
-
-metrics_output_path = os.path.join(OUTPUT_DIR, 'predictive_metrics_benchmark2.txt')
-with open(metrics_output_path, 'w', encoding='utf-8') as f:
-    f.write("==== Benchmark 2: Predictive Performance XGBoost (Cross-Validated) ====\n")
-    f.write(f"Validation Protocol: {N_SPLITS}-Fold Cross-Validation\n")
-    f.write(f"Features Selected: {TOP_N_FEATURES} out of {X.shape[1]}\n\n")
-    
-    f.write(f"--- XGBoost Regression (on top {TOP_N_FEATURES} selected features) ---\n")
-    for target_name, m_dict in all_fold_metrics.items():
-        r2_m, r2_std = np.mean(m_dict['r2']), np.std(m_dict['r2'])
-        mae_m, mae_std = np.mean(m_dict['mae']), np.std(m_dict['mae'])
-        mse_m, mse_std = np.mean(m_dict['mse']), np.std(m_dict['mse'])
+metrics_summary_path = os.path.join(OUTPUT_DIR, 'predictive_metrics_benchmark2.txt')
+with open(metrics_summary_path, 'w') as f:
+    f.write("=== XGBoost Baseline Performance Metrics (5-Fold CV on Top 59 Features) ===\n")
+    for target_name in target_cols:
+        r2_m, r2_std = np.mean(all_fold_metrics[target_name]['r2']), np.std(all_fold_metrics[target_name]['r2'])
+        mae_m, mae_std = np.mean(all_fold_metrics[target_name]['mae']), np.std(all_fold_metrics[target_name]['mae'])
+        mse_m, mse_std = np.mean(all_fold_metrics[target_name]['mse']), np.std(all_fold_metrics[target_name]['mse'])
         
-        ci95_r2 = 1.96 * r2_std / np.sqrt(len(m_dict['r2']))
-        ci95_mae = 1.96 * mae_std / np.sqrt(len(m_dict['mae']))
-        
+        ci95_r2 = 1.96 * r2_std / np.sqrt(N_SPLITS)
         f.write(f"Target: {target_name}\n")
-        f.write(f"  - R2:  {r2_m:.4f} +/- {ci95_r2:.4f} (95% CI: [{r2_m - ci95_r2:.4f}, {r2_m + ci95_r2:.4f}])\n")
-        f.write(f"  - MAE: {mae_m:.4f} +/- {ci95_mae:.4f}\n")
-        f.write(f"  - MSE: {mse_m:.4f}\n\n")
+        f.write(f"  R2:  {r2_m:.4f} +/- {ci95_r2:.4f} (95% CI: [{r2_m - ci95_r2:.4f}, {r2_m + ci95_r2:.4f}])\n")
+        f.write(f"  MAE: {mae_m:.4f} +/- {mae_std:.4f}\n")
+        f.write(f"  MSE: {mse_m:.4f} +/- {mse_std:.4f}\n\n")
 
-print("Benchmark 2 Execution Complete!")
-print(f"Metrics saved to {metrics_output_path}")
+features_output_path = os.path.join(OUTPUT_DIR, 'selected_features_benchmark2.csv')
+with open(features_output_path, 'w', newline='', encoding='utf-8') as f:
+    writer = csv.writer(f)
+    writer.writerow(['Selected_Feature', 'XGB_Importance'])
+    for idx in top_feature_indices:
+        writer.writerow([feature_cols[idx], f"{avg_importance[idx]:.6f}"])
+
+print(f"3. Results saved to '{metrics_summary_path}' and '{features_output_path}'.")
