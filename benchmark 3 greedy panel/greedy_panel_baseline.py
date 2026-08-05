@@ -1,7 +1,6 @@
 import os
 import sys
 import csv
-import importlib.util
 import numpy as np
 
 # Add project root to python path
@@ -12,6 +11,7 @@ from src.common.preprocessing import (
     apply_scaling_and_imputation,
     get_kfold_splits
 )
+from src.common.fista_solver import solve_fista_l21_mtfl
 
 DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
 B1_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'benchmark 1 multitask learning'))
@@ -21,13 +21,6 @@ TARGETS_PATH = os.path.join(DATA_DIR, 'adni_longitudinal_targets.csv')
 MAPPING_PATH = os.path.join(B1_DIR, 'feature_to_panel_mapping.csv')
 COSTS_PATH = os.path.join(B1_DIR, 'panel_costs.csv')
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), 'greedy_baseline_metrics.txt')
-
-# Import FISTA solver from benchmark 1
-b1_path = os.path.join(B1_DIR, 'mtfl_benchmark.py')
-spec = importlib.util.spec_from_file_location("mtfl_benchmark", b1_path)
-mtfl_module = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(mtfl_module)
-solve_fista_l21_mtfl = mtfl_module.solve_fista_l21_mtfl
 
 print("1. Loading Data & Clinical Panel Provenance...")
 X, Y, feature_cols, target_cols, rids = load_and_preprocess_adni_data(FEATURES_PATH, TARGETS_PATH, purge_admin=True)

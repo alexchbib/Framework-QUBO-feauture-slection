@@ -84,27 +84,20 @@ def load_and_preprocess_adni_data(features_path, targets_path, purge_admin=True,
     X = np.array([[safe_encode_val(row[i], x_header[i]) for i in keep_x_indices] for row in x_rows], dtype=np.float64)
     Y = np.array([[safe_encode_val(row[i], y_header[i]) for i in target_indices] for row in y_rows], dtype=np.float64)
     
-    if purge_zero_variance:
-        observed_counts = np.sum(~np.isnan(X), axis=0)
-        stds = np.nanstd(X, axis=0)
-        stds[np.isnan(stds)] = 0.0
-        valid_cols = (observed_counts > 5) & (stds > 1e-6)
-        X = X[:, valid_cols]
-        feature_names = [feature_names[i] for i in range(len(feature_names)) if valid_cols[i]]
-    
     return X, Y, feature_names, target_names, np.array(rids_x)
 
 def compute_observed_scaling(X_train):
     """
     Computes feature means and standard deviations strictly on OBSERVED non-missing values
     BEFORE mean imputation (Fixes A2). Prevents missingness inflation on imaging panels.
+    Sets zero-variance/unobserved training features to std=1.0 so they scale safely to 0.
     """
     x_means = np.nanmean(X_train, axis=0)
     x_means[np.isnan(x_means)] = 0.0
     
     # Compute std strictly on observed entries
     x_stds = np.nanstd(X_train, axis=0)
-    x_stds[np.isnan(x_stds) | (x_stds == 0)] = 1.0
+    x_stds[np.isnan(x_stds) | (x_stds <= 1e-6)] = 1.0
     
     return x_means, x_stds
 

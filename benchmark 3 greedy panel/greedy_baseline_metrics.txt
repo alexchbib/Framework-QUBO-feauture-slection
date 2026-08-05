@@ -3,11 +3,11 @@ Protocol: Iterative Cost-Aware Greedy Elimination (5-Fold CV)
 
 Step | Active Panels | Billed Cost ($) | Mean R2 Score | Action
 ---------------------------------------------------------------------------
-   0 |            18 | $    14,150.00 |        0.7519 | Full Panel Set
-   1 |            17 | $    11,150.00 |        0.7520 | Removed Tau PET Imaging
-   2 |            16 | $     9,650.00 |        0.7522 | Removed DTI MRI (Diffusion Tensor)
-   3 |            15 | $     8,150.00 |        0.7521 | Removed ASL MRI (Arterial Spin Labeling)
-   4 |            14 | $     6,650.00 |        0.7522 | Removed Structural MRI (FreeSurfer)
-   5 |            13 | $     3,650.00 |        0.7514 | Removed Amyloid PET Imaging
-   6 |            12 | $     2,650.00 |        0.7478 | Removed CSF Biomarkers (Lumbar Puncture)
-   7 |            11 | $       650.00 |        0.7362 | Removed FDG PET Imaging
+   0 |            19 | $    14,150.00 |        0.7515 | Full Panel Set
+   1 |            18 | $    11,150.00 |        0.7520 | Removed Tau PET Imaging
+   2 |            17 | $     9,650.00 |        0.7518 | Removed DTI MRI (Diffusion Tensor)
+   3 |            16 | $     8,150.00 |        0.7521 | Removed Structural MRI (FreeSurfer)
+   4 |            15 | $     6,650.00 |        0.7520 | Removed ASL MRI (Arterial Spin Labeling)
+   5 |            14 | $     3,650.00 |        0.7511 | Removed Amyloid PET Imaging
+   6 |            13 | $     2,650.00 |        0.7477 | Removed CSF Biomarkers (Lumbar Puncture)
+   7 |            12 | $       650.00 |        0.7362 | Removed FDG PET Imaging

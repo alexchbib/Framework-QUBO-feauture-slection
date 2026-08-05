@@ -11,6 +11,7 @@ from src.common.preprocessing import (
     apply_scaling_and_imputation,
     get_kfold_splits
 )
+from src.common.fista_solver import solve_fista_l21_mtfl, select_lambda_inner_cv
 
 DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
 FEATURES_PATH = os.path.join(DATA_DIR, 'adni_longitudinal_features.csv')
@@ -60,58 +61,6 @@ subsets = {
 
 splits = get_kfold_splits(X.shape[0], n_splits=5, seed=42)
 
-def solve_fista_l21_mtfl(X_sc, Y_sc, target_mask=None, lambda_val=0.05, max_iters=5000, tol=1e-8):
-    N, d = X_sc.shape
-    T = Y_sc.shape[1]
-    
-    if target_mask is None:
-        target_mask = np.ones_like(Y_sc)
-    
-    s_val = np.linalg.svd(X_sc, compute_uv=False)
-    L = (s_val[0]**2) / N
-    step = 1.0 / L
-    
-    W = np.zeros((d, T), dtype=np.float64)
-    Z = W.copy()
-    t_fista = 1.0
-    
-    def compute_obj(W_curr):
-        diff = (X_sc.dot(W_curr) - Y_sc) * target_mask
-        loss = 0.5 * np.sum(diff**2) / N
-        reg = lambda_val * np.sum(np.linalg.norm(W_curr, axis=1))
-        return loss + reg
-        
-    obj_old = compute_obj(W)
-    
-    for it in range(max_iters):
-        diff_z = (X_sc.dot(Z) - Y_sc) * target_mask
-        grad = X_sc.T.dot(diff_z) / N
-        W_temp = Z - step * grad
-        
-        norms = np.linalg.norm(W_temp, axis=1)
-        thresh = step * lambda_val
-        
-        mask = norms > thresh
-        scaling = np.zeros_like(norms)
-        scaling[mask] = (1.0 - thresh / norms[mask])
-        W_next = W_temp * scaling[:, np.newaxis]
-        
-        obj_new = compute_obj(W_next)
-        rel_change = abs(obj_old - obj_new) / (obj_old + 1e-12)
-        
-        if rel_change < tol and it > 20:
-            W = W_next
-            break
-            
-        obj_old = obj_new
-        
-        t_next = (1.0 + np.sqrt(1.0 + 4.0 * t_fista**2)) / 2.0
-        Z = W_next + ((t_fista - 1.0) / t_next) * (W_next - W)
-        W = W_next
-        t_fista = t_next
-        
-    return W
-
 print("\n=================================================================")
 print("RUNNING OFFICIAL ABLATION STUDY SUITE (5-FOLD CV)")
 print("=================================================================\n")
@@ -138,7 +87,8 @@ for name, mask in subsets.items():
         Y_tr_sc = (Y_tr_imp - y_means) / y_stds
         Y_tr_sc[~target_mask] = 0.0
         
-        W_opt = solve_fista_l21_mtfl(X_tr_sc, Y_tr_sc, target_mask=target_mask.astype(float), lambda_val=0.05, max_iters=5000, tol=1e-8)
+        best_lambda = select_lambda_inner_cv(X_tr_sc, Y_tr_sc, target_mask)
+        W_opt = solve_fista_l21_mtfl(X_tr_sc, Y_tr_sc, target_mask=target_mask.astype(float), lambda_val=best_lambda, max_iters=5000, tol=1e-8)
         preds_sc = X_te_sc.dot(W_opt)
         preds = preds_sc * y_stds + y_means
         
