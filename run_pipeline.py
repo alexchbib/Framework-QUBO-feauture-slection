@@ -9,7 +9,7 @@ def run_script(script_path, cwd=None):
     print(f"=================================================================\n")
     if cwd is None:
         cwd = os.path.dirname(os.path.abspath(script_path))
-    cmd = [sys.executable, os.path.basename(script_path)]
+    cmd = [sys.executable, os.path.abspath(script_path)]
     subprocess.run(cmd, cwd=cwd, check=True)
 
 def main():
@@ -39,7 +39,17 @@ def main():
         run_script(os.path.join(root_dir, 'src', 'baselines', 'greedy_panel_baseline.py'), cwd=root_dir)
 
     if args.all or args.costs:
-        run_script(os.path.join(root_dir, 'evaluate_costs.py'), cwd=root_dir)
+        cmd = [
+            sys.executable,
+            os.path.join(root_dir, 'evaluate_costs.py'),
+            '--panel_costs', os.path.join(root_dir, 'benchmark 1 multitask learning', 'panel_costs.csv'),
+            '--mapping_csv', os.path.join(root_dir, 'benchmark 1 multitask learning', 'feature_to_panel_mapping.csv'),
+            '--features_csv', os.path.join(root_dir, 'benchmark 1 multitask learning', 'selected_features_benchmark1.csv')
+        ]
+        print(f"\n=================================================================")
+        print(f"RUNNING: evaluate_costs.py")
+        print(f"=================================================================\n")
+        subprocess.run(cmd, cwd=root_dir, check=True)
 
     if args.all or args.ablation:
         run_script(os.path.join(root_dir, 'src', 'ablation_study.py'), cwd=root_dir)
