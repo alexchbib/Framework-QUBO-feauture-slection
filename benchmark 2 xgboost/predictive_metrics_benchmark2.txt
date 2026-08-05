@@ -1,20 +1,20 @@
 ==== Benchmark 2: Predictive Performance XGBoost (Cross-Validated) ====
 Validation Protocol: 5-Fold Cross-Validation
-Features Selected: 660 out of 2093
+Features Selected: 59 out of 2093
 
---- XGBoost Regression (on top 660 selected features) ---
+--- XGBoost Regression (on top 59 selected features) ---
 Target: M24_ADAS13
-  - R2:  0.6801 +/- 0.0387 (95% CI: [0.6413, 0.7188])
-  - MAE: 4.4283 +/- 0.2878
-  - MSE: 39.9734
+  - R2:  0.6856 +/- 0.0412 (95% CI: [0.6443, 0.7268])
+  - MAE: 4.3878 +/- 0.3255
+  - MSE: 39.4346
 
 Target: M24_CDRSB
-  - R2:  0.6393 +/- 0.0528 (95% CI: [0.5865, 0.6921])
-  - MAE: 0.9435 +/- 0.0830
-  - MSE: 2.1701
+  - R2:  0.6537 +/- 0.0457 (95% CI: [0.6080, 0.6993])
+  - MAE: 0.9300 +/- 0.0764
+  - MSE: 2.0763
 
 Target: M24_MMSE
-  - R2:  0.5812 +/- 0.0600 (95% CI: [0.5211, 0.6412])
-  - MAE: 1.6305 +/- 0.2614
-  - MSE: 5.1047
+  - R2:  0.5901 +/- 0.0544 (95% CI: [0.5357, 0.6445])
+  - MAE: 1.6144 +/- 0.2494
+  - MSE: 4.9591
 

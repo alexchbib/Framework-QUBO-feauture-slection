@@ -15,9 +15,9 @@ from src.common.preprocessing import (
 # ==========================================
 # CONFIGURATION
 # ==========================================
-LEARNING_RATE = 0.05
-N_ITERS = 300
 LAMBDA_VAL = 0.05
+MAX_ITERS = 5000
+TOLERANCE = 1e-8
 N_SPLITS = 5
 
 DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
@@ -29,43 +29,72 @@ print("1. Loading Data & Applying Preprocessing Pipeline...")
 X, Y, feature_cols, target_cols, rids = load_and_preprocess_adni_data(FEATURES_PATH, TARGETS_PATH, purge_admin=True)
 print(f"Loaded {X.shape[0]} unique subjects, {X.shape[1]} clean clinical features, and {Y.shape[1]} targets.")
 
-def solve_l21_mtfl(X_scaled, Y_scaled, lambda_val, lr=0.05, max_iters=300):
+def solve_fista_l21_mtfl(X_sc, Y_sc, lambda_val, max_iters=5000, tol=1e-8):
     """
-    Corrected L2,1-norm proximal gradient solver (Fixes B4).
-    Gradient is scaled by N once, step size alpha = lr / L.
+    Fast Iterative Shrinkage-Thresholding Algorithm (FISTA) for L2,1-norm MTFL.
+    Solves the exact multi-task feature selection objective (Argyriou et al., 2006):
+        min_W (1 / 2N) * ||X W - Y||_F^2 + lambda * ||W||_{2,1}
+        
+    Mathematical Fixes:
+    1. Exact Spectral Norm Lipschitz constant: L = (1 / N) * sigma_max(X)^2
+    2. Exact Step Size: t = 1 / L (no arbitrary over-estimation)
+    3. FISTA Nesterov Momentum Acceleration
+    4. Relative Objective Value Convergence Criterion: |obj_new - obj_old| / obj_old < tol
     """
-    N, d = X_scaled.shape
-    T = Y_scaled.shape[1]
+    N, d = X_sc.shape
+    T = Y_sc.shape[1]
+    
+    # Compute exact largest singular value / spectral norm
+    s_val = np.linalg.svd(X_sc, compute_uv=False)
+    L = (s_val[0]**2) / N
+    step = 1.0 / L
+    
     W = np.zeros((d, T), dtype=np.float64)
+    Z = W.copy()
+    t_fista = 1.0
     
-    L = np.sum(X_scaled**2) / (N * T)
-    step = lr / max(L, 1.0)
-    
-    for iteration in range(max_iters):
-        grad = X_scaled.T.dot(X_scaled.dot(W) - Y_scaled) / N
-        W_temp = W - step * grad
+    def compute_obj(W_curr):
+        loss = 0.5 * np.sum((X_sc.dot(W_curr) - Y_sc)**2) / N
+        reg = lambda_val * np.sum(np.linalg.norm(W_curr, axis=1))
+        return loss + reg
         
-        # Block Soft Thresholding for L2,1 penalty
+    obj_old = compute_obj(W)
+    
+    for it in range(max_iters):
+        # Gradient of smooth loss term w.r.t Z
+        grad = X_sc.T.dot(X_sc.dot(Z) - Y_sc) / N
+        W_temp = Z - step * grad
+        
+        # Block Soft-Thresholding for L2,1 group norm
         norms = np.linalg.norm(W_temp, axis=1)
-        threshold = step * lambda_val
+        thresh = step * lambda_val
         
-        mask = norms > threshold
+        mask = norms > thresh
         scaling = np.zeros_like(norms)
-        scaling[mask] = (1.0 - threshold / norms[mask])
-        
+        scaling[mask] = (1.0 - thresh / norms[mask])
         W_next = W_temp * scaling[:, np.newaxis]
         
-        if np.max(np.abs(W_next - W)) < 1e-6:
+        obj_new = compute_obj(W_next)
+        rel_change = abs(obj_old - obj_new) / (obj_old + 1e-12)
+        
+        if rel_change < tol and it > 20:
             W = W_next
             break
+            
+        obj_old = obj_new
+        
+        # FISTA Nesterov acceleration update
+        t_next = (1.0 + np.sqrt(1.0 + 4.0 * t_fista**2)) / 2.0
+        Z = W_next + ((t_fista - 1.0) / t_next) * (W_next - W)
         W = W_next
+        t_fista = t_next
         
     return W
 
-print(f"2. Executing {N_SPLITS}-Fold Cross-Validation...")
+print(f"2. Executing {N_SPLITS}-Fold Cross-Validation with FISTA...")
 
 all_fold_metrics = {model: {t: {'r2': [], 'mae': [], 'mse': []} for t in target_cols} 
-                    for model in ['Multi-Task L2,1 Lasso', 'Ridge Refit (Selected Panel)']}
+                    for model in ['Multi-Task L2,1 Lasso (FISTA)', 'Ridge Refit (Selected Panel)']}
 
 selected_feature_counts = []
 global_feature_importance = np.zeros(X.shape[1])
@@ -76,7 +105,7 @@ for fold, (train_idx, test_idx) in enumerate(splits):
     X_train, X_test = X[train_idx], X[test_idx]
     Y_train, Y_test = Y[train_idx], Y[test_idx]
     
-    # Compute scaling on OBSERVED values before imputation (Fixes A2)
+    # Compute scaling on OBSERVED values before imputation
     x_means, x_stds = compute_observed_scaling(X_train)
     X_tr_sc, X_te_sc, X_tr_imp, X_te_imp = apply_scaling_and_imputation(X_train, X_test, x_means, x_stds)
     
@@ -88,7 +117,7 @@ for fold, (train_idx, test_idx) in enumerate(splits):
     Y_tr_imp = np.where(np.isnan(Y_train), y_means, Y_train)
     Y_tr_sc = (Y_tr_imp - y_means) / y_stds
     
-    W_opt = solve_l21_mtfl(X_tr_sc, Y_tr_sc, LAMBDA_VAL, lr=LEARNING_RATE, max_iters=N_ITERS)
+    W_opt = solve_fista_l21_mtfl(X_tr_sc, Y_tr_sc, lambda_val=LAMBDA_VAL, max_iters=MAX_ITERS, tol=TOLERANCE)
     
     feat_norms = np.linalg.norm(W_opt, axis=1)
     global_feature_importance += feat_norms
@@ -122,7 +151,7 @@ for fold, (train_idx, test_idx) in enumerate(splits):
             preds_ridge[:, t_i] = y_means[t_i]
             
     models_preds = {
-        'Multi-Task L2,1 Lasso': preds_lasso,
+        'Multi-Task L2,1 Lasso (FISTA)': preds_lasso,
         'Ridge Refit (Selected Panel)': preds_ridge
     }
     
@@ -158,7 +187,7 @@ with open(feature_output_path, 'w', newline='', encoding='utf-8') as f:
 
 metrics_output_path = os.path.join(OUTPUT_DIR, 'predictive_metrics_benchmark1.txt')
 with open(metrics_output_path, 'w', encoding='utf-8') as f:
-    f.write("==== Benchmark 1: Multi-Task L2,1-Norm (Cross-Validated) ====\n")
+    f.write("==== Benchmark 1: Multi-Task L2,1-Norm (FISTA Converged) ====\n")
     f.write(f"Validation Protocol: {N_SPLITS}-Fold Cross-Validation\n")
     f.write(f"Mean Features Selected: {mean_selected_count} out of {X.shape[1]}\n\n")
     

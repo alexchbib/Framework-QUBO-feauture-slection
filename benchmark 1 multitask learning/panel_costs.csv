@@ -1,7 +1,7 @@
 "Panel_Name","Cost_USD"
 "Demographics & Medical History",50
-"ADAS-Cog Assessment",300
-"MMSE Assessment",150
+"ADAS-Cog Assessment",0
+"MMSE Assessment",0
 "Clock Drawing Test",50
 "Copy Drawing Test",50
 "Logical Memory Test",100
@@ -9,7 +9,7 @@
 "Category Fluency Test",50
 "Trail Making Test (TMT)",100
 "Boston Naming Test",100
-"Clinical Dementia Rating (CDR)",250
+"Clinical Dementia Rating (CDR)",0
 "Functional Assessment Questionnaire (FAQ)",100
 "CSF Biomarkers (Lumbar Puncture)",1000
 "DTI MRI (Diffusion Tensor)",1500

@@ -15,7 +15,7 @@ from src.common.preprocessing import (
 # ==========================================
 # CONFIGURATION
 # ==========================================
-TOP_N_FEATURES = 660  # Match Benchmark 1 feature count precisely
+TOP_N_FEATURES = 59  # Match FISTA selected feature count precisely (59 features)
 N_SPLITS = 5
 
 DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))

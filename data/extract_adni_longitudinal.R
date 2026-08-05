@@ -3,6 +3,7 @@
 # Resolves Audit findings A3 (NEUROBAT baseline selection), A4 (Provenance-based panel mapping), 
 # A5 (FDG PET pivoting & SUVR ratio), and C3 (Relative path handling).
 
+#packages
 library(dplyr)
 library(tidyr)
 library(purrr)
@@ -18,30 +19,30 @@ if (!dir.exists(data_dir)) {
 cat("Loading raw R data tables from:", data_dir, "\n")
 
 # Load RDA files
-load(file.path(data_dir, "PTDEMOG.rda"))
-load(file.path(data_dir, "APOERES.rda"))
-load(file.path(data_dir, "ADAS.rda"))
-load(file.path(data_dir, "MMSE.rda"))
-load(file.path(data_dir, "NEUROBAT.rda"))
-load(file.path(data_dir, "CDR.rda"))
-load(file.path(data_dir, "FAQ.rda"))
-load(file.path(data_dir, "UCSFFSX7.rda"))
-load(file.path(data_dir, "UPENNBIOMK_MASTER.rda"))
-load(file.path(data_dir, "UCBERKELEYFDG_8mm.rda"))
-load(file.path(data_dir, "UCBERKELEY_AMY_6MM.rda"))
-load(file.path(data_dir, "DTIROI_MEAN.rda"))
-load(file.path(data_dir, "UCSFASLFS_V2.rda"))
-load(file.path(data_dir, "UCBERKELEY_TAU_6MM.rda"))
+load(file.path(data_dir, "PTDEMOG.rda")) # Demographics
+load(file.path(data_dir, "APOERES.rda")) #Age, Sex, Education, APOE ε4 status
+load(file.path(data_dir, "ADAS.rda")) #Alzheimer’s Disease Assessment Scale-Cognitive Subscale
+load(file.path(data_dir, "MMSE.rda")) #Mini-Mental State Exam
+load(file.path(data_dir, "NEUROBAT.rda")) #Neuropsychological Test Battery
+load(file.path(data_dir, "CDR.rda")) #Clinical Dementia Rating (CDR)
+load(file.path(data_dir, "FAQ.rda")) #Functional Assessment Questionnaire (FAQ)
+load(file.path(data_dir, "UCSFFSX7.rda")) #Structural MRI (FreeSurfer)
+load(file.path(data_dir, "UPENNBIOMK_MASTER.rda")) #CSF Biomarkers (Lumbar Puncture)
+load(file.path(data_dir, "UCBERKELEYFDG_8mm.rda")) #FDG PET Imaging (Cerebral Glucose Metabolism)
+load(file.path(data_dir, "UCBERKELEY_AMY_6MM.rda")) #Amyloid PET Imaging (Cerebral Amyloid Deposition)
+load(file.path(data_dir, "DTIROI_MEAN.rda")) #DTI MRI (Diffusion Tensor)
+load(file.path(data_dir, "UCSFASLFS_V2.rda")) #ASL MRI (Cerebral Blood Flow)
+load(file.path(data_dir, "UCBERKELEY_TAU_6MM.rda")) #Tau PET Imaging (Cerebral Tau Deposition)
 
-# Improved baseline filter prioritizing complete 'bl' over 'sc' (Fixes A3)
-filter_bl <- function(df) {
-  baseline_codes <- c("bl", "sc", "scmri", "v01", "v02", "v03", "4_bl", "4_sc", "init")
+# Baseline filter prioritizing complete 'bl' over 'sc' 
+filter_bl <- function(df) { 
+  baseline_codes <- c("bl", "sc", "scmri", "v01", "v02", "v03", "4_bl", "4_sc", "init") #Baseline visit codes
   has_v1 <- "VISCODE" %in% names(df)
   has_v2 <- "VISCODE2" %in% names(df)
   
-  if (has_v1 || has_v2) {
-    df_sub <- df
-    if (has_v1 && has_v2) {
+  if (has_v1 || has_v2) { #Check if there are VISCODE or VISCODE2 columns
+    df_sub <- df 
+    if (has_v1 && has_v2) { 
       df_sub <- df_sub %>% filter(VISCODE %in% baseline_codes | VISCODE2 %in% baseline_codes)
     } else if (has_v1) {
       df_sub <- df_sub %>% filter(VISCODE %in% baseline_codes)
