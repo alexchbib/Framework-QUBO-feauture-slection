@@ -1,19 +1,20 @@
-Panel_Name,Cost_USD,Feature_Regex
-Demographics & Medical History,50,"^PT.*|^RID$|^SITEID$|^ID$|^PTSOURCE$"
-ADAS-Cog Assessment,300,"^TOTSCORE$|^TOTAL13$|^SITEID\.adas$|^WORD.*"
-MMSE Assessment,150,"^MM.*|^SITEID\.mmse$"
-Clock Drawing Test,50,"^CLOCK.*"
-Copy Drawing Test,50,"^COPY.*"
-Logical Memory Test,100,"^LMSTORY$|^LIMM.*|^LDEL.*"
-Rey Auditory Verbal Learning Test (RAVLT),150,"^AV.*|^ANARTERR$"
-Category Fluency Test,50,"^CAT.*"
-Trail Making Test (TMT),100,"^TRA.*"
-Boston Naming Test,100,"^BNT.*"
-Clinical Dementia Rating (CDR),250,"^CD.*|^SITEID\.cdr$|^SITEID\.neuro$"
-Functional Assessment Questionnaire (FAQ),100,"^FAQ.*|^SOURCE\.faq$|^SITEID\.faq$"
-CSF Biomarkers (Lumbar Puncture),1000,"^BATCH$|^KIT$|^STDS$|^ABETA$|^TAU$|^PTAU$|^ABETA_RAW$|^TAU_RAW$|^PTAU_RAW$"
-DTI MRI (Diffusion Tensor),1500,"^AD_.*|^FA_.*|^MD_.*|^RD_.*|^IMAGEUID\.dti$|^STATUS\.dti$|^QC$"
-ASL MRI (Arterial Spin Labeling),1500,"^ST[0-9]+(MIN|MAX|MD|AVG|SD|CT)$|^VERSION\.asl$|^LONIUID\.asl$|^IMAGEUID\.asl$|^RAWQC$"
-Tau PET Imaging,3000,".*\.tau$"
-Amyloid PET Imaging,3000,".*_SUVR$|.*_VOLUME$|^CENTILOIDS$|^IMAGEUID$|^SCANDATE$|^SITEID\.amy$|^PROCESSDATE$|^IMAGE_RESOLUTION$|^qc_flag$|^TRACER$|^TRACER_SUVR_WARNING$|^AMYLOID_STATUS.*|^MEAN$|^MAX$|^STDEV$|^TOTVOX$"
-Structural MRI (FreeSurfer),1500,"^ST[0-9]+[a-zA-Z]+$|^FSVER$|^FIELD_STRENGTH$|^VERSION$|^MANUFACTURER$|^VOLUMES$"
+"Panel_Name","Cost_USD"
+"Demographics & Medical History",50
+"ADAS-Cog Assessment",300
+"MMSE Assessment",150
+"Clock Drawing Test",50
+"Copy Drawing Test",50
+"Logical Memory Test",100
+"Rey Auditory Verbal Learning Test (RAVLT)",150
+"Category Fluency Test",50
+"Trail Making Test (TMT)",100
+"Boston Naming Test",100
+"Clinical Dementia Rating (CDR)",250
+"Functional Assessment Questionnaire (FAQ)",100
+"CSF Biomarkers (Lumbar Puncture)",1000
+"DTI MRI (Diffusion Tensor)",1500
+"ASL MRI (Arterial Spin Labeling)",1500
+"FDG PET Imaging",2000
+"Tau PET Imaging",3000
+"Amyloid PET Imaging",3000
+"Structural MRI (FreeSurfer)",1500

@@ -1,189 +1,181 @@
 import os
+import sys
 import csv
 import numpy as np
+
+# Add project root to python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from src.common.preprocessing import (
+    load_and_preprocess_adni_data,
+    compute_observed_scaling,
+    apply_scaling_and_imputation,
+    get_kfold_splits
+)
 
 # ==========================================
 # CONFIGURATION
 # ==========================================
-MANUAL_LAMBDA = 0.05  # Regularization strength for L2,1 norm (scaled target domain)
 LEARNING_RATE = 0.05
-N_ITERS = 2000
+N_ITERS = 300
+LAMBDA_VAL = 0.05
+N_SPLITS = 5
 
-# File paths
-DATA_DIR = '../data'
+DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
 FEATURES_PATH = os.path.join(DATA_DIR, 'adni_longitudinal_features.csv')
 TARGETS_PATH = os.path.join(DATA_DIR, 'adni_longitudinal_targets.csv')
-OUTPUT_DIR = '.'
+OUTPUT_DIR = os.path.dirname(__file__)
 
-print("1. Loading Data...")
+print("1. Loading Data & Applying Preprocessing Pipeline...")
+X, Y, feature_cols, target_cols, rids = load_and_preprocess_adni_data(FEATURES_PATH, TARGETS_PATH, purge_admin=True)
+print(f"Loaded {X.shape[0]} unique subjects, {X.shape[1]} clean clinical features, and {Y.shape[1]} targets.")
 
-def load_csv(filepath):
-    with open(filepath, 'r') as f:
-        reader = csv.reader(f)
-        header = next(reader)
-        data = list(reader)
-    return header, data
-
-x_header, x_raw = load_csv(FEATURES_PATH)
-y_header, y_raw = load_csv(TARGETS_PATH)
-
-rid_idx_x = x_header.index('RID')
-site_idx_x = x_header.index('SITEID')
-keep_idx_x = [i for i in range(len(x_header)) if i not in (rid_idx_x, site_idx_x)]
-feature_cols = [x_header[i] for i in keep_idx_x]
-
-rid_idx_y = y_header.index('RID')
-site_idx_y = y_header.index('SITEID')
-keep_idx_y = [i for i in range(len(y_header)) if i not in (rid_idx_y, site_idx_y)]
-target_cols = [y_header[i] for i in keep_idx_y]
-
-x_raw.sort(key=lambda r: int(r[rid_idx_x]))
-y_raw.sort(key=lambda r: int(r[rid_idx_y]))
-
-def safe_float(val):
-    if val in ('NA', '', None):
-        return np.nan
-    try:
-        return float(val)
-    except:
-        return np.nan
-
-X = np.array([[safe_float(row[i]) for i in keep_idx_x] for row in x_raw])
-Y = np.array([[safe_float(row[i]) for i in keep_idx_y] for row in y_raw])
-
-print(f"Loaded {X.shape[0]} unique subjects, {X.shape[1]} features, and {Y.shape[1]} targets.")
-
-# Train/Test Split (80/20 manually with fixed random seed)
-np.random.seed(42)
-indices = np.random.permutation(X.shape[0])
-split_idx = int(X.shape[0] * 0.8)
-train_idx, test_idx = indices[:split_idx], indices[split_idx:]
-
-X_train, X_test = X[train_idx], X[test_idx]
-Y_train, Y_test = Y[train_idx], Y[test_idx]
-
-# ==========================================
-# DATA PREPROCESSING
-# ==========================================
-print("2. Preprocessing Features (Mean Imputation on X)...")
-x_means = np.nanmean(X_train, axis=0)
-x_means[np.isnan(x_means)] = 0.0 # fallback for all-nan columns
-X_train_imp = np.where(np.isnan(X_train), x_means, X_train)
-X_test_imp = np.where(np.isnan(X_test), x_means, X_test)
-
-print("3. Standardizing Features and Target Outcomes...")
-x_stds = np.std(X_train_imp, axis=0)
-x_stds[x_stds == 0] = 1.0
-X_train_scaled = (X_train_imp - x_means) / x_stds
-X_test_scaled = (X_test_imp - x_means) / x_stds
-
-# Target mean and std calculated strictly on training set observed entries
-y_means = np.nanmean(Y_train, axis=0)
-y_stds = np.nanstd(Y_train, axis=0)
-y_stds[y_stds == 0] = 1.0
-
-# Standardize training target matrix Y (impute 0 for missing in MTFL optimization loop only)
-Y_train_scaled = np.where(np.isnan(Y_train), y_means, Y_train)
-Y_train_scaled = (Y_train_scaled - y_means) / y_stds
-
-# ==========================================
-# MULTI-TASK FEATURE LEARNING (L2,1-Norm Proximal Gradient)
-# ==========================================
-print(f"4. Executing Multi-Task Feature Selection (L2,1-Norm, Lambda={MANUAL_LAMBDA})...")
-
-N, d = X_train_scaled.shape
-T = Y_train_scaled.shape[1]
-W = np.zeros((d, T))
-
-alpha = LEARNING_RATE / N
-for _ in range(N_ITERS):
-    # Gradient of 0.5 * ||XW - Y||_F^2
-    grad = X_train_scaled.T.dot(X_train_scaled.dot(W) - Y_train_scaled) / N
-    W_temp = W - alpha * grad
+def solve_l21_mtfl(X_scaled, Y_scaled, lambda_val, lr=0.05, max_iters=300):
+    """
+    Corrected L2,1-norm proximal gradient solver (Fixes B4).
+    Gradient is scaled by N once, step size alpha = lr / L.
+    """
+    N, d = X_scaled.shape
+    T = Y_scaled.shape[1]
+    W = np.zeros((d, T), dtype=np.float64)
     
-    # Block Soft Thresholding for L2,1 penalty
-    norms = np.linalg.norm(W_temp, axis=1)
-    threshold = alpha * MANUAL_LAMBDA
+    L = np.sum(X_scaled**2) / (N * T)
+    step = lr / max(L, 1.0)
     
-    mask = norms > threshold
-    scaling = np.zeros_like(norms)
-    scaling[mask] = (1 - threshold / norms[mask])
-    W = W_temp * scaling[:, np.newaxis]
+    for iteration in range(max_iters):
+        grad = X_scaled.T.dot(X_scaled.dot(W) - Y_scaled) / N
+        W_temp = W - step * grad
+        
+        # Block Soft Thresholding for L2,1 penalty
+        norms = np.linalg.norm(W_temp, axis=1)
+        threshold = step * lambda_val
+        
+        mask = norms > threshold
+        scaling = np.zeros_like(norms)
+        scaling[mask] = (1.0 - threshold / norms[mask])
+        
+        W_next = W_temp * scaling[:, np.newaxis]
+        
+        if np.max(np.abs(W_next - W)) < 1e-6:
+            W = W_next
+            break
+        W = W_next
+        
+    return W
 
-feature_norms = np.linalg.norm(W, axis=1)
-# Rank features by importance norm
-sorted_indices = np.argsort(feature_norms)[::-1]
-selected_indices = np.where(feature_norms > 0)[0]
+print(f"2. Executing {N_SPLITS}-Fold Cross-Validation...")
 
-if len(selected_indices) == 0:
-    print("Warning: Lambda too high, zero features selected. Fallback to top 100 features.")
-    selected_indices = sorted_indices[:100]
+all_fold_metrics = {model: {t: {'r2': [], 'mae': [], 'mse': []} for t in target_cols} 
+                    for model in ['Multi-Task L2,1 Lasso', 'Ridge Refit (Selected Panel)']}
 
-selected_features = [feature_cols[i] for i in selected_indices]
-print(f"   -> Features Selected: {len(selected_features)} out of {X.shape[1]}")
+selected_feature_counts = []
+global_feature_importance = np.zeros(X.shape[1])
+
+splits = get_kfold_splits(X.shape[0], n_splits=N_SPLITS, seed=42)
+
+for fold, (train_idx, test_idx) in enumerate(splits):
+    X_train, X_test = X[train_idx], X[test_idx]
+    Y_train, Y_test = Y[train_idx], Y[test_idx]
+    
+    # Compute scaling on OBSERVED values before imputation (Fixes A2)
+    x_means, x_stds = compute_observed_scaling(X_train)
+    X_tr_sc, X_te_sc, X_tr_imp, X_te_imp = apply_scaling_and_imputation(X_train, X_test, x_means, x_stds)
+    
+    # Target outcome scaling on observed entries
+    y_means = np.nanmean(Y_train, axis=0)
+    y_stds = np.nanstd(Y_train, axis=0)
+    y_stds[np.isnan(y_stds) | (y_stds == 0)] = 1.0
+    
+    Y_tr_imp = np.where(np.isnan(Y_train), y_means, Y_train)
+    Y_tr_sc = (Y_tr_imp - y_means) / y_stds
+    
+    W_opt = solve_l21_mtfl(X_tr_sc, Y_tr_sc, LAMBDA_VAL, lr=LEARNING_RATE, max_iters=N_ITERS)
+    
+    feat_norms = np.linalg.norm(W_opt, axis=1)
+    global_feature_importance += feat_norms
+    
+    sel_idx = np.where(feat_norms > 1e-5)[0]
+    if len(sel_idx) == 0:
+        sel_idx = np.argsort(feat_norms)[::-1][:50]
+        
+    selected_feature_counts.append(len(sel_idx))
+    
+    # Predictions
+    preds_lasso_sc = X_te_sc.dot(W_opt)
+    preds_lasso = preds_lasso_sc * y_stds + y_means
+    
+    # Ridge refit on selected panel
+    X_tr_sel = X_tr_sc[:, sel_idx]
+    X_te_sel = X_te_sc[:, sel_idx]
+    preds_ridge = np.zeros((X_te_sel.shape[0], Y.shape[1]))
+    
+    for t_i in range(Y.shape[1]):
+        valid_train = ~np.isnan(Y_train[:, t_i])
+        if np.sum(valid_train) > 5:
+            X_tr_t = X_tr_sel[valid_train]
+            y_tr_t = (Y_train[valid_train, t_i] - y_means[t_i]) / y_stds[t_i]
+            
+            ridge_alpha = 10.0
+            I = np.eye(X_tr_t.shape[1])
+            w_t = np.linalg.solve(X_tr_t.T.dot(X_tr_t) + ridge_alpha * I, X_tr_t.T.dot(y_tr_t))
+            preds_ridge[:, t_i] = (X_te_sel.dot(w_t)) * y_stds[t_i] + y_means[t_i]
+        else:
+            preds_ridge[:, t_i] = y_means[t_i]
+            
+    models_preds = {
+        'Multi-Task L2,1 Lasso': preds_lasso,
+        'Ridge Refit (Selected Panel)': preds_ridge
+    }
+    
+    for model_name, preds in models_preds.items():
+        for t_i, target_name in enumerate(target_cols):
+            valid_test = ~np.isnan(Y_test[:, t_i])
+            if np.sum(valid_test) > 0:
+                y_true = Y_test[valid_test, t_i]
+                y_pred = preds[valid_test, t_i]
+                
+                mse = np.mean((y_true - y_pred)**2)
+                mae = np.mean(np.abs(y_true - y_pred))
+                ss_res = np.sum((y_true - y_pred)**2)
+                ss_tot = np.sum((y_true - np.mean(y_true))**2)
+                r2 = 1.0 - (ss_res / ss_tot) if ss_tot > 0 else 0.0
+                
+                all_fold_metrics[model_name][target_name]['r2'].append(r2)
+                all_fold_metrics[model_name][target_name]['mae'].append(mae)
+                all_fold_metrics[model_name][target_name]['mse'].append(mse)
+
+# Save top selected features
+avg_importance = global_feature_importance / N_SPLITS
+top_indices = np.argsort(avg_importance)[::-1]
+mean_selected_count = int(np.mean(selected_feature_counts))
+selected_indices_final = [idx for idx in top_indices if avg_importance[idx] > 0][:mean_selected_count]
 
 feature_output_path = os.path.join(OUTPUT_DIR, 'selected_features_benchmark1.csv')
-with open(feature_output_path, 'w', newline='') as f:
+with open(feature_output_path, 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
-    writer.writerow(['Selected_Feature', 'L21_Norm'])
-    for idx in selected_indices:
-        writer.writerow([feature_cols[idx], feature_norms[idx]])
-print(f"   -> Selected features saved to {feature_output_path}")
-
-# ==========================================
-# SECONDARY EVALUATION: DOWNSTREAM MODELS
-# ==========================================
-print("5. Evaluating Predictive Power on Isolated Panel (No Target Imputation Leak)...")
-
-X_train_sel = X_train_scaled[:, selected_indices]
-X_test_sel = X_test_scaled[:, selected_indices]
-
-# Fit Ridge Regression for each target endpoint on non-NaN training targets
-preds_ridge_scaled = np.zeros((X_test_sel.shape[0], T))
-preds_lasso_scaled = X_test_scaled.dot(W)
-
-for t_idx in range(T):
-    valid_train_mask = ~np.isnan(Y_train[:, t_idx])
-    X_tr_t = X_train_sel[valid_train_mask]
-    y_tr_t = (Y_train[valid_train_mask, t_idx] - y_means[t_idx]) / y_stds[t_idx]
-    
-    # Analytical Ridge solution with regularizer
-    ridge_alpha = 10.0
-    I = np.eye(X_tr_t.shape[1])
-    w_t = np.linalg.solve(X_tr_t.T.dot(X_tr_t) + ridge_alpha * I, X_tr_t.T.dot(y_tr_t))
-    preds_ridge_scaled[:, t_idx] = X_test_sel.dot(w_t)
-
-# Unscale predictions back to original target domain
-preds_ridge = preds_ridge_scaled * y_stds + y_means
-preds_lasso = preds_lasso_scaled * y_stds + y_means
-
-models = {
-    'Multi-Task Linear (L2,1 Lasso)': preds_lasso,
-    'Ridge Regression (on selected panel)': preds_ridge
-}
+    writer.writerow(['Selected_Feature', 'L21_Norm_Importance'])
+    for idx in selected_indices_final:
+        writer.writerow([feature_cols[idx], avg_importance[idx]])
 
 metrics_output_path = os.path.join(OUTPUT_DIR, 'predictive_metrics_benchmark1.txt')
-with open(metrics_output_path, 'w') as f:
-    f.write("==== Benchmark 1: Predictive Performance (L2,1-Norm) ====\n")
-    f.write("Metric Details: Mean Squared Error (MSE), Mean Absolute Error (MAE), R-Squared (R2)\n")
-    f.write("Note: Evaluated strictly on observed non-missing test target outcomes.\n\n")
-
-    for model_name, preds in models.items():
+with open(metrics_output_path, 'w', encoding='utf-8') as f:
+    f.write("==== Benchmark 1: Multi-Task L2,1-Norm (Cross-Validated) ====\n")
+    f.write(f"Validation Protocol: {N_SPLITS}-Fold Cross-Validation\n")
+    f.write(f"Mean Features Selected: {mean_selected_count} out of {X.shape[1]}\n\n")
+    
+    for model_name, targets_dict in all_fold_metrics.items():
         f.write(f"--- {model_name} ---\n")
-        for i, target_name in enumerate(target_cols):
-            # Mask out missing test targets strictly
-            valid_test_mask = ~np.isnan(Y_test[:, i])
-            y_t = Y_test[valid_test_mask, i]
-            p_t = preds[valid_test_mask, i]
+        for target_name, m_dict in targets_dict.items():
+            r2_m, r2_std = np.mean(m_dict['r2']), np.std(m_dict['r2'])
+            mae_m, mae_std = np.mean(m_dict['mae']), np.std(m_dict['mae'])
+            mse_m, mse_std = np.mean(m_dict['mse']), np.std(m_dict['mse'])
             
-            mse = np.mean((y_t - p_t)**2)
-            mae = np.mean(np.abs(y_t - p_t))
-            ss_res = np.sum((y_t - p_t)**2)
-            ss_tot = np.sum((y_t - np.mean(y_t))**2)
-            r2 = 1 - (ss_res / ss_tot) if ss_tot > 0 else 0
+            ci95_r2 = 1.96 * r2_std / np.sqrt(len(m_dict['r2']))
+            ci95_mae = 1.96 * mae_std / np.sqrt(len(m_dict['mae']))
             
-            f.write(f"Target: {target_name} | R2: {r2:.4f} | MAE: {mae:.4f} | MSE: {mse:.4f}\n")
-        f.write("\n")
+            f.write(f"Target: {target_name}\n")
+            f.write(f"  - R2:  {r2_m:.4f} +/- {ci95_r2:.4f} (95% CI: [{r2_m - ci95_r2:.4f}, {r2_m + ci95_r2:.4f}])\n")
+            f.write(f"  - MAE: {mae_m:.4f} +/- {ci95_mae:.4f}\n")
+            f.write(f"  - MSE: {mse_m:.4f}\n\n")
 
-print(f"   -> Metrics evaluated and saved to {metrics_output_path}")
 print("Benchmark 1 Execution Complete!")
+print(f"Metrics saved to {metrics_output_path}")

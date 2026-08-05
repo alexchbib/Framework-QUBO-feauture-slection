@@ -1,14 +1,36 @@
-==== Benchmark 1: Predictive Performance (L2,1-Norm) ====
-Metric Details: Mean Squared Error (MSE), Mean Absolute Error (MAE), R-Squared (R2)
-Note: Evaluated strictly on observed non-missing test target outcomes.
+==== Benchmark 1: Multi-Task L2,1-Norm (Cross-Validated) ====
+Validation Protocol: 5-Fold Cross-Validation
+Mean Features Selected: 660 out of 2093
 
---- Multi-Task Linear (L2,1 Lasso) ---
-Target: M24_ADAS13(Alzheimer's Disease Assessment Scale - Cognitive Subscale 13) | R2: 0.6438 | MAE: 4.9529 | MSE: 43.1873
-Target: M24_CDRSB(Clinical Dementia Rating) | R2: 0.7141 | MAE: 0.7727 | MSE: 1.3736
-Target: M24_MMSE(Mini-Mental State Examination) | R2: 0.6311 | MAE: 1.5097 | MSE: 4.5116
+--- Multi-Task L2,1 Lasso ---
+Target: M24_ADAS13
+  - R2:  0.6379 +/- 0.0271 (95% CI: [0.6107, 0.6650])
+  - MAE: 4.8997 +/- 0.3460
+  - MSE: 45.2275
 
---- Ridge Regression (on selected panel) ---
-Target: M24_ADAS13(Alzheimer's Disease Assessment Scale - Cognitive Subscale 13) | R2: 0.5192 | MAE: 5.7738 | MSE: 58.3034
-Target: M24_CDRSB(Clinical Dementia Rating) | R2: 0.5323 | MAE: 1.1151 | MSE: 2.2472
-Target: M24_MMSE(Mini-Mental State Examination) | R2: 0.0854 | MAE: 2.4209 | MSE: 11.1846
+Target: M24_CDRSB
+  - R2:  0.5777 +/- 0.0270 (95% CI: [0.5507, 0.6047])
+  - MAE: 1.0466 +/- 0.0782
+  - MSE: 2.4934
+
+Target: M24_MMSE
+  - R2:  0.5531 +/- 0.0308 (95% CI: [0.5223, 0.5839])
+  - MAE: 1.6635 +/- 0.2468
+  - MSE: 5.3443
+
+--- Ridge Refit (Selected Panel) ---
+Target: M24_ADAS13
+  - R2:  0.6161 +/- 0.0603 (95% CI: [0.5558, 0.6764])
+  - MAE: 5.1731 +/- 0.2392
+  - MSE: 45.9453
+
+Target: M24_CDRSB
+  - R2:  0.5150 +/- 0.0504 (95% CI: [0.4646, 0.5655])
+  - MAE: 1.2383 +/- 0.0590
+  - MSE: 2.7792
+
+Target: M24_MMSE
+  - R2:  0.3724 +/- 0.1508 (95% CI: [0.2215, 0.5232])
+  - MAE: 1.9920 +/- 0.1104
+  - MSE: 6.6190
 

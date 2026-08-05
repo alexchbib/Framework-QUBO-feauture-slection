@@ -1,11 +1,9 @@
 import os
+import sys
 import csv
-import re
 import argparse
 
-ADMIN_REGEX = re.compile(r'^(SITEID(\..*)?|IMAGEUID(\..*)?|STATUS(\..*)?|VERSION(\..*)?|LONIUID(\..*)?|SOURCE(\..*)?|RAWQC|qc_flag|FSVER|FIELD_STRENGTH|MANUFACTURER|TRACER|TRACER_SUVR_WARNING|BATCH|KIT|STDS|USERDATE|update_stamp|HAS_QC_ERROR|DD_CRF_VERSION|VISCODE|VISDATE|ORIGPROT|COLPROT|EXAMDATE|RUNDATE|DRAWDTE|RID|ID)$', re.IGNORECASE)
-
-def evaluate_panel_costs(panel_costs_path, feature_mapping_path, selected_features_path):
+def evaluate_panel_costs(panel_costs_path, feature_mapping_path, selected_features_path, include_endpoint_costs=False):
     print(f"Loading panel costs from: {panel_costs_path}")
     panel_costs = {}
     with open(panel_costs_path, 'r', encoding='utf-8') as f:
@@ -13,7 +11,7 @@ def evaluate_panel_costs(panel_costs_path, feature_mapping_path, selected_featur
         for row in reader:
             panel_costs[row['Panel_Name']] = float(row['Cost_USD'])
             
-    print(f"Loading feature mapping table from: {feature_mapping_path}")
+    print(f"Loading feature mapping table (provenance) from: {feature_mapping_path}")
     feature_to_panel = {}
     with open(feature_mapping_path, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
@@ -31,53 +29,64 @@ def evaluate_panel_costs(panel_costs_path, feature_mapping_path, selected_featur
             
         for row in reader:
             if row:
-                feat = row[feature_col_idx]
-                if not ADMIN_REGEX.match(feat):
-                    selected_features.append(feat)
+                selected_features.append(row[feature_col_idx])
                 
-    print(f"Loaded {len(selected_features)} non-administrative clinical features.")
+    print(f"Loaded {len(selected_features)} selected clinical features.")
     
-    # Evaluate costs
+    # Endpoint mandatory instruments (Fixes B7)
+    endpoint_panels = {"ADAS-Cog Assessment", "Clinical Dementia Rating (CDR)", "MMSE Assessment"}
+    
     triggered_panels = set()
     unmapped_features = []
     
     for feature in selected_features:
         panel_name = feature_to_panel.get(feature, 'UNMAPPED')
-        
         if panel_name == 'UNMAPPED':
             unmapped_features.append(feature)
         else:
             triggered_panels.add(panel_name)
             
     if unmapped_features:
-        print(f"\nWARNING: {len(unmapped_features)} selected features are labeled as 'UNMAPPED'!")
-        print(f"Examples: {unmapped_features[:10]}")
+        print(f"\nWARNING: {len(unmapped_features)} selected features are unmapped!")
+        print(f"Examples: {unmapped_features[:5]}")
     
-    # Calculate totals
-    total_cost = 0
+    total_cost = 0.0
     panel_breakdown = []
     
-    for panel_name in triggered_panels:
+    for panel_name in sorted(triggered_panels):
         cost = panel_costs.get(panel_name, 0.0)
-        total_cost += cost
-        panel_breakdown.append((panel_name, cost))
+        
+        # Mandatory trial endpoint policy (Fixes B7)
+        if not include_endpoint_costs and panel_name in endpoint_panels:
+            billed_cost = 0.0
+            note = " (Mandatory Trial Endpoint - Billed $0.00)"
+        else:
+            billed_cost = cost
+            note = ""
             
-    print("\n" + "="*50)
-    print("COST EVALUATION RESULTS")
-    print("="*50)
+        total_cost += billed_cost
+        feat_count = sum(1 for f in selected_features if feature_to_panel.get(f) == panel_name)
+        panel_breakdown.append((panel_name, cost, billed_cost, feat_count, note))
+            
+    print("\n" + "="*65)
+    print("AUDITED COST EVALUATION RESULTS")
+    print("="*65)
     print(f"Total Unique Panels Triggered: {len(triggered_panels)}")
-    print(f"Total Estimated Financial Cost: ${total_cost:,.2f}")
+    print(f"Total Billed Financial Burden per Patient: ${total_cost:,.2f}")
+    if not include_endpoint_costs:
+        print("Note: Endpoint cognitive batteries (ADAS, CDR, MMSE) billed at $0 (mandatory outcome measures).")
     print("\nTriggered Panels Breakdown:")
-    for name, cost in panel_breakdown:
-        feat_count = sum(1 for f in selected_features if feature_to_panel.get(f) == name)
-        print(f"  - {name}: ${cost:,.2f} ({feat_count} clinical features used)")
-    print("="*50)
+    for name, raw_cost, billed_cost, feat_count, note in panel_breakdown:
+        print(f"  - {name}: ${billed_cost:,.2f}{note} ({feat_count} clinical features used)")
+    print("="*65)
+    return total_cost, triggered_panels
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate clinical trial panel costs.")
-    parser.add_argument("--panel_costs", type=str, required=True, help="Path to panel_costs.csv (Panel_Name, Cost_USD)")
-    parser.add_argument("--mapping_csv", type=str, required=True, help="Path to feature_to_panel_mapping.csv (Feature_Name, Panel_Name)")
+    parser.add_argument("--panel_costs", type=str, required=True, help="Path to panel_costs.csv")
+    parser.add_argument("--mapping_csv", type=str, required=True, help="Path to feature_to_panel_mapping.csv")
     parser.add_argument("--features_csv", type=str, required=True, help="Path to selected_features.csv")
+    parser.add_argument("--include_endpoint_costs", action="store_true", help="Charge endpoint cognitive tests")
     
     args = parser.parse_args()
-    evaluate_panel_costs(args.panel_costs, args.mapping_csv, args.features_csv)
+    evaluate_panel_costs(args.panel_costs, args.mapping_csv, args.features_csv, args.include_endpoint_costs)
