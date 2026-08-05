@@ -10,7 +10,7 @@ However, ordering *every single test* for *every patient* is extremely expensive
 ### What was fixed and why?
 An deep technical audit revealed critical flaws in earlier versions of this project—such as missing memory test scores, accidental data leakage (cheating during AI training), wrong test prices, and missing brain scan tables. Most importantly, we discovered that the previous feature selection solver used an inflated mathematical step size that caused it to stop prematurely at 300 iterations (yielding 660 fake un-converged features). 
 
-We upgraded the optimizer to **FISTA (Fast Iterative Shrinkage-Thresholding Algorithm)** with an exact spectral norm step size and relative objective convergence tolerance. FISTA converges fully in ~400 iterations, identifying **58 truly essential clinical features**, boosting 24-month prediction accuracy up to **$R^2 = 0.8034$** (up from $0.5895$), while keeping patient screening costs low (**$9,600.00**).
+We upgraded the optimizer to **FISTA (Fast Iterative Shrinkage-Thresholding Algorithm)** with an exact spectral norm step size and relative objective convergence tolerance. FISTA converges fully in ~400 iterations, identifying **58 truly essential clinical features**, boosting 24-month prediction accuracy up to **$R^2 = 0.8026$** (up from $0.5895$), while keeping patient screening costs low (**$9,600.00**).
 
 ---
 
@@ -87,7 +87,7 @@ We upgraded the optimizer to **FISTA (Fast Iterative Shrinkage-Thresholding Algo
 
 ### Decision 9: Inclusion of Baseline Cognitive Scores as Input Features & Ablation Study
 - **What we did**: We evaluated model performance both **with** baseline target scores (`TOTAL13`, `CDRSB`, `MMSCORE` at Month 0) and **without** baseline target scores in a dedicated ablation experiment.
-- **Why we made this choice (Justification)**: In clinical practice, predicting 2-year disease progression benefit from knowing a patient's starting memory anchor at Month 0. Furthermore, running an ablation experiment excluding baseline target scores proves that the model maintains high predictive power ($R^2 = 0.7807$) purely from imaging, spinal fluid biomarkers, and domain-specific cognitive tests without relying solely on baseline outcome anchors.
+- **Why we made this choice (Justification)**: In clinical practice, predicting 2-year disease progression benefit from knowing a patient's starting memory anchor at Month 0. Furthermore, running an ablation experiment excluding baseline target scores proves that the model maintains high predictive power ($R^2 = 0.7507$) purely from imaging, spinal fluid biomarkers, and domain-specific cognitive tests without relying solely on baseline outcome anchors.
 
 ---
 
@@ -106,10 +106,10 @@ We tested three distinct approaches across 5 cross-validation folds (where the A
 
 | AI / Statistical Method | Selected Features | Billed Cost per Patient | 24-Month Memory Score Accuracy ($R^2$) | Simple Interpretation |
 | :--- | :---: | :---: | :---: | :--- |
-| **Multi-Task $L_{2,1}$ Lasso (FISTA)** | **58 features** | **$9,600.00** | **ADAS13**: **$0.8026 \pm 0.0324$** ([0.7702, 0.8350])<br>**CDR-SB**: **$0.7627 \pm 0.0461$** ([0.7167, 0.8088])<br>**MMSE**: **$0.6899 \pm 0.0665$** ([0.6234, 0.7565]) | **Full Multi-Modal Operating Point**: Top-end ADAS13 precision ($R^2 \approx 0.80$) combining imaging, fluid, and psychometrics. Note: Greedy Step 3 ($8,150) achieves equivalent mean $R^2$ for $1,450 less (see greedy trace). |
+| **Multi-Task $L_{2,1}$ Lasso (FISTA)** | **58 features** | **$9,600.00** | **ADAS13**: **$0.8026 \pm 0.0324$** ([0.7702, 0.8350])<br>**CDR-SB**: **$0.7627 \pm 0.0461$** ([0.7167, 0.8088])<br>**MMSE**: **$0.6899 \pm 0.0665$** ([0.6234, 0.7565]) | **Full Multi-Modal Operating Point**: Top-end ADAS13 precision ($R^2 \approx 0.80$) combining imaging, fluid, and psychometrics. Note: Greedy Step 5 ($5,650) achieves equivalent $R^2 = 0.7510$ for $3,950 less (see greedy trace). |
 | **Cognitive Tests ONLY (FISTA)** | **27 features** | **$550.00** | **ADAS13**: **$0.7785 \pm 0.0467$** ([0.7318, 0.8252])<br>**CDR-SB**: **$0.7516 \pm 0.0505$** ([0.7011, 0.8021])<br>**MMSE**: **$0.6790 \pm 0.0785$** ([0.6006, 0.7575]) | **Tier 1 (Ultra-Low-Cost Operating Point)**: Saves **$9,050.00** per patient at a minimal $0.02$ drop in ADAS13 $R^2$ with overlapping 95% CIs. |
 | **Decision Tree Models (XGBoost)** | 58 features | **$9,600.00** | **ADAS13**: $0.6859 \pm 0.0412$ ([0.6447, 0.7272])<br>**CDR-SB**: $0.6455 \pm 0.0512$ ([0.5943, 0.6968])<br>**MMSE**: $0.5782 \pm 0.0546$ ([0.5236, 0.6328]) | Tree baseline evaluated on matching feature budget; joint linear multi-task shrinkage outperforms independent trees. |
-| **Greedy Panel Elimination (FISTA)** | Dynamic panel subsets | **$14,150 \rightarrow \$650** | **Full Set**: $0.7515$ ($14,150)<br>**Step 3 ($8,150)**: $0.7521$<br>**Step 4 ($6,650)**: $0.7520$<br>**Pruned Set**: **$0.7362$** at $650 | Greedy backward pruning reveals a **Pareto-dominant operating point**: Steps 3–4 achieve $R^2 \approx 0.752$ for $6,650–$8,150, matching the full FISTA selection ($9,600) at lower cost. |
+| **Greedy Panel Elimination (FISTA)** | Dynamic panel subsets | **$14,150 \rightarrow \$650** | **Full Set**: $0.7513$ ($14,150)<br>**Step 2 ($9,650)**: $0.7516$<br>**Step 5 ($5,650)**: $0.7510$<br>**Pruned Set**: **$0.7359$** at $650 | Backward panel pruning reveals a **Pareto-dominant operating point**: Step 5 achieves $R^2 = 0.7510$ at $5,650$ (saving $3,950 per patient vs. full selection at $9,600 with only −0.0007 R² difference). |
 
 *Note: All confidence intervals report exact $95\%$ bounds ($\text{Mean} \pm 1.96 \cdot \frac{\text{SD}}{\sqrt{5}}$).*
 
@@ -190,7 +190,7 @@ The table below breaks down every medical test panel, its real-world clinical co
    - **CSF Biomarkers**: **$1,000.00** for **1 single feature**
    - **$4,500.00 (47% of the total budget)** is spent on just 3 isolated features! Standard $L_{2,1}$ group lasso evaluates feature weights individually without penalizing whole-panel entry costs — it doesn't know that the 2nd Amyloid feature is **$0 (FREE)** once $3,000 is paid, or that a single lone ASL feature costs **$1,500**. Quadratic Binary Optimization (QUBO) with explicit panel indicator variables is uniquely required to solve true cost-constrained feature selection.
 
-2. **True Convergence Unlocks High Accuracy**: By fixing the mathematical step size bug and using FISTA, the model converged to **58 core features** (down from 660 fake un-converged features), boosting prediction accuracy to **$R^2 = 0.8034$**!
+2. **True Convergence Unlocks High Accuracy**: By fixing the mathematical step size bug and using FISTA, the model converged to **58 core features** (down from 660 fake un-converged features), boosting prediction accuracy to **$R^2 = 0.8026$**!
 3. **ADNI2 Provides Optimal 24-Month Timeline Quality**: Selecting ADNI2 ($N=553$) over ADNI3 or ADNI1 provides the largest single complete 5-year cohort with 100% 24-month multi-modal imaging, fluid biomarker, and cognitive follow-up integrity.
 4. **FDA/EMA Regulatory Triad Mandates Endpoint Selection**: Selecting `ADAS13`, `CDR-SB`, and `MMSE` as the target matrix ($T=3$) directly mirrors regulatory registration requirements, combining cognitive performance (`ADAS13`), functional daily independence (`CDR-SB`), and global staging (`MMSE`).
 5. **Pure Biomarkers Cap Out at $R^2 \approx 0.52 - 0.59$**: Structural MRI, PET SUVr, CSF biomarkers, APOE, and Demographics predict 2-year cognitive endpoints with $R^2 \approx 0.52 - 0.59$ across both FISTA and Decision Tree benchmarks, perfectly matching standard ADNI literature benchmarks.

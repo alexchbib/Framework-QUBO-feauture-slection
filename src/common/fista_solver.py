@@ -70,7 +70,7 @@ def solve_fista_l21_mtfl(X_sc, Y_sc, target_mask=None, lambda_val=0.05, max_iter
         
     return W
 
-def select_lambda_inner_cv(X_tr_sc, Y_tr_sc, target_mask, lambda_candidates=[0.001, 0.01, 0.05, 0.1, 0.5]):
+def select_lambda_inner_cv(X_tr_sc, Y_tr_sc, target_mask, lambda_candidates=[0.5, 0.1, 0.05, 0.01, 0.001]):
     """
     Inner 3-fold cross-validation to select optimal lambda within each outer training fold.
     Uses warm-starting across lambda candidates to accelerate convergence.
