@@ -16,12 +16,18 @@ from src.common.preprocessing import (
     get_kfold_splits
 )
 from src.common.fista_solver import solve_fista_l21_mtfl, select_lambda_inner_cv
+from src.common.panel_costs import load_panel_tables, billed_cost_for_features
 
 DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
 FEATURES_PATH = os.path.join(DATA_DIR, 'adni_longitudinal_features.csv')
 TARGETS_PATH = os.path.join(DATA_DIR, 'adni_longitudinal_targets.csv')
 MAPPING_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'benchmark 1 multitask learning', 'feature_to_panel_mapping.csv'))
 OUTPUT_TXT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ablation_results.txt'))
+
+COSTS_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'benchmark 1 multitask learning', 'panel_costs.csv'))
+TIER1_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tier1_cognitive_summary.txt'))
+panel_costs_tbl, _ = load_panel_tables(COSTS_PATH, MAPPING_PATH)
+tier1_summary = None
 
 # Load provenance mapping
 feature_to_panel = {}
@@ -74,6 +80,10 @@ results = []
 
 for name, mask in subsets.items():
     X_sub = X[:, mask]
+    subset_feature_names = [c for c, keep in zip(feature_cols, mask) if keep]
+    subset_importance = np.zeros(X_sub.shape[1])
+    subset_counts = []
+    
     fista_r2 = {t: [] for t in target_cols}
     xgb_r2 = {t: [] for t in target_cols}
     
@@ -96,6 +106,11 @@ for name, mask in subsets.items():
         
         best_lambda = select_lambda_inner_cv(X_tr_sc, Y_tr_sc, target_mask)
         W_opt = solve_fista_l21_mtfl(X_tr_sc, Y_tr_sc, target_mask=target_mask.astype(float), lambda_val=best_lambda, max_iters=5000, tol=1e-8)
+        
+        feat_norms_fold = np.linalg.norm(W_opt, axis=1)
+        subset_importance += feat_norms_fold
+        subset_counts.append(int(np.sum(feat_norms_fold > 1e-5)))
+
         preds_sc = X_te_sc.dot(W_opt)
         preds_fista = preds_sc * y_stds + y_means
         
@@ -135,6 +150,15 @@ for name, mask in subsets.items():
                 r2 = 1.0 - (ss_res / ss_tot) if ss_tot > 0 else 0.0
                 xgb_r2[target_name].append(r2)
                 
+    # Export the Tier 1 operating point so the report never hardcodes it.
+    if name == "Cognitive Tests ONLY":
+        avg_imp = subset_importance / len(splits)
+        k_sel = int(np.mean(subset_counts))
+        order = np.argsort(avg_imp)[::-1]
+        sel_names = [subset_feature_names[i] for i in order if avg_imp[i] > 0][:k_sel]
+        t1_cost, t1_panels = billed_cost_for_features(sel_names, panel_costs_tbl, feature_to_panel)
+        tier1_summary = (k_sel, t1_cost, len(t1_panels))
+
     # Format FISTA row
     row_fista = [name, "FISTA MTFL", f"{X_sub.shape[1]} features"]
     for target_name in target_cols:
@@ -169,3 +193,11 @@ with open(OUTPUT_TXT_PATH, 'w', encoding='utf-8') as f:
     f.write("-" * 145 + "\n")
     for row in results:
         f.write(f"{row[0]:<35} | {row[1]:<16} | {row[2]:<15} | {row[3]:<22} | {row[4]:<22} | {row[5]:<22}\n")
+
+assert tier1_summary is not None, "Tier 1 (Cognitive Tests ONLY) summary was never computed!"
+with open(TIER1_PATH, 'w', encoding='utf-8') as f:
+    f.write("==== Tier 1 Operating Point (Cognitive Tests ONLY) ====\n")
+    f.write(f"Selected Features: {tier1_summary[0]}\n")
+    f.write(f"Billed Cost: {tier1_summary[1]:.2f}\n")
+    f.write(f"Panels Triggered: {tier1_summary[2]}\n")
+print(f"Tier 1 operating point written to {TIER1_PATH}")

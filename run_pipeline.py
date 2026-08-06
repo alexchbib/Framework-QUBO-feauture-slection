@@ -54,11 +54,9 @@ def main():
     if args.all or args.ablation:
         run_script(os.path.join(root_dir, 'src', 'ablation_study.py'), cwd=root_dir)
 
-    # Synchronize report metrics unconditionally at the end of pipeline execution
-    try:
-        run_script(os.path.join(root_dir, 'src', 'common', 'sync_report.py'), cwd=root_dir)
-    except Exception as e:
-        print(f"Warning: Report synchronization failed with error: {e}")
+    # Always re-synchronise: any stage above can invalidate the report, and the
+    # synchroniser is idempotent, so running it unconditionally is safe.
+    run_script(os.path.join(root_dir, 'src', 'common', 'sync_report.py'), cwd=root_dir)
 
     print("\n=================================================================")
     print("PIPELINE EXECUTION COMPLETE! ALL RESULTS GENERATED AND SAVED.")

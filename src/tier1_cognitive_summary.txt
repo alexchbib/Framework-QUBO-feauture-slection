@@ -1,0 +1,4 @@
+==== Tier 1 Operating Point (Cognitive Tests ONLY) ====
+Selected Features: 26
+Billed Cost: 550.00
+Panels Triggered: 9
