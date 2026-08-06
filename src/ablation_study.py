@@ -21,6 +21,7 @@ DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data')
 FEATURES_PATH = os.path.join(DATA_DIR, 'adni_longitudinal_features.csv')
 TARGETS_PATH = os.path.join(DATA_DIR, 'adni_longitudinal_targets.csv')
 MAPPING_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'benchmark 1 multitask learning', 'feature_to_panel_mapping.csv'))
+OUTPUT_TXT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ablation_results.txt'))
 
 # Load provenance mapping
 feature_to_panel = {}
@@ -160,3 +161,11 @@ print("-" * 125)
 for row in results:
     print(f"{row[0]:<35} | {row[1]:<16} | {row[3]:<22} | {row[4]:<22} | {row[5]:<22}")
 print("=================================================================\n")
+
+# Save formatted ablation results for automated report synchronizer
+with open(OUTPUT_TXT_PATH, 'w', encoding='utf-8') as f:
+    f.write("==== Official Ablation Study Results Matrix ====\n")
+    f.write(f"{'Feature Modality Subset':<35} | {'Model':<16} | {'Features':<15} | {'ADAS13 R2 (95% CI)':<22} | {'CDRSB R2 (95% CI)':<22} | {'MMSE R2 (95% CI)':<22}\n")
+    f.write("-" * 145 + "\n")
+    for row in results:
+        f.write(f"{row[0]:<35} | {row[1]:<16} | {row[2]:<15} | {row[3]:<22} | {row[4]:<22} | {row[5]:<22}\n")
