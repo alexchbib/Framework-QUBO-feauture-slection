@@ -36,30 +36,30 @@ all_fold_metrics = {model: {t: {'r2': [], 'mae': [], 'mse': []} for t in target_
                     for model in ['Multi-Task L2,1 Lasso (FISTA)', 'Ridge Refit (Selected Panel)']}
 
 selected_feature_counts = []
-global_feature_importance = np.zeros(X.shape[1])
+global_feature_importance = np.zeros(X.shape[1]) # Initialize feature importance
 
-splits = get_kfold_splits(X.shape[0], n_splits=N_SPLITS, seed=42)
+splits = get_kfold_splits(X.shape[0], n_splits=N_SPLITS, seed=42) 
 
-for fold, (train_idx, test_idx) in enumerate(splits):
-    X_train, X_test = X[train_idx], X[test_idx]
-    Y_train, Y_test = Y[train_idx], Y[test_idx]
+for fold, (train_idx, test_idx) in enumerate(splits): 
+    X_train, X_test = X[train_idx], X[test_idx] # Split data into training and testing sets
+    Y_train, Y_test = Y[train_idx], Y[test_idx] # Split targets into training and testing sets
     
-    x_means, x_stds = compute_observed_scaling(X_train)
-    X_tr_sc, X_te_sc, X_tr_imp, X_te_imp = apply_scaling_and_imputation(X_train, X_test, x_means, x_stds)
+    x_means, x_stds = compute_observed_scaling(X_train) # Compute feature means and standard deviations
+    X_tr_sc, X_te_sc, X_tr_imp, X_te_imp = apply_scaling_and_imputation(X_train, X_test, x_means, x_stds) # Apply scaling and imputation
     
-    y_means = np.nanmean(Y_train, axis=0)
-    y_stds = np.nanstd(Y_train, axis=0)
-    y_stds[np.isnan(y_stds) | (y_stds == 0)] = 1.0
+    y_means = np.nanmean(Y_train, axis=0) # Compute target means and standard deviations
+    y_stds = np.nanstd(Y_train, axis=0) # Compute target standard deviations
+    y_stds[np.isnan(y_stds) | (y_stds == 0)] = 1.0 # Avoid division by zero
     
-    target_mask = ~np.isnan(Y_train)
-    Y_tr_imp = np.where(np.isnan(Y_train), 0.0, Y_train)
-    Y_tr_sc = (Y_tr_imp - y_means) / y_stds
-    Y_tr_sc[~target_mask] = 0.0
+    target_mask = ~np.isnan(Y_train) # Create a mask for valid targets
+    Y_tr_imp = np.where(np.isnan(Y_train), 0.0, Y_train) # Fill missing target values with 0.0
+    Y_tr_sc = (Y_tr_imp - y_means) / y_stds # Scale targets by mean and standard deviation
+    Y_tr_sc[~target_mask] = 0.0 # Set scaled values for masked elements to 0.0
     
-    best_lambda = select_lambda_inner_cv(X_tr_sc, Y_tr_sc, target_mask)
-    W_opt = solve_fista_l21_mtfl(X_tr_sc, Y_tr_sc, target_mask=target_mask.astype(float), lambda_val=best_lambda, max_iters=MAX_ITERS, tol=TOLERANCE)
+    best_lambda = select_lambda_inner_cv(X_tr_sc, Y_tr_sc, target_mask) # Select optimal lambda using inner-fold CV
+    W_opt = solve_fista_l21_mtfl(X_tr_sc, Y_tr_sc, target_mask=target_mask.astype(float), lambda_val=best_lambda, max_iters=MAX_ITERS, tol=TOLERANCE) # Solve FISTA
     
-    feat_norms = np.linalg.norm(W_opt, axis=1)
+    feat_norms = np.linalg.norm(W_opt, axis=1) # Compute feature norms
     global_feature_importance += feat_norms
     
     sel_idx = np.where(feat_norms > 1e-5)[0]

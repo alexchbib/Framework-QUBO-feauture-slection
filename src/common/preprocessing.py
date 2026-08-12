@@ -3,7 +3,7 @@ import csv
 import re
 import numpy as np
 
-# Administrative metadata regex to purge before modeling (Fixes A6)
+# Administrative metadata regex to purge before modeling
 ADMIN_FEATURE_REGEX = re.compile(
     r'^(RID|SITEID(\..*)?|IMAGEUID(\..*)?|STATUS(\..*)?|VERSION(\..*)?|LONIUID(\..*)?|SOURCE(\..*)?|RAWQC|qc_flag|FSVER|FIELD_STRENGTH|MANUFACTURER|TRACER.*|SCANDATE.*|PROCESSDATE.*|BATCH|KIT|STDS|USERDATE|update_stamp|HAS_QC_ERROR|DD_CRF_VERSION|VISCODE|VISDATE|ORIGPROT|COLPROT|EXAMDATE|RUNDATE|DRAWDTE|ID(\..*)?)$',
     re.IGNORECASE
@@ -108,15 +108,15 @@ def load_and_preprocess_adni_data(features_path, targets_path, purge_admin=True,
 def compute_observed_scaling(X_train):
     """
     Computes feature means and standard deviations strictly on OBSERVED non-missing values
-    BEFORE mean imputation (Fixes A2). Prevents missingness inflation on imaging panels.
+    BEFORE mean imputation. Prevents missingness inflation on imaging panels.
     Sets zero-variance/unobserved training features to std=1.0 so they scale safely to 0.
     """
-    x_means = np.nanmean(X_train, axis=0)
-    x_means[np.isnan(x_means)] = 0.0
+    x_means = np.nanmean(X_train, axis=0) # compute mean strictly on observed entries
+    x_means[np.isnan(x_means)] = 0.0 # set NaN means to 0.0
     
     # Compute std strictly on observed entries
-    x_stds = np.nanstd(X_train, axis=0)
-    x_stds[np.isnan(x_stds) | (x_stds <= 1e-6)] = 1.0
+    x_stds = np.nanstd(X_train, axis=0) 
+    x_stds[np.isnan(x_stds) | (x_stds <= 1e-6)] = 1.0 # prevent division by zero or NaN
     
     return x_means, x_stds
 
@@ -126,11 +126,11 @@ def apply_scaling_and_imputation(X_train, X_test, x_means, x_stds, max_z=10.0):
     Clips standardized features to [-max_z, max_z] (default +-10.0) to structurally bound
     extreme z-score outliers from small-sample std estimation.
     """
-    X_train_imp = np.where(np.isnan(X_train), x_means, X_train)
-    X_test_imp = np.where(np.isnan(X_test), x_means, X_test)
+    X_train_imp = np.where(np.isnan(X_train), x_means, X_train) # impute missing values with training means
+    X_test_imp = np.where(np.isnan(X_test), x_means, X_test) # impute missing values with training means
     
-    X_train_scaled = np.clip((X_train_imp - x_means) / x_stds, -max_z, max_z)
-    X_test_scaled = np.clip((X_test_imp - x_means) / x_stds, -max_z, max_z)
+    X_train_scaled = np.clip((X_train_imp - x_means) / x_stds, -max_z, max_z) # standardize using training means and stds
+    X_test_scaled = np.clip((X_test_imp - x_means) / x_stds, -max_z, max_z) # standardize using training means and stds
     
     return X_train_scaled, X_test_scaled, X_train_imp, X_test_imp
 
@@ -138,13 +138,13 @@ def get_kfold_splits(n_samples, n_splits=5, seed=42):
     """
     Generates K-Fold cross-validation splits.
     """
-    np.random.seed(seed)
-    indices = np.random.permutation(n_samples)
-    folds = np.array_split(indices, n_splits)
+    np.random.seed(seed) 
+    indices = np.random.permutation(n_samples) # shuffle indices
+    folds = np.array_split(indices, n_splits) # split indices into k folds
     
     splits = []
     for i in range(n_splits):
-        test_idx = folds[i]
-        train_idx = np.hstack([folds[j] for j in range(n_splits) if j != i])
+        test_idx = folds[i] # test set is the current fold
+        train_idx = np.hstack([folds[j] for j in range(n_splits) if j != i]) # train set is all other folds
         splits.append((train_idx, test_idx))
     return splits
