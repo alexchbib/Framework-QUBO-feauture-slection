@@ -106,10 +106,10 @@ We tested three distinct approaches across 5 cross-validation folds (where the A
 
 | AI / Statistical Method | Selected Features | Billed Cost per Patient | 24-Month Memory Score Accuracy ($R^2$) | Simple Interpretation |
 | :--- | :---: | :---: | :---: | :--- |
-| **Multi-Task $L_{2,1}$ Lasso (FISTA)** | **58 features** | **$9,600.00** | **ADAS13**: **$0.8026 \pm 0.0324$** ([0.7702, 0.8350])<br>**CDR-SB**: **$0.7627 \pm 0.0460$** ([0.7167, 0.8088])<br>**MMSE**: **$0.6899 \pm 0.0666$** ([0.6234, 0.7565]) | **Full Multi-Modal Operating Point**: Top-end ADAS13 precision combining imaging, fluid, and psychometrics. Note: Greedy Step 5 ($5,650) achieves equivalent mean $R^2 = 0.7510$ for $3,950 less (see greedy trace). |
+| **Multi-Task $L_{2,1}$ Lasso (FISTA)** | **58 features** | **$9,600.00** | **ADAS13**: **$0.8026 \pm 0.0324$** ([0.7702, 0.8350])<br>**CDR-SB**: **$0.7627 \pm 0.0460$** ([0.7167, 0.8088])<br>**MMSE**: **$0.6899 \pm 0.0666$** ([0.6234, 0.7565]) | **Full Multi-Modal Operating Point**: Top-end ADAS13 precision combining imaging, fluid, and psychometrics. Note: Greedy Step 4 ($6,650) achieves equivalent mean $R^2 = 0.7515$ for $2,950 less (see greedy trace). |
 | **Cognitive Tests ONLY (FISTA)** | **26 features** | **$550.00** | **ADAS13**: **$0.7785 \pm 0.0467$** ([0.7318, 0.8252])<br>**CDR-SB**: **$0.7516 \pm 0.0505$** ([0.7011, 0.8021])<br>**MMSE**: **$0.6790 \pm 0.0784$** ([0.6006, 0.7575]) | **Tier 1 (Ultra-Low-Cost Operating Point)**: 9 panels. Saves **$9,050.00** per patient at a $0.02$ drop in ADAS13 $R^2$ with overlapping 95% CIs. |
-| **Decision Tree Models (XGBoost)** | 58 features | **$9,600.00** | **ADAS13**: $0.7589 \pm 0.0477$ ([0.7112, 0.8066])<br>**CDR-SB**: $0.6861 \pm 0.0474$ ([0.6387, 0.7335])<br>**MMSE**: $0.6508 \pm 0.0505$ ([0.6003, 0.7013]) | Tree baseline evaluated on matching feature budget; joint linear multi-task shrinkage outperforms independent trees. |
-| **Greedy Panel Elimination (FISTA)** | Dynamic panel subsets | **$14,150 $\rightarrow$ $650** | **Full Set**: 0.7513 ($14,150)<br>**Step 5 ($5,650)**: 0.7510<br>**Pruned Set**: **0.7359** at $650 | Backward panel pruning reveals a **Pareto-dominant operating point**: Step 5 achieves mean $R^2 = 0.7510$ at $5,650, saving $3,950 per patient versus the full selection at $9,600.00 (-0.0007 mean $R^2$). |
+| **Decision Tree Models (XGBoost)** | 58 features | **$8,000.00** | **ADAS13**: $0.7589 \pm 0.0477$ ([0.7112, 0.8066])<br>**CDR-SB**: $0.6861 \pm 0.0474$ ([0.6387, 0.7335])<br>**MMSE**: $0.6508 \pm 0.0505$ ([0.6003, 0.7013]) | Tree baseline (12 panels) evaluated on matching feature budget; achieves comparable accuracy at lower screening cost ($8,000.00 vs $9,600.00). |
+| **Greedy Panel Elimination (FISTA)** | Dynamic panel subsets | **$14,150 $\rightarrow$ $650** | **Full Set**: 0.7518 ($14,150)<br>**Step 4 ($6,650)**: 0.7515<br>**Pruned Set**: **0.7357** at $650 | Backward panel pruning reveals a **Pareto-dominant operating point**: Step 4 achieves mean $R^2 = 0.7515$ at $6,650, saving $2,950 per patient versus the full selection at $9,600.00 (-0.0002 mean $R^2$). |
 
 *Note: All confidence intervals report exact $95\%$ bounds ($\text{Mean} \pm 1.96 \cdot \frac{\text{SD}}{\sqrt{5}}$).*
 
@@ -132,25 +132,24 @@ We evaluated **BOTH FISTA Multi-Task Learning AND Decision Tree Regressors** acr
 
 ---
 
-## 4. Literature Justification: Why Multi-Task $L_{2,1}$ Outperforms XGBoost
+## 4. Literature Justification: Multi-Task $L_{2,1}$ vs. Decision Tree Baselines
 
-The result where Multi-Task $L_{2,1}$ Lasso ($R^2 = 0.8026$) outperforms single-task XGBoost ($R^2 = 0.7589$) on this dataset is **strongly supported by published machine learning and biomedical informatics literature**:
+With nested cross-validation hyperparameter tuning, single-task XGBoost achieves competitive prognostic performance ($R^2 = 0.7589 \pm 0.0477$ on ADAS13) while activating fewer medical procedures (**$8,000.00 across 12 panels**, omitting ASL MRI and secondary psychometric drawing tests). Multi-Task $L_{2,1}$ Lasso achieves the top numerical precision ($R^2 = 0.8026 \pm 0.0324$ on ADAS13) with overlapping 95% confidence intervals on ADAS13 ($[0.7702, 0.8350]$ vs $[0.7112, 0.8066]$) and MMSE ($[0.6234, 0.7565]$ vs $[0.6003, 0.7013]$).
 
-### 1. Information Pooling Across Tasks (Argyriou et al. 2006; Lounici et al. 2011)
-- **XGBoost** trains 3 separate decision tree models for `ADAS13`, `CDR-SB`, and `MMSE` independently. Each tree ensemble optimizes split thresholds purely on its own individual target.
-- **Multi-Task $L_{2,1}$ Lasso** pools statistical strength across all 3 correlated cognitive endpoints simultaneously. Lounici et al. (*Annals of Statistics*, 2011) mathematically proved that $L_{2,1}$ multi-task regularization reduces estimation error bounds by a factor of $\sqrt{T}$ (where $T=3$ tasks) when target trajectories share an underlying biological basis.
+This comparative behavior is well-supported by machine learning and biomedical informatics theory:
 
-### 2. High-Dimensional Regularization vs. Axis-Aligned Tree Partitions (Hastie et al. 2009)
-- Even with nested-CV depth and estimator tuning, decision trees partition feature space using orthogonal, axis-aligned step functions. In high-dimensional regimes ($d = 2{,}027$), selecting a sparse 58-feature panel via greedy tree splits can produce variance across subtle continuous imaging gradients.
-- $L_{2,1}$ Lasso applies **continuous soft-thresholding shrinkage**, smoothly penalizing correlated features simultaneously across all tasks without the boundary artifacts of recursive partitioning.
+### 1. Information Pooling Across Correlated Tasks (Argyriou et al. 2006; Lounici et al. 2011)
+- **XGBoost** estimates three separate tree ensembles for `ADAS13`, `CDR-SB`, and `MMSE` independently. Each ensemble optimizes split thresholds purely on its own individual target.
+- **Multi-Task $L_{2,1}$ Lasso** pools statistical strength across all 3 correlated cognitive endpoints simultaneously. Lounici et al. (*Annals of Statistics*, 2011) mathematically proved that $(2,1)$-norm group regularization reduces estimation error bounds by a factor of $\sqrt{T}$ (where $T=3$ tasks) when target trajectories share an underlying biological degradation pattern.
 
-### 3. Biological Linearity in Alzheimer's Progression (Zhou et al., IEEE TPAMI 2013)
-- Zhou et al. (*IEEE Transactions on Pattern Analysis and Machine Intelligence*, 2013) specifically evaluated multi-task feature selection on ADNI outcome prediction.
-- Their findings confirmed that 2-year Alzheimer's cognitive progression (`ADAS13`, `CDR-SB`, `MMSE`) follows an **additive biological degradation trajectory** (linear combinations of hippocampal brain shrinkage, word memory decline, and CSF tau elevation). Regularized linear multi-task models capture these continuous biological trajectories cleanly.
+### 2. Inductive Bias & Smooth Biological Degradation (Zhou et al., IEEE TPAMI 2013)
+- Zhou et al. (*IEEE Transactions on Pattern Analysis and Machine Intelligence*, 2013) demonstrated that 2-year Alzheimer's cognitive progression follows a predominantly **additive biological trajectory** (continuous combinations of hippocampal atrophy, CSF tau elevation, and baseline word memory decline).
+- Continuous linear multi-task shrinkage provides a well-matched inductive bias for smooth biological degradation trajectories, allowing FISTA to maintain a modest precision edge (+0.0437 ADAS13 $R^2$) over axis-aligned step-function decision trees.
 
-### 4. Model Preprocessing Protocol Parity Note
-- **XGBoost (GBDT)** receives unscaled features directly with native NaN values, leveraging XGBoost's default-direction split algorithm at each node with inner 3-fold CV parameter tuning.
-- **FISTA (Regularized Linear Model)** uses training-fold observed mean imputation, standardization, and $\pm 10.0$ z-score clipping, as gradient-based linear solvers strictly require standardized, fully-dense numeric inputs. Both models are evaluated under identical nested cross-validation protocols.
+### 3. Cost-Accuracy Trade-off Between Baselines
+- **XGBoost ($8,000.00 / 12 panels)**: Achieves high predictive accuracy without requiring ASL MRI ($1,500.00) or minor drawing tests ($100.00), representing an efficient mid-tier operating point on the cost-accuracy curve.
+- **FISTA MTFL ($9,600.00 / 15 panels)**: Selects a comprehensive multi-modal panel that maximizes top-end precision ($R^2 \approx 0.80$).
+- **Methodological Parity**: Both models are evaluated under identical nested cross-validation protocols (inner CV hyperparameter search, fold-isolated preprocessing, and observation-masked target evaluations).
 
 ---
 
@@ -160,21 +159,21 @@ The table below breaks down every medical test panel, its real-world clinical co
 
 | Medical Test Panel / Procedure | Unit Price ($) | FISTA Selected Features | Billed Panel Cost ($) | Medical Description |
 | :--- | :---: | :---: | :---: | :--- |
-| **Amyloid PET Imaging** | $3,000.00 | 11 | $3,000.00 | Brain PET scan detecting amyloid plaque buildup. |
+| **Amyloid PET Imaging** | $3,000.00 | 10 | $3,000.00 | Brain PET scan detecting amyloid plaque buildup. |
 | **FDG PET Imaging** | $2,000.00 | 1 | $2,000.00 | Brain PET scan measuring brain glucose metabolism. |
 | **ASL MRI (Arterial Spin Labeling)** | $1,500.00 | 1 | $1,500.00 | MRI measuring blood flow in brain tissue. |
-| **Structural MRI (FreeSurfer)** | $1,500.00 | 16 | $1,500.00 | High-resolution MRI measuring brain shrink/volume. |
+| **Structural MRI (FreeSurfer)** | $1,500.00 | 18 | $1,500.00 | High-resolution MRI measuring brain shrink/volume. |
 | **CSF Biomarkers (Lumbar Puncture)** | $1,000.00 | 1 | $1,000.00 | Spinal tap measuring Alzheimer's proteins (Tau/Amyloid). |
-| **Rey Auditory Verbal Learning (RAVLT)** | $150.00 | 7 | $150.00 | Word list memory test. |
-| **Functional Assessment (FAQ)** | $100.00 | 1 | $100.00 | Daily living activities questionnaire (filled by family). |
+| **Rey Auditory Verbal Learning Test (RAVLT)** | $150.00 | 7 | $150.00 | Word list memory test. |
 | **Boston Naming Test** | $100.00 | 2 | $100.00 | Picture object naming test. |
+| **Functional Assessment Questionnaire (FAQ)** | $100.00 | 1 | $100.00 | Daily living activities questionnaire (filled by family). |
 | **Trail Making Test (TMT)** | $100.00 | 4 | $100.00 | Connect-the-dots visual processing speed test. |
-| **Demographics & Medical History** | $50.00 | 2 | $50.00 | Age, gender, education, basic health history. |
 | **Category Fluency Test** | $50.00 | 1 | $50.00 | Verbal animal naming speed test. |
 | **Clock Drawing Test** | $50.00 | 1 | $50.00 | Drawing clock face spatial memory test. |
+| **Demographics & Medical History** | $50.00 | 2 | $50.00 | Age, gender, education, basic health history. |
 | **ADAS-Cog Assessment** | $0.00* | 1 | $0.00 | Primary trial endpoint (cognitive score). |
-| **Clinical Dementia Rating (CDR)** | $0.00* | 5 | $0.00 | Primary trial endpoint (dementia severity stage). |
-| **MMSE Assessment** | $0.00* | 5 | $0.00 | Primary trial endpoint (mental status exam). |
+| **Clinical Dementia Rating (CDR)** | $0.00* | 4 | $0.00 | Primary trial endpoint (dementia severity stage). |
+| **MMSE Assessment** | $0.00* | 4 | $0.00 | Primary trial endpoint (mental status exam). |
 | **TOTAL BILLED COST PER PATIENT** | — | **58 Features** | **$9,600.00** | Total patient screening cost. |
 
 *\*Mandatory trial outcome measures billed at $0 per clinical trial budget policy.*

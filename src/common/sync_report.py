@@ -1,10 +1,11 @@
 import os
 import re
 import sys
+from collections import Counter
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from src.common.panel_costs import (
-    load_panel_tables, billed_cost_for_features, read_selected_features
+    load_panel_tables, billed_cost_for_features, read_selected_features, ENDPOINT_PANELS
 )
 
 
@@ -148,6 +149,25 @@ def replace_markdown_table(lines, header_marker, new_table_lines):
     return lines[:start] + new_table_lines + lines[end:]
 
 
+PANEL_DESCRIPTIONS = {
+    "Amyloid PET Imaging": "Brain PET scan detecting amyloid plaque buildup.",
+    "FDG PET Imaging": "Brain PET scan measuring brain glucose metabolism.",
+    "ASL MRI (Arterial Spin Labeling)": "MRI measuring blood flow in brain tissue.",
+    "Structural MRI (FreeSurfer)": "High-resolution MRI measuring brain shrink/volume.",
+    "CSF Biomarkers (Lumbar Puncture)": "Spinal tap measuring Alzheimer's proteins (Tau/Amyloid).",
+    "Rey Auditory Verbal Learning Test (RAVLT)": "Word list memory test.",
+    "Functional Assessment Questionnaire (FAQ)": "Daily living activities questionnaire (filled by family).",
+    "Boston Naming Test": "Picture object naming test.",
+    "Trail Making Test (TMT)": "Connect-the-dots visual processing speed test.",
+    "Demographics & Medical History": "Age, gender, education, basic health history.",
+    "Category Fluency Test": "Verbal animal naming speed test.",
+    "Clock Drawing Test": "Drawing clock face spatial memory test.",
+    "ADAS-Cog Assessment": "Primary trial endpoint (cognitive score).",
+    "Clinical Dementia Rating (CDR)": "Primary trial endpoint (dementia severity stage).",
+    "MMSE Assessment": "Primary trial endpoint (mental status exam)."
+}
+
+
 # ----------------------------------------------------------------------------
 # Main
 # ----------------------------------------------------------------------------
@@ -157,8 +177,9 @@ def sync_report_metrics():
     report_path = os.path.join(root, 'Project_Summary_Report.md')
 
     b1_dir = os.path.join(root, 'benchmark 1 multitask learning')
+    b2_dir = os.path.join(root, 'benchmark 2 xgboost')
     bm1_path = os.path.join(b1_dir, 'predictive_metrics_benchmark1.txt')
-    bm2_path = os.path.join(root, 'benchmark 2 xgboost', 'predictive_metrics_benchmark2.txt')
+    bm2_path = os.path.join(b2_dir, 'predictive_metrics_benchmark2.txt')
     bm3_path = os.path.join(root, 'benchmark 3 greedy panel', 'greedy_baseline_metrics.txt')
     ablation_path = os.path.join(root, 'src', 'ablation_results.txt')
     tier1_path = os.path.join(root, 'src', 'tier1_cognitive_summary.txt')
@@ -190,6 +211,11 @@ def sync_report_metrics():
     tier2_features = read_selected_features(os.path.join(b1_dir, 'selected_features_benchmark1.csv'))
     tier2_cost, tier2_panels = billed_cost_for_features(tier2_features, panel_costs_tbl, feature_to_panel)
     tier2_cost_fmt = f"${tier2_cost:,.2f}"
+
+    # ---- XGBoost cost, computed from its actual selection ----
+    xgb_features = read_selected_features(os.path.join(b2_dir, 'selected_features_benchmark2.csv'))
+    xgb_cost, xgb_panels = billed_cost_for_features(xgb_features, panel_costs_tbl, feature_to_panel)
+    xgb_cost_fmt = f"${xgb_cost:,.2f}"
 
     # ---- Tier 1 (cognitive-only) operating point ----
     tier1_k, tier1_cost, tier1_panels = tier1
@@ -303,11 +329,11 @@ def sync_report_metrics():
          f"**MMSE**: **${t1_mmse[0]:.4f} \\pm {t1_mmse[1]:.4f}$** ([{t1_mmse[2]:.4f}, {t1_mmse[3]:.4f}]) | "
          f"**Tier 1 (Ultra-Low-Cost Operating Point)**: {tier1_panels} panels. Saves **{tier1_savings_fmt}** per patient "
          f"at a ${adas_drop:.2f}$ drop in ADAS13 $R^2$ with overlapping 95% CIs. |"),
-        (f"| **Decision Tree Models (XGBoost)** | {tier2_k} features | **{tier2_cost_fmt}** | "
+        (f"| **Decision Tree Models (XGBoost)** | {tier2_k} features | **{xgb_cost_fmt}** | "
          f"**ADAS13**: ${a2[0]:.4f} \\pm {a2[1]:.4f}$ ([{a2[2]:.4f}, {a2[3]:.4f}])<br>"
          f"**CDR-SB**: ${c2[0]:.4f} \\pm {c2[1]:.4f}$ ([{c2[2]:.4f}, {c2[3]:.4f}])<br>"
          f"**MMSE**: ${m2[0]:.4f} \\pm {m2[1]:.4f}$ ([{m2[2]:.4f}, {m2[3]:.4f}]) | "
-         f"Tree baseline evaluated on matching feature budget; joint linear multi-task shrinkage outperforms independent trees. |"),
+         f"Tree baseline ({len(xgb_panels)} panels) evaluated on matching feature budget; achieves comparable accuracy at lower screening cost ({xgb_cost_fmt} vs {tier2_cost_fmt}). |"),
         (f"| **Greedy Panel Elimination (FISTA)** | Dynamic panel subsets | **{c_full} $\\rightarrow$ {c_pruned}** | "
          f"**Full Set**: {r_full:.4f} ({c_full})<br>**Step {pareto_idx} ({c_par})**: {r_par:.4f}<br>"
          f"**Pruned Set**: **{r_pruned:.4f}** at {c_pruned} | "
@@ -352,11 +378,43 @@ def sync_report_metrics():
 
     lines = replace_markdown_table(lines, "Feature Modality Subset", ablation_lines)
 
+    # ---- Section 5: Medical Panel Financial Burden Table (Derived Dynamically) ----
+    feature_counts_by_panel = Counter(feature_to_panel[f] for f in tier2_features)
+    
+    # Sort triggered panels by unit price descending, then name
+    sorted_triggered_panels = sorted(
+        tier2_panels,
+        key=lambda p: (p in ENDPOINT_PANELS, -panel_costs_tbl.get(p, 0.0), p)
+    )
+
+    financial_table_lines = [
+        "| Medical Test Panel / Procedure | Unit Price ($) | FISTA Selected Features | Billed Panel Cost ($) | Medical Description |",
+        "| :--- | :---: | :---: | :---: | :--- |",
+    ]
+    
+    for panel in sorted_triggered_panels:
+        is_endpoint = panel in ENDPOINT_PANELS
+        unit_price = panel_costs_tbl.get(panel, 0.0)
+        unit_price_str = f"${unit_price:,.2f}" if not is_endpoint else "$0.00*"
+        billed_cost_str = "$0.00" if is_endpoint else f"${unit_price:,.2f}"
+        feat_cnt = feature_counts_by_panel.get(panel, 0)
+        desc = PANEL_DESCRIPTIONS.get(panel, "Clinical test panel.")
+        financial_table_lines.append(
+            f"| **{panel}** | {unit_price_str} | {feat_cnt} | {billed_cost_str} | {desc} |"
+        )
+        
+    financial_table_lines.append(
+        f"| **TOTAL BILLED COST PER PATIENT** | — | **{tier2_k} Features** | **{tier2_cost_fmt}** | Total patient screening cost. |"
+    )
+
+    lines = replace_markdown_table(lines, "Medical Test Panel / Procedure", financial_table_lines)
+
     with open(report_path, 'w', encoding='utf-8') as f:
         f.write("\n".join(lines) + "\n")
 
     print("[OK] REPORT SYNCHRONISED")
     print(f"     Tier 2: {tier2_k} features, {tier2_cost_fmt}, {len(tier2_panels)} panels")
+    print(f"     XGBoost: {tier2_k} features, {xgb_cost_fmt}, {len(xgb_panels)} panels")
     print(f"     Tier 1: {tier1_k} features, {tier1_cost_fmt}, {tier1_panels} panels")
     print(f"     Greedy Pareto: step {pareto_idx} at {c_par} (R2 {r_par:.4f})")
 
